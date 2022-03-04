@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% load rango_template_tags %}
+{% load libnav_template_tags %}
 
 <html>
     <head>
@@ -29,9 +29,9 @@
             {% if user.is_authenticated %}
                <li><a href="{% url 'libnav:profile' %}">My Profile</a></li>
             {% else %}
-                <li><a href="{% url 'rango:login' %}">Login</a></li>
+                <li><a href="{% url 'libnav:login' %}">Login</a></li>
             {% endif %}
-                <li><a href="{% url 'rango:about' %}">About</a></li>
+                <li><a href="{% url 'libnav:about' %}">About</a></li>
             </ul>
         </div>
     </body>
