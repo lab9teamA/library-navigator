@@ -1,0 +1,99 @@
+/* Nav bar css*/
+#navbar {
+    position: relative;
+    border: 1px solid blue;
+    background-color: #0020ff;
+    overflow: hidden;
+}
+
+#navbar li {
+    float: right;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+}
+
+#navbar a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+#navbar form {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+#navbar input {
+    text-align: left;
+    font-size: 12px;
+}
+
+#navbar a:hover {
+    background-color: #00ffff;
+    color: black;
+}
+
+
+/* Main page css*/
+.parent {
+    display: flex;
+    height: 80%;
+
+}
+
+
+.child {
+    margin: 10px;
+}
+
+#sidebar {
+    width: 20%;
+    height: 100%;
+}
+
+#mainbody {
+    width: 80%;
+    height: 100%;
+}
+
+
+/* Footer css*/
+footer {
+
+}
+
+footer li {
+    float: right;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+footer a {
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/* General page css*/
+
+div {
+    border: 1px solid black;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
