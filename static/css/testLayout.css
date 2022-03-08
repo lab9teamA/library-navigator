@@ -4,6 +4,9 @@
     border: 1px solid blue;
     background-color: #0020ff;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: 10%;
 }
 
 #navbar li {
@@ -47,53 +50,168 @@
 .parent {
     display: flex;
     height: 80%;
+    margin: 0;
+    padding: 0;
 
 }
 
 
 .child {
-    margin: 10px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 #sidebar {
     width: 20%;
-    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #mainbody {
     width: 80%;
-    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
+#imageLoc {
+    height: 95%;
+    margin: 0;
+    padding: 0;
+}
+
+#mainbodyPara p {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-size: 20px;
+
+}
+
+#imageLoc img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
 
 /* Footer css*/
-footer {
-
+#footer {
+    margin: 0;
+    padding: 0;
+    height: 10%;
 }
 
-footer li {
+#footer li {
     float: right;
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-footer a {
+#footer a {
     float: left;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 15px;
+
 }
+
+
+/* Side bar css */
+
+
+.sWig {
+    height: 45%;
+    padding: 0;
+    margin: 0;
+}
+
+.sWig div {
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 90%;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    background: peachpuff;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.sWig li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sWig h4 {
+    padding: 0 0 0 15px;
+    margin: 5px 0 0 0;
+    height: 10%;
+
+    /*background: white;*/
+}
+
+
+#busyness {
+    height: 10%;
+    padding: 0;
+    margin: 0;
+}
+
+#busyness h5 {
+    padding: 0 0 0 0;
+    margin: 0;
+    text-align: center;
+}
+
+.dot {
+    height: 25px;
+    width: 25px;
+    border: 2px solid black;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-on {
+    height: 25px;
+    width: 25px;
+    border: 2px solid black;
+    background-color: yellow;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+
+#cFriendsInd {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    background: peachpuff;
+    border: 2px solid black;
+    border-radius: 5px;
+
+}
+
+
+#cFriendsInd img {
+    width: 40px;
+    height: 40px;
+    padding: 0 0 0 0;
+}
+
 
 /* General page css*/
 
 div {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
     overflow: hidden;
 }
