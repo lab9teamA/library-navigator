@@ -1,23 +1,16 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+<!--{% load staticfiles %}-->
 <html lang="en">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!--        <script src="{% static 'javascript/friendsCurrentLevelTest.js' %"></script>-->
-    <!--        <script src="../../static/javascript/friendsCurrentLevelTest.js"></script>-->
 
     <link href="../../static/css/testLayout.css" rel="stylesheet">
     <!--        <link rel="stylesheet" href="{% static 'css/testLayout.css' %">-->
     <title>Test Page</title>
 </head>
 <body>
-<!--    <div id="test">-->
-<!--        <h2>Test to be changed</h2>-->
-<!--        <button onclick="loadDoc()" type="button">Change Content</button>-->
-<!--    </div>-->
-<!--    <textarea cols="50" rows=“10"> Enter text </textarea>-->
 <div class="wrapper">
-
 	<div id="navbar">
         <ul>
 			<li>
@@ -32,10 +25,10 @@
     </div>
   
 	<div class="main">
-	
 		<div class="child" id="mainbody">
 			<div id="imageLoc">
-				<img src="{{ MEDIA_URL }}floorplans/Level1.jpg">
+				<!--Will be dynamically loaded-->
+				<!--				<img src="{{ MEDIA_URL }}floorplans/Level1.jpg">-->
 			</div>
 			<div id="mainbodyPara">
 				<p>on this floor? <a href="">check in</a> so others can see</p>
@@ -43,34 +36,40 @@
 		</div>
 		
 		<div class="child" id="sidebar">
-		
 			<div id="busyness">
 				<h5>Busyness</h5>
+				<!--Will be dynamically loaded-->
 				<span class="dot-on"></span>
 				<span class="dot-on"></span>
 				<span class="dot-on"></span>
 				<span class="dot"></span>
 				<span class="dot"></span>
 			</div>
-		
-			<div class="sWig" id="cFriendsBlock">
+
+			<div class="sWig">
 				<h4>Friends on this level</h4>
 				<div id="cFriendsInd">
 					<ul>
-						<li><img alt="Profile Pic 1" src="{{ MEDIA_URL }}profile_images/profileImage1.jpg">Billybob - 5 mins ago</li>
-						<li><img alt="Profile Pic 2" src="{{ MEDIA_URL }}profile_images/profileImage2.jpg">suizy - 2 hrs ago</li>
-						<li><img alt="EMPTY" src="{{ MEDIA_URL }}profile_images/NONE.jpg">Test user</li>
-						<li><img alt="EMPTY" src="{{ MEDIA_URL }}profile_images/NONE.jpg">Test user</li>
-						<li><img alt="EMPTY" src="{{ MEDIA_URL }}profile_images/NONE.jpg">Test user</li>
-						<li><img alt="EMPTY" src="{{ MEDIA_URL }}profile_images/NONE.jpg">Test user</li>
+						<!--Will be dynamically loaded-->
+						<li><img alt="Profile Pic 1" src="../../media/profile_images/profileImage1.jpg">Billybob - 5
+							mins ago
+						</li>
+						<li><img alt="Profile Pic 2" src="../../media/profile_images/profileImage2.jpg">suizy - 2 hrs
+							ago
+						</li>
+						<li><img alt="EMPTY" src="../../media/profile_images/NONE.jpg">Test user</li>
+						<li><img alt="EMPTY" src="../../media/profile_images/NONE.jpg">Test user</li>
+						<li><img alt="EMPTY" src="../../media/profile_images/NONE.jpg">Test user</li>
+						<li><img alt="EMPTY" src="../../media/profile_images/NONE.jpg">Test user</li>
 					</ul>
 				</div>
 			</div>
-			
-			<div class="sWig" id="cFriendsBlock">
+
+			<div class="sWig">
 				<h4>Popular books on this level</h4>
 				<div id="pBooksBlock">
 					<ul>
+						<!--Will be dynamically loaded-->
 						<li>The Bible</li>
 						<li>Cheryl - My Story</li>
 						<li>Test book</li>
@@ -92,9 +91,7 @@
 					</ul>
 				</div>
 			</div>
-			
 		</div>
-		
 	</div>
 	
 	<div class="footer">
