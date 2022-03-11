@@ -9,3 +9,9 @@ def home(request):
     response = render(request, 'libnav/home.html')
 
     return response
+
+
+def map(request):
+    response = render(request, 'libnav/map.html')
+
+    return response
