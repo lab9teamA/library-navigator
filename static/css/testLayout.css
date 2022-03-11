@@ -1,7 +1,20 @@
 html,
+
 body {
 	height: 100%;
 	margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--light-blue);
+}
+:root{
+    --lightest-blue: #E6EEF4;
+    --light-blue: #B6D2E7;
+    --blue: #5D90B7;
+    --dark-blue: #306A97;
+    --darkest-blue: #124B77;
+    --midnight: #042B49;
+    --yellow: #EBCD3F;
+    --red: #B91212;
 }
 
 .wrapper {
@@ -18,15 +31,15 @@ body {
 }
 
 .wrapper div {
-	border: 1px solid grey;
+    /* remove at end maybe*/
+	border: 2px solid var(--blue);
 }
 
 
 
 .wrapper #navbar {
 	flex: 0 1 auto;
-    border: 1px solid blue;
-    background-color: #0020ff;
+    background-color: var(--dark-blue);
 }
 
 .wrapper #navbar ul {
@@ -42,7 +55,7 @@ body {
 
 .wrapper #navbar a {
     float: left;
-    color: #f2f2f2;
+    color: var(--lightest-blue);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -51,7 +64,7 @@ body {
 
 .wrapper #navbar form {
     float: left;
-    color: #f2f2f2;
+    color: var(--lightest-blue);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -64,8 +77,8 @@ body {
 }
 
 .wrapper #navbar a:hover {
-    background-color: #00ffff;
-    color: black;
+    background-color: var(--lightest-blue);
+    color: var(--midnight)
 }
 
 
@@ -176,9 +189,9 @@ body {
 .main #sidebar .sWig #cFriendsInd,
 .main #sidebar .sWig #pBooksBlock {
     padding: 0 0 0 0;
-    margin: 0 0 0 0;
-    background: peachpuff;
-    border: 2px solid black;
+    margin: 10px 0 10px 0;
+    background: var(--lightest-blue);
+    border: 2px solid var(--lightest-blue);
     border-radius: 5px;
     overflow: scroll;
     overflow-x: hidden;
@@ -189,7 +202,7 @@ body {
 .dot {
     height: 25px;
     width: 25px;
-    border: 2px solid black;
+    border: 2px solid var(--midnight);
     border-radius: 50%;
     display: inline-block;
 }
@@ -197,8 +210,8 @@ body {
 .dot-on {
     height: 25px;
     width: 25px;
-    border: 2px solid black;
-    background-color: yellow;
+    border: 2px solid var(--midnight);
+    background-color: var(--yellow);
     border-radius: 50%;
     display: inline-block;
 }
