@@ -1,0 +1,217 @@
+html,
+
+body {
+	height: 100%;
+	margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--light-blue);
+}
+:root{
+    --lightest-blue: #E6EEF4;
+    --light-blue: #B6D2E7;
+    --blue: #5D90B7;
+    --dark-blue: #306A97;
+    --darkest-blue: #124B77;
+    --midnight: #042B49;
+    --yellow: #EBCD3F;
+    --red: #B91212;
+}
+
+.wrapper {
+	display: flex;
+	flex-flow: column;
+	height: 100%;
+	overflow: hidden;
+}
+
+.main {
+	display: flex;
+	flex-flow: row;
+	width: 100%;
+}
+
+.wrapper div {
+    /* remove at end maybe*/
+	border: 2px solid var(--blue);
+}
+
+
+
+.wrapper #navbar {
+	flex: 0 1 auto;
+    background-color: var(--dark-blue);
+}
+
+.wrapper #navbar ul {
+	margin: 0px;
+}
+
+.wrapper #navbar li {
+    float: right;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper #navbar a {
+    float: left;
+    color: var(--lightest-blue);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.wrapper #navbar form {
+    float: left;
+    color: var(--lightest-blue);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.wrapper #navbar input {
+    text-align: left;
+    font-size: 12px;
+}
+
+.wrapper #navbar a:hover {
+    background-color: var(--lightest-blue);
+    color: var(--midnight)
+}
+
+
+
+.wrapper .main {
+	flex: 1 1 auto;
+}
+
+
+
+.wrapper .footer {
+	flex: 0 1 40px;
+}
+
+.wrapper .footer ul {
+	margin: 0px;
+}
+
+.wrapper .footer li {
+    float: right;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper .footer a {
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+
+
+.main .child {
+	margin: 10px;
+}
+
+.main #mainbody {
+	flex: 4 0 0;
+	display: flex;
+	flex-flow: column;
+}
+
+.main #mainbody #imageLoc {
+	flex: 1 1 0;
+	overflow: hidden;
+}
+
+.main #mainbody #imageLoc img {
+    max-width: 100%;
+    max-height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+    display: block;
+}
+
+.main #mainbody #mainBodyPara {
+	flex: 0 1 auto;
+}
+
+.main #mainbody p {
+	margin-left: 16px;
+	margin-right: 16px;
+}
+
+
+
+.main #sidebar {
+	flex: 1 0 0;
+	display: flex;
+	flex-flow: column;
+}
+
+.main #sidebar #busyness {
+	flex: 0 1 auto;
+}
+
+.main #sidebar #busyness h5 {
+    padding: 0 0 0 0;
+    margin: 0;
+    text-align: center;
+}
+
+.main #sidebar .sWig {
+    flex: 1 1 0;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column;
+}
+
+.main #sidebar .sWig h4 {
+    padding: 0 0 0 15px;
+    margin: 5px 0 0 0;
+    flex: 0 1 0;
+}
+
+.main #sidebar .sWig div {
+    flex: 1 1 0;
+}
+
+.main #sidebar .sWig img {
+	max-width: 40px;
+    max-height: 40px;
+}
+
+.main #sidebar .sWig #cFriendsInd,
+.main #sidebar .sWig #pBooksBlock {
+    padding: 0 0 0 0;
+    margin: 10px 0 10px 0;
+    background: var(--lightest-blue);
+    border: 2px solid var(--lightest-blue);
+    border-radius: 5px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+
+
+.dot {
+    height: 25px;
+    width: 25px;
+    border: 2px solid var(--midnight);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-on {
+    height: 25px;
+    width: 25px;
+    border: 2px solid var(--midnight);
+    background-color: var(--yellow);
+    border-radius: 50%;
+    display: inline-block;
+}
