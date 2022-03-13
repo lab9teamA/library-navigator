@@ -31,6 +31,7 @@ class Book(models.Model):
     description = models.CharField(max_length=1000)
     likes = models.IntegerField()
     location = models.ForeignKey(Location , on_delete=models.PROTECT)
+    subjects = models.ManyToManyField(Subject,related_name='book_subjects',blank=True)
 
     def __str__(self):
         return self.title
@@ -39,8 +40,8 @@ class Book(models.Model):
 class User(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to="profile_images",blank=True)
-    isReading = models.ManyToManyField(Book,related_name="user_isReading")
-    recommends = models.ManyToManyField(Book,related_name="user_recommends")
-
+    isReading = models.ManyToManyField(Book,related_name="user_isReading",blank=True)
+    recommends = models.ManyToManyField(Book,related_name="user_recommends",blank=True)
+    friends = models.ManyToManyField(User,related_name='user_friends',blank=True)
     def __str__(self):
         return self.user.username
