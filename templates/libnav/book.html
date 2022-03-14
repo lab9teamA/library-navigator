@@ -9,8 +9,18 @@
 {% endblock %}
 
 {% block body_block %}
+<h1>
+{% if book %}
+<h1>
+    {{ book.title }}
+</h1>
 <div>
-    book stuff
+    {{book.author}}
+    {{book.publishDate}}
 </div>
+{% else %}
+    Unknown Book
+{% endif %}
+
 
 {% endblock %}

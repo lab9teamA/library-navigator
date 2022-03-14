@@ -1,9 +1,21 @@
 {% extends 'libnav/base.html' %}
 
 {% block title_block %}
-    {{ MEDIA_URL }} + {{ MEDIA_ROOT }}
+{% if floor %}
+    Floor {{floor.number}}
+{%else%}
+    the floor you are trying to find does not exist.
+{% endif %}
 {% endblock %}
 
 {% block body_block %}
-    <img src="{{ MEDIA_URL }}floorplans/Level1alpha.png" alt="Level 1 Floorplan" />
+{% if floor %}
+<div class="child" id="mainbody">
+    <img src="{{ MEDIA_URL }}floorplans/{{floor.mapName}}" alt="Level {{floor.number}} Floorplan" />
+</div>
+{%else%}
+<h1>
+    the floor you are trying to find does not exist.
+</h1>
+{% endif %}
 {% endblock %}
