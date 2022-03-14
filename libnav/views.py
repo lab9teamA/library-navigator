@@ -10,7 +10,12 @@ from django.http import HttpResponse
 
 
 def home(request):
-    response = render(request, 'libnav/home.html')
+    popular_list = Book.objects.order_by('-likes')[:5]
+
+    context_dict = {
+        'popular': popular_list,
+    }
+    response = render(request, 'libnav/home.html', context= context_dict)
 
     return response
 def about(request):

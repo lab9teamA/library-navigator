@@ -1,0 +1,16 @@
+{% extends 'libnav/base.html' %}
+
+{% block title_block %}
+{% if book %}
+    {{ book.title }}
+{% else %}
+    Unknown Book
+{% endif %}
+{% endblock %}
+
+{% block body_block %}
+<div>
+    book stuff
+</div>
+
+{% endblock %}

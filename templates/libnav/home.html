@@ -23,13 +23,17 @@
 <div class="sWig">
     <h4>People like reading</h4>
     <div id="pBooksBlock">
-        <ul>
-            <!--Will be dynamically loaded-->
-            <li>The Bible</li>
-            <li>Cheryl - My Story</li>
-            <li>Test book</li>
-            <li>Test book</li>
-        </ul>
+    {%if popular%}
+    <ul>
+        {%for book in popular%}
+        <li>
+            <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
+        </li>
+        {%endfor%}
+    </ul>
+    {%else%}
+    <strong>There are no books present.</strong>
+    {%endif%}
     </div>
 </div>
 {% endblock %}
