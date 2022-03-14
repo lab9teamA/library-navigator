@@ -17,6 +17,8 @@
 <div>
     {{book.author}}
     {{book.publishDate}}
+    <br />
+    this book can be found at bookcase {{bookcase.id}} on <a href="{% url 'libnav:map' bookcase.floor.number %}">floor {{bookcase.floor.number}}</a>
 </div>
 {% else %}
     Unknown Book

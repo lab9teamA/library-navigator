@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from numpy import number
-from libnav.models import Book, Floor
+from libnav.models import Book, Bookcase, Floor, Subject
 # from libnav.forms import
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -40,7 +40,9 @@ def book(request, isbn):
     context_dict ={}
     try:
         book = Book.objects.get(ISBN = isbn)
+        location = Bookcase.objects.get(id = book.bookcase.id)
         context_dict['book'] = book
+        context_dict['bookcase'] = location
     except Book.DoesNotExist:
         context_dict['book'] = None
     response = render(request, 'libnav/book.html', context=context_dict)
