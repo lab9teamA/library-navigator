@@ -23,7 +23,7 @@
                     </form>
                 </li>
                 <li><a href="{% url 'libnav:home' %}">Home</a></li>
-                <li><a href="{% url 'libnav:map' %}">Map</a></li>
+                <li><a href="{% url 'libnav:map' 1 %}">Map</a></li>
                 {% if user.is_authenticated %}
                 <li><a href="">My profile</a></li>
                 <li><a href="">Logout</a></li>

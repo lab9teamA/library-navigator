@@ -9,15 +9,16 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
+class Floor(models.Model):
+    number = models.IntegerField(primary_key=True)
+    mapName = models.CharField( max_length= 20)
 
-class Location(models.Model):
-    floor = models.IntegerField()
-    bookCaseID = models.CharField(max_length=10)
+class Bookcase(models.Model):
+    id = models.CharField(max_length=10, primary_key=True, unique=True)
+    floor = models.ForeignKey(Floor, on_delete=models.PROTECT)
 
     def __str__(self):
-        return  str(self.bookCaseID) +" at "+str(self.floor)
-
-
+        return  str(self.id) +" on floor "+str(self.floor)
 
 
 class Book(models.Model):
@@ -30,7 +31,7 @@ class Book(models.Model):
     numberOfPage = models.IntegerField()
     description = models.CharField(max_length=1000)
     likes = models.IntegerField()
-    location = models.ForeignKey(Location , on_delete=models.PROTECT)
+    bookcase = models.ForeignKey(Bookcase , on_delete=models.PROTECT)
     subjects = models.ManyToManyField(Subject,related_name='book_subjects',blank=True)
 
     def __str__(self):

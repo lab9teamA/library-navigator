@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
-# from libnav.models import
+from django.contrib.auth.decorators import login_required
+from numpy import number
+from libnav.models import Book, Floor
 # from libnav.forms import
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -19,12 +21,24 @@ def profile(request):
     response = render(request, 'libnav/profile.html')
     return response
 
-def map(request):
-    response = render(request, 'libnav/map.html')
+def map(request, floor_number):
+    context_dict ={}
+    try:
+        floor = Floor.objects.get(number = floor_number)
+        context_dict['floor'] = floor
+    except Floor.DoesNotExist:
+        context_dict['floor'] = None
+    response = render(request, 'libnav/map.html', context = context_dict)
     return response
 
-def book(request):
-    response = render(request, 'libnav/book.html')
+def book(request, isbn):
+    context_dict ={}
+    try:
+        book = Book.objects.get(ISBN = isbn)
+        context_dict['book'] = book
+    except Book.DoesNotExist:
+        context_dict['book'] = None
+    response = render(request, 'libnav/book.html', context=context_dict)
     return response
 
 def user_login(request):
@@ -45,3 +59,8 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'libnav/login.html')
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('rango:index'))
