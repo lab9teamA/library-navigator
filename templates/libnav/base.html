@@ -1,3 +1,4 @@
+{% load libnav_template_tags %}
 <!DOCTYPE html>
 {% load staticfiles %}
 {% load libnav_template_tags %}
@@ -18,7 +19,7 @@
         </div>
         <div>
             {% block sidebar_block %}
-                {% get_floor_list floor %}
+{#                {% get_floor_list floor %}#}
             {% endblock %}
         </div>
         <hr />
@@ -26,12 +27,12 @@
             <ul>
                 <li><a href="{% url 'libnav:home' %}">Home</a></li>
                 <li><a href="{% url 'libnav:map' %}">Map</a></li>
-            {% if user.is_authenticated %}
-               <li><a href="{% url 'libnav:profile' %}">My Profile</a></li>
-            {% else %}
-                <li><a href="{% url 'libnav:login' %}">Login</a></li>
-            {% endif %}
-                <li><a href="{% url 'libnav:about' %}">About</a></li>
+{#            {% if user.is_authenticated %}#}
+{#               <li><a href="{% url 'libnav:profile' %}">My Profile</a></li>#}
+{#            {% else %}#}
+{#                <li><a href="{% url 'libnav:login' %}">Login</a></li>#}
+{#            {% endif %}#}
+{#                <li><a href="{% url 'libnav:about' %}">About</a></li>#}
             </ul>
         </div>
     </body>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+{% extends 'libnav/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {{ MEDIA_URL }} + {{ MEDIA_ROOT }}
+{% endblock %}
+
+{% block body_block %}
+    <img src="{{ MEDIA_URL }}floorplans/Level1alpha.png" alt="Level 1 Floorplan" />
+{% endblock %}
