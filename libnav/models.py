@@ -12,13 +12,15 @@ class Subject(models.Model):
 class Floor(models.Model):
     number = models.IntegerField(primary_key=True)
     mapName = models.CharField( max_length= 20)
+    def __str__(self):
+        return "Floor "+ str(self.number)
 
 class Bookcase(models.Model):
     id = models.CharField(max_length=10, primary_key=True, unique=True)
     floor = models.ForeignKey(Floor, on_delete=models.PROTECT)
 
     def __str__(self):
-        return  str(self.id) +" on floor "+str(self.floor)
+        return  str(self.id) +" on "+str(self.floor)
 
 
 class Book(models.Model):
@@ -38,9 +40,11 @@ class Book(models.Model):
         return self.title
 
 
-class User(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to="profile_images",blank=True)
+    website = models.URLField(blank= True)
+    description = models.CharField(max_length = 1000, blank=True)
     isReading = models.ManyToManyField(Book,related_name="user_isReading",blank=True)
     recommends = models.ManyToManyField(Book,related_name="user_recommends",blank=True)
     friends = models.ManyToManyField(User,related_name='user_friends',blank=True)

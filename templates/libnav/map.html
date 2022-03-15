@@ -13,9 +13,12 @@
 <div class="child" id="mainbody">
     <img src="{{ MEDIA_URL }}floorplans/{{floor.mapName}}" alt="Level {{floor.number}} Floorplan" />
 </div>
+<a href="{% url 'libnav:map' floor.number|add:"1" %}">up a floor</a>
+<a href="{% url 'libnav:map' floor.number|add:"-1"  %}">down floor</a>
 {%else%}
 <h1>
     the floor you are trying to find does not exist.
+    <a href="{% url 'libnav:map' 1 %}">go to floor 1</a>
 </h1>
 {% endif %}
 {% endblock %}

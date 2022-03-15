@@ -1,0 +1,29 @@
+{% extends 'libnav/base.html' %}
+
+{% block title_block %}
+{% if user %}
+    {{ user.username }}
+{% else %}
+    Unknown Profile
+{% endif %}
+{% endblock %}
+
+{% block body_block %}
+
+<h1>
+{% if user %}
+    {{ user.username }}
+{% else %}
+    Unknown profile
+{% endif %}
+</h1>
+<img src = "{{ MEDIA_URL }}profile_images/{{userProfile.picture}}" alt="{{user.username}}'s profile photo">
+<div>
+    {{userProfile.website}}
+    <br />
+    {{userProfile.description}}
+</div>
+
+
+
+{% endblock %}

@@ -1,9 +1,10 @@
+from multiprocessing import context
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from numpy import number
-from libnav.models import Book, Bookcase, Floor, Subject
+from django.contrib.auth.models import User
+from libnav.models import Book, Bookcase, Floor, Subject, UserProfile
 # from libnav.forms import
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -22,8 +23,18 @@ def about(request):
     response = render(request, 'libnav/about.html')
     return response
 
-def profile(request):
-    response = render(request, 'libnav/profile.html')
+def profile(request, username):
+    context_dict = {}
+    try:
+        user = User.objects.get(username = username)
+        userProfile = UserProfile.objects.get(user = user)
+        context_dict["user"]= user
+        context_dict["userProfile"] = userProfile
+    except:
+        context_dict["user"]= None
+        context_dict["userProfile"] = None
+    response = render(request, 'libnav/profile.html', context= context_dict)
+    #if logged in return myprofile.html
     return response
 
 def map(request, floor_number):
@@ -58,7 +69,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse('libnav:index'))
+                return redirect(reverse('libnav:home'))
             else:
                 return HttpResponse("Your LIBNAV account is disabled.")
         else:
@@ -70,4 +81,4 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect(reverse('rango:index'))
+    return redirect(reverse('libnav:home'))
