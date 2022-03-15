@@ -20,8 +20,12 @@
         {% endif %}
         </h1>
     <div id = "imageProfile">
+        {% if userProfile.picture %}
         <img src = "{{ MEDIA_URL }}/{{userProfile.picture.path}}" alt="{{user.username}}'s profile photo">
-    </div>
+		{% else %}
+		<img src = "{{ MEDIA_URL }}profile_images/NONE.jpg" alt="{{user.username}}'s profile photo">
+		{% endif %}
+	</div>
     <a href="{{userProfile.website}}">{{userProfile.website}}</a>
     <br />
     <div id = "mainbodyPara">

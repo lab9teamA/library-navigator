@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from libnav.models import Book, Bookcase, Floor, Subject, UserProfile
+from libnav.forms import UserForm, UserProfileForm
 # from libnav.forms import
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -82,25 +83,60 @@ def book(request, isbn):
     return response
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('libnav:profile', kwargs={'username': request.user.username}))
+    
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        # login form 
+        if request.POST.get('submit') == 'login':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-        user = authenticate(username= username, password = password)
+            user = authenticate(username= username, password = password)
 
-        if user:
-            if user.is_active:
-                login(request, user)
-                return redirect(reverse('libnav:home'))
+            if user:
+                if user.is_active:
+                    login(request, user)
+                    return redirect(reverse('libnav:home'))
+                else:
+                    return HttpResponse("Your LIBNAV account is disabled.")
             else:
-                return HttpResponse("Your LIBNAV account is disabled.")
-        else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+                print(f"Invalid login details: {username}, {password}")
+                return HttpResponse("Invalid login details supplied.")
+        # register form 
+        elif request.POST.get('submit') == 'register':
+            user_form = UserForm(request.POST)
+            profile_form = UserProfileForm(request.POST)
+            
+            if user_form.is_valid() and profile_form.is_valid():
+                user = user_form.save()
+                user.set_password(user.password)
+                user.save()
+                profile = profile_form.save(commit=False)
+                profile.user = user 
+                
+                if 'picture' in request.FILES:
+                    profile.picture = request.FILES['picture']
+                    
+                profile.save()
+                
+                login(request, user)
+                return redirect(reverse('libnav:profile', kwargs={'username': user.username}))
+            else:
+                print(user_form.errors, profile_form.errors)
+    # not post          
     else:
-        return render(request, 'libnav/login.html')
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+        
+    return render(request,
+        'libnav/login.html',
+        context = {
+            'user_form': user_form,
+            'profile_form': profile_form,})
 
 @login_required
 def user_logout(request):
     logout(request)
     return redirect(reverse('libnav:home'))
+        
