@@ -25,15 +25,34 @@ def about(request):
 
 def profile(request, username):
     context_dict = {}
+    current_user = request.user
     try:
         user = User.objects.get(username = username)
         userProfile = UserProfile.objects.get(user = user)
         context_dict["user"]= user
         context_dict["userProfile"] = userProfile
-    except:
+    except User.DoesNotExist:
         context_dict["user"]= None
         context_dict["userProfile"] = None
-    response = render(request, 'libnav/profile.html', context= context_dict)
+    if current_user.is_authenticated and user == current_user:
+        try:
+            friends = userProfile.friends.all()
+            context_dict["friends"] = friends
+        except:
+            context_dict["friends"] = None
+        response = render(request, 'libnav/my_profile.html', context= context_dict)
+
+    else:
+        try:
+            recommended = userProfile.recommends.all()
+            context_dict["recommended"] = recommended
+            reading = userProfile.isReading.all()
+            context_dict["reading"] = reading
+        except:
+
+            context_dict["recommended"] = None
+            context_dict["reading"] = None
+        response = render(request, 'libnav/profile.html', context= context_dict)
     #if logged in return myprofile.html
     return response
 

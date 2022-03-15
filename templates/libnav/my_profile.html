@@ -29,26 +29,18 @@
     </div>
 </div>
 <div class="child" id="sidebar">
+    {%if friends%}
     <div class="sWig">
-        <h4>{{user.username}} recommends</h4>
-        <div id="pBooksBlock">
-        {%for book in recommended%}
+        <h4>your friends</h4>
+        <div id="cFriendsInd">
+        {%for friend in friends%}
             <li>
-                <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
+                <a href="{% url 'libnav:profile' friend.username %}">{{friend.username}}</a>
             </li>
         {%endfor%}
         </div>
     </div>
-    <div class="sWig">
-        <h4>{{user.username}} is reading</h4>
-        <div id="pBooksBlock">
-        {%for book in reading%}
-            <li>
-                <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
-            </li>
-        {%endfor%}
-        </div>
-    </div>
+    {% endif %}
 </div>
 
 {% endblock %}

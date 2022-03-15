@@ -137,6 +137,11 @@ body {
     display: block;
 }
 
+.main #mainbody #imageProfile img{
+    max-width: 25%;
+    max-height: 25%;
+}
+
 .main #mainbody #mainBodyPara {
 	flex: 0 1 auto;
 }
