@@ -1,6 +1,7 @@
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
+import os
 
 class Subject(models.Model):
     id = models.AutoField(primary_key=True , unique=True)
@@ -43,7 +44,7 @@ class Book(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to="profile_images",blank=True)
+    picture = models.ImageField(upload_to="profile_images",blank=True,default="profile_images/NONE.jpg")
     website = models.URLField(blank= True)
     description = models.CharField(max_length = 1000, blank=True)
     isReading = models.ManyToManyField(Book,related_name="user_isReading",blank=True)

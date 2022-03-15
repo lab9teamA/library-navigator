@@ -61,9 +61,9 @@ def map(request, floor_number):
     try:
         floor = Floor.objects.get(number = floor_number)
         context_dict['floor'] = floor
-        books = Book.objects.order_by('-likes')
+        books = Book.objects.filter(bookcase__in=Bookcase.objects.filter(floor=Floor.objects.get(number=floor_number))).order_by('-likes')
         context_dict['books'] = books
-    except Floor.DoesNotExist:
+    except Floor.DoesNotExist or Bookcase.DoesNotExist:
         context_dict['floor'] = None
         context_dict['books'] = None
     response = render(request, 'libnav/map.html', context = context_dict)

@@ -4,7 +4,6 @@ import random
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'library_navigator.settings')
 
 import django
-from random import randint
 
 django.setup()
 
