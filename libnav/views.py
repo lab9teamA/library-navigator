@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 from libnav.models import Book, Bookcase, Floor, Subject, UserProfile
 # from libnav.forms import
 from django.shortcuts import redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+
+from libnav.miscs.locations_keeper import locations,location
 
 
 def home(request):
@@ -104,3 +106,33 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse('libnav:home'))
+
+@login_required
+def api_get_loc(request):
+    username = request.user.username
+
+    user = User.objects.get(username=request.user.username)
+    userProfile = UserProfile.objects.get(user=user)
+
+    user_loc = locations.get_all_by_users([username])
+
+    friends = [x.username for x in userProfile.friends.all()]
+    friends_locations = locations.get_all_by_users(friends)
+
+    public_loc = [x for x in locations.get_all_public_locations() if x not in friends_locations]
+    if user_loc in public_loc:
+        public_loc.remove(user_loc)
+
+    response = [user_loc,friends_locations,public_loc]
+    return JsonResponse(locations.get_all_public_locations())
+
+@login_required
+def api_set_loc(request):
+    l = location(user =  request.user.username,
+             x = request.POST["x"],
+             y = request.POST["y"],
+             floor = request.POST["floor"],
+             private = request.POST["private"])
+    locations.add(l)
+
+    return HttpResponse()
