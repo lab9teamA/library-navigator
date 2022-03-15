@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--{% load staticfiles %}-->
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--        <script src="{% static 'javascript/friendsCurrentLevelTest.js' %}"></script>-->
+
+    <link href="../../../static/css/base.css" rel="stylesheet">
+    <!--    <link href="../../../static/css/home.css" rel="stylesheet">-->
+    <!--        <link rel="stylesheet" href="{% static 'css/base.css' %}">-->
+    <title>Test Page</title>
+</head>
+<body>
+<div class="wrapper">
+    <div id="navbar">
+        <ul>
+            <li>
+                <form action="">
+                    <input id="search" name="booksearch" placeholder="Search..." type="text">
+                </form>
+            </li>
+            <li><a href="">Logout</a></li>
+            <li><a href="">Friends</a></li>
+            <li><a href="">Home</a></li>
+        </ul>
+    </div>
+
+    <div id="bodyBlock">
+        <div id="mainHome">
+            <div id="header">
+                welcome to the home page of library navigator
+            </div>
+            <div class="mPanel">
+                <h4>Popular books in the library</h4>
+                <div id="pBooksBlock">
+                    <ul>
+                        <!--Will be dynamically loaded-->
+                        <li>The Bible</li>
+                        <li>Cheryl - My Story</li>
+                        <li>Test book</li>
+                        <li>Test book</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mPanel">
+                <h4>People like reading</h4>
+                <div id="pReadingBlock">
+                    <ul>
+                        <li>
+                            <a href="">Test book</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <ul>
+            <li><a href="">About</a></li>
+            <li><a href="">Contact Us</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+

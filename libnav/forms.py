@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from libnav.models import Page, UserProfile
+from libnav.models import User, UserProfile
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget = forms.PasswordInput())
