@@ -28,12 +28,13 @@ class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     coverImage = models.ImageField(upload_to='book_cover_images',null=True)
-    checkedOut = models.DateTimeField(null=True)
+    checkedOut = models.BooleanField(default=False)
+    numCheckedOut = models.IntegerField(default=0)
     publishDate = models.DateField()
     numberOfPage = models.IntegerField()
     description = models.CharField(max_length=1000)
-    likes = models.IntegerField()
-    bookcase = models.ForeignKey(Bookcase , on_delete=models.PROTECT)
+    likes = models.IntegerField(default=0)
+    bookcase = models.ForeignKey(Bookcase, on_delete=models.PROTECT)
     subjects = models.ManyToManyField(Subject,related_name='book_subjects',blank=True)
 
     def __str__(self):
