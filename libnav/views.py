@@ -10,6 +10,18 @@ from libnav.forms import UserForm, UserProfileForm
 from django.shortcuts import redirect
 from django.http import HttpResponse
 
+from django.http.response import JsonResponse
+
+
+def put(request):
+    if request.method == 'GET':
+        return JsonResponse({"key": "value"})
+    else:
+        return HttpResponse()
+
+def testPage(request):
+    return render(request, "libnav/test.html")
+
 
 def home(request):
     popular_list = Book.objects.order_by('-likes')[:5]
