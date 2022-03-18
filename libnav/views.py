@@ -138,6 +138,10 @@ def user_login(request):
             if user:
                 if user.is_active:
                     login(request, user)
+                    user_id=UserProfile.objects.get(user=User.objects.get(username=username)).user_id
+                    print(user_id)
+                    request.session['user_id'] = UserProfile.objects.get(user=User.objects.get(username=username)).user_id
+                    print(request.session['user_id'])
                     return redirect(reverse('libnav:home'))
                 else:
                     return HttpResponse("Your LIBNAV account is disabled.")
@@ -162,6 +166,7 @@ def user_login(request):
                 profile.save()
 
                 login(request, user)
+                request.session['user_id'] = profile.user_id
                 return redirect(reverse('libnav:profile', kwargs={'username': user.username}))
             else:
                 print(user_form.errors, profile_form.errors)
@@ -179,6 +184,10 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
+    try:
+        del request.session['user_id']
+    except KeyError:
+        pass
     return redirect(reverse('libnav:home'))
 
 @login_required
