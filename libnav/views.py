@@ -1,3 +1,4 @@
+import json
 from multiprocessing import context
 from django.shortcuts import render
 from django.urls import reverse
@@ -68,6 +69,10 @@ def map(request, floor_number):
         context_dict['books'] = None
     response = render(request, 'libnav/map.html', context = context_dict)
     return response
+
+def updateMap(request, floor_number):
+    floor = Floor.objects.get(number=floor_number)
+    return HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number}))
 
 def book(request, isbn):
     context_dict ={}

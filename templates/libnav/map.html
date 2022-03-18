@@ -1,4 +1,6 @@
 {% extends 'libnav/base.html' %}
+{% load staticfiles %}
+{% load libnav_template_tags %}
 
 {% block title_block %}
 {% if floor %}
@@ -16,6 +18,16 @@
     </div>
 </div>
 <div class="child" id="sidebar">
+    {% block map_floors_block %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script src="{% static "javascript/floorScroll.js" %}"></script>
+        <div id="scrollBar">
+            <ul id="floorList">
+
+            </ul>
+        </div>
+    {% endblock %}
     <div id="busyness">
         <h5>Busyness</h5>
         <!--Will be dynamically loaded-->
@@ -50,11 +62,15 @@
     <div class="sWig">
         <h4>Popular books on this level</h4>
         <div id="pBooksBlock">
+        {% if books %}
         {%for book in books%}
             <li>
                 <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
             </li>
         {%endfor%}
+        {% else %}
+            There are no books on this floor
+        {% endif %}
         </div>
     </div>
 </div>

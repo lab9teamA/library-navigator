@@ -1,13 +1,14 @@
-let current = 1;
-const nFloors = 12
+let current_floor = 1;
+const nFloors = 12;
 
 $(document).ready(() => {
+    updateImage(current_floor);
     genList();
-    // updateImage();
 });
 
 
 function genList() {
+
     const ul = document.getElementById("floorList");
     ul.innerHTML = "";
 
@@ -20,15 +21,15 @@ function genList() {
     downA.onclick = onArrowDown;
 
 
-    for (let i = 1; i < nFloors + 1; i++) {
+    for (let i = nFloors; i > 0; i--) {
         const li = document.createElement("li");
-        li.textContent = i;
+        li.textContent = i.toString();
         li.onclick = onFloorClick;
-        if (i === current) {
-            if (i !== 1)
+        if (i === current_floor) {
+            if (i !== nFloors)
                 ul.appendChild(upA)
             ul.appendChild(li);
-            if (i !== nFloors)
+            if (i !== 1)
                 ul.appendChild(downA)
         } else {
             ul.appendChild(li)
@@ -37,23 +38,48 @@ function genList() {
     }
 }
 
+
+function updateImage(new_floor) {
+    let url = "http://127.0.0.1:8000/libnav/updatemap/" + new_floor
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        // console.log(this.responseText);
+        if (this.readyState === 4 && this.status === 200) {
+            console.log(this.responseText);
+            let floor = JSON.parse(this.responseText);
+            updatePage(new_floor, floor.mapName);
+        }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
+}
+
+
+function updatePage(floor_number, floor_image) {
+    let floor_div = document.getElementById("imageLoc");
+    console.log(floor_div.children);
+    floor_div.children[0].src = "../../../media/floorplans/" + floor_image;
+    floor_div.children[0].alt = "Level " + floor_number + " Floorplan";
+}
+
+
 function onFloorClick(e) {
-    current = parseInt(e.target.innerHTML);
+    current_floor = parseInt(e.target.innerHTML);
+    updateImage(current_floor);
     genList();
-    // updateImage();
 }
 
 
 function onArrowUp() {
-    current -= 1;
+    current_floor += 1;
+    updateImage(current_floor);
     genList();
-    // updateImage();
 }
 
 function onArrowDown() {
-    current += 1;
+    current_floor -= 1;
+    updateImage(current_floor);
     genList();
-    // updateImage();
 }
 
 
