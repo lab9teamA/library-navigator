@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from libnav.models import Book, Bookcase, Floor, Subject, UserProfile
+from libnav.models import Book, Bookcase, Floor, FriendRequest, Subject, UserProfile
 # from libnav.forms import
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -34,12 +34,16 @@ def profile(request, username):
     except User.DoesNotExist:
         context_dict["user"]= None
         context_dict["userProfile"] = None
+
     if current_user.is_authenticated and user == current_user:
         try:
             friends = userProfile.friends.all()
             context_dict["friends"] = friends
+            friend_requests = FriendRequest.objects.filter(to_user = current_user)
+            context_dict["requests"] = friend_requests
         except:
             context_dict["friends"] = None
+            context_dict['requests'] = None
         response = render(request, 'libnav/my_profile.html', context= context_dict)
 
     else:
@@ -48,13 +52,36 @@ def profile(request, username):
             context_dict["recommended"] = recommended
             reading = userProfile.isReading.all()
             context_dict["reading"] = reading
+            if current_user.is_authenticated:
+                if userProfile.friends.filter(user = current_user).exists():
+                    context_dict['notFriends'] = False
+                else:
+                    context_dict['notFriends'] = True
         except:
-
             context_dict["recommended"] = None
             context_dict["reading"] = None
+            context_dict['notFriends'] = True
+        
         response = render(request, 'libnav/profile.html', context= context_dict)
     #if logged in return myprofile.html
     return response
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        image = request.POST.get('profile picture')
+        website = request.POST.get('website')
+        description = request.POST.get('description')
+        current_user = request.user
+        try:
+            user_profile = UserProfile.get(user = current_user)
+            user_profile.image = image
+            user_profile.website = website
+            user_profile.description = description
+        except:
+            return HttpResponse("unable to update profile")
+    else:
+        return render(request, 'libnav/edit_profile.html')
 
 def map(request, floor_number):
     context_dict ={}
@@ -104,3 +131,35 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse('libnav:home'))
+
+@login_required
+def send_friend_request(request, username):
+    from_user = request.user
+    to_user = User.objects.get(username = username)
+    friend_request, created = FriendRequest.objects.get_or_create(from_user = from_user, to_user = to_user)
+    if created:
+        return HttpResponse('friend request sent')
+    else:
+        return HttpResponse('friend request was already sent')
+
+@login_required
+def accept_friend_request(request, requestID):
+    friend_request = FriendRequest.objects.get(id = requestID)
+    from_user = UserProfile.objects.get(user = friend_request.from_user)
+    to_user = UserProfile.objects.get(user = friend_request.to_user)
+    if friend_request.to_user == request.user:
+        to_user.friends.add(friend_request.from_user)
+        from_user.friends.add(friend_request.to_user)
+        friend_request.delete()
+        return HttpResponse('friend request accepted')
+    else:
+        return HttpResponse('friend request not accepted')
+        
+@login_required
+def delete_friend_request(request, requestID):
+    friend_request = FriendRequest.objects.get(id = requestID)
+    if friend_request.to_user == request.user:
+        friend_request.delete()
+        return HttpResponse('friend request deleted')
+    else:
+        return HttpResponse('friend request not deleted')

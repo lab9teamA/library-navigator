@@ -41,6 +41,20 @@
         </div>
     </div>
     {% endif %}
+    {%if requests%}
+    <div class="sWig">
+        <h4>friend requests</h4>
+        <div id="cFriendsInd">
+        {%for request in requests %}
+            <li>
+                <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}</a>
+                <a href="{% url 'libnav:accept friend request' request.id %}">accept</a>
+                <a href="{% url 'libnav:delete friend request' request.id %}">delete</a>
+            </li>
+        {%endfor%}
+        </div>
+    </div>
+    {% endif %}
 </div>
 
 {% endblock %}
