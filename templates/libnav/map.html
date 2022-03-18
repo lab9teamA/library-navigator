@@ -1,4 +1,6 @@
 {% extends 'libnav/base.html' %}
+{% load staticfiles %}
+{% load libnav_template_tags %}
 
 {% block title_block %}
 {% if floor %}
@@ -10,53 +12,65 @@
 
 {% block body_block %}
 {% if floor %}
-<div class="main">
-    <div class="child" id="mainbody">
-        <div id="imageLoc">
-            <img alt="Level {{floor.number}} Floorplan" src="{{ MEDIA_URL }}floorplans/{{floor.mapName}}"/>
+<div class="child" id="mainbody">
+    <div id="imageLoc">
+        <img src="{{ MEDIA_URL }}floorplans/{{floor.mapName}}" alt="Level {{floor.number}} Floorplan" />
+    </div>
+</div>
+<div class="child" id="sidebar">
+    {% block map_floors_block %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script src="{% static "javascript/floorScroll.js" %}"></script>
+        <div id="scrollBar">
+            <ul id="floorList">
+
+            </ul>
+        </div>
+    {% endblock %}
+    <div id="busyness">
+        <h5>Busyness</h5>
+        <!--Will be dynamically loaded-->
+        <span class="dot-on"></span>
+        <span class="dot-on"></span>
+        <span class="dot-on"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+    <a href="{% url 'libnav:map' floor.number|add:"1" %}">up a floor</a>
+    <a href="{% url 'libnav:map' floor.number|add:"-1"  %}">down floor</a>
+    {% if user.is_authenticated %}
+    <div class="sWig">
+        <h4>Friends on this level</h4>
+        <div id="cFriendsInd">
+            <ul>
+                <!--Will be dynamically loaded-->
+                <li><img alt="Profile Pic 1" src="/../../media/profile_images/profileImage1.jpg">Billybob - 5
+                    mins ago
+                </li>
+                <li><img alt="Profile Pic 2" src="/../../media/profile_images/profileImage2.jpg">suizy - 2 hrs
+                    ago
+                </li>
+                <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
+                <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
+                <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
+                <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
+            </ul>
         </div>
     </div>
-    <div class="child" id="sidebar">
-        <div id="busyness">
-            <h5>Busyness</h5>
-            <!--Will be dynamically loaded-->
-            <span class="dot-on"></span>
-            <span class="dot-on"></span>
-            <span class="dot-on"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-        </div>
-        <a 1href="{% url 'libnav:map' floor.number|add:"" %}">up a floor</a>
-        <a -1href="{% url 'libnav:map' floor.number|add:"" %}">down floor</a>
-        {% if user.is_authenticated %}
-        <div class="sWig">
-            <h4>Friends on this level</h4>
-            <div id="cFriendsInd">
-                <ul>
-                    <!--Will be dynamically loaded-->
-                    <li><img alt="Profile Pic 1" src="/../../media/profile_images/profileImage1.jpg">Billybob - 5
-                        mins ago
-                    </li>
-                    <li><img alt="Profile Pic 2" src="/../../media/profile_images/profileImage2.jpg">suizy - 2 hrs
-                        ago
-                    </li>
-                    <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
-                    <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
-                    <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
-                    <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
-                </ul>
-            </div>
-        </div>
-        {%endif%}
-        <div class="sWig">
-            <h4>Popular books on this level</h4>
-            <div id="pBooksBlock">
-                {%for book in books%}
-                <li>
-                    <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
-                </li>
-                {%endfor%}
-            </div>
+    {%endif%}
+    <div class="sWig">
+        <h4>Popular books on this level</h4>
+        <div id="pBooksBlock">
+        {% if books %}
+        {%for book in books%}
+            <li>
+                <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
+            </li>
+        {%endfor%}
+        {% else %}
+            There are no books on this floor
+        {% endif %}
         </div>
     </div>
 </div>

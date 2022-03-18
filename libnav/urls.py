@@ -13,4 +13,5 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('put/', views.put, name='put'),
     path('test/', views.testPage, name='test')
+    path('updatemap/<floor_number>/', views.updateMap, name='updateMap'),
 ]
