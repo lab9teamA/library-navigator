@@ -1,7 +1,7 @@
 {% extends 'libnav/base.html' %}
 
 {% block title_block %}
-    Login
+    Login or Register
 {% endblock %}
 
 {% block body_block %}
@@ -12,6 +12,14 @@
     <br />
     Password: <input type="password" name="password" value="" size="50"/>
     <br />
-    <input type="submit" value="submit" />
+    <input type="submit" name="submit" value="login" />
+</form>
+
+<h1>Register a new account</h1>
+<form id="login_form" method="post" action="{% url 'libnav:login' %}">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+	{{ profile_form.as_p }}
+    <input type="submit" name="submit" value="register" />
 </form>
 {% endblock %}

@@ -41,7 +41,7 @@ class Book(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE) 
     picture = models.ImageField(upload_to="profile_images",blank=True)
     website = models.URLField(blank= True)
     description = models.CharField(max_length = 1000, blank=True)
