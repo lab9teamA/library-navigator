@@ -10,49 +10,56 @@
 
 {% block body_block %}
 
-
-<div class="child" id="mainbody">
-    <h1>
-        {% if user %}
-            {{ user.username }}
-        {% else %}
-            Unknown profile
-        {% endif %}
-        </h1>
-    <div id = "imageProfile">
-		{% if userProfile.picture %}
-        <img src = "{{ MEDIA_URL }}/{{userProfile.picture.path}}" alt="{{user.username}}'s profile photo">
-		{% else %}
-		<img src = "{{ MEDIA_URL }}profile_images/NONE.jpg" alt="{{user.username}}'s profile photo">
-		{% endif %}
-    </div>
-    <a href="{{userProfile.website}}">{{userProfile.website}}</a>
-    <br />
-    <div id = "mainbodyPara">
-        {{userProfile.description}}
-    </div>
-</div>
-<div class="child" id="sidebar">
-    <div class="sWig">
-        <h4>{{user.username}} recommends</h4>
-        <div id="pBooksBlock">
-        {%for book in recommended%}
-            <li>
-                <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
-            </li>
-        {%endfor%}
+<div id="viewProfile">
+    <div id="pageWrapper">
+        <div id="bProfile">
+            <div class="content">
+                {% if userProfile.picture %}
+                <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}/{{userProfile.picture.path}}">
+                {% else %}
+                <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}profile_images/NONE.jpg">
+                {% endif %}
+                <h4>
+                    {% if user %}
+                    {{ user.username }}
+                    {% else %}
+                    Unknown profile
+                    {% endif %}
+                </h4>
+                <a href="{{userProfile.website}}">{{userProfile.website}}</a>
+                {% if notFriends %}
+                <a href="{% url 'libnav:send friend request' user.username %}">send friend request</a>
+                {%endif%}
+                <!--    Not sure if this is necessary -->
+                <!--    <br />-->
+                <!--    <div id = "mainbodyPara">-->
+                <!--        {{userProfile.description}}-->
+                <!--    </div>-->
+            </div>
+        </div>
+        <div id="infoBlock">
+            <div class="box" id="isReading">
+                <h3>{{user.username}} is Reading</h3>
+                <div class="items">
+                    {%for book in recommended%}
+                    <li>
+                        <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
+                    </li>
+                    {%endfor%}
+                </div>
+            </div>
+            <div class="box" id="recommends">
+                <h3>{{user.username}} recommends</h3>
+                <div class="items">
+                    {%for book in reading%}
+                    <li>
+                        <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
+                    </li>
+                    {%endfor%}
+                </div>
+            </div>
+            <h4>loves level 8</h4>
         </div>
     </div>
-    <div class="sWig">
-        <h4>{{user.username}} is reading</h4>
-        <div id="pBooksBlock">
-        {%for book in reading%}
-            <li>
-                <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
-            </li>
-        {%endfor%}
-        </div>
-    </div>
 </div>
-
 {% endblock %}

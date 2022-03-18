@@ -1,0 +1,18 @@
+{% extends 'libnav/base.html' %}
+
+{% block title_block %}
+    Edit Profile
+{% endblock %}
+
+{% block body_block %}
+<h1>Edit Profile</h1>
+<form id="profile_form" method="post" action="{% url 'libnav:edit profile' %}">
+    {% csrf_token %}
+    Image: <input type = "image" name = "profile picture"/>
+    <br />
+    Website: <input type="text" name="website" value="website" size="50"/>
+    <br />
+    description: <input type="text" name="description" value="description" size="1000"/>
+    <input type="submit" value="save" />
+</form>
+{% endblock %}
