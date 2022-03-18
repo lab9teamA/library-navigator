@@ -1,22 +1,11 @@
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext("2d");
+var canvas;
+var canvasHeight;
+var canvasWidth;
+var context;
+var mapSprite;
+var friendSprite;
+var randomSprite;
 
-//const xhttp = new XMLHttpRequest();
-//xhttp.onreadystatechange = function () {
-        // console.log(this.responseText);
-  //      if (this.readyState === 4 && this.status === 200) {
-    //        document.getElementById("map").innerHTML = this.responseText;
-      //  }
-//};
-//xhttp.open("GET", "http://localhost:8000/libnav/put/", true);
-//xhttp.send();
-
-var floornum = sessionStorage.getItem("floornum");
-var floorimg = sessionStorage.getItem("floorimg");
-
-// Map sprite
-var mapSprite = new Image();
-mapSprite.src = floorimg;
 
 var friendSprite = new Image();
 friendSprite.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/1504px-Map_pin_icon_green.svg.png"
@@ -34,7 +23,29 @@ var Marker = function () {
 
 var Markers = new Array();
 
-var mouseClicked = function (mouse) {
+
+function drawMap() {
+    context.clearRect(0,0,canvasWidth,canvasHeight);
+
+    var floornum = sessionStorage.getItem("floornum");
+    var floorimg = sessionStorage.getItem("floorimg");
+    var mediaUrl = sessionStorage.getItem("mediaUrl");
+    var src = mediaUrl + "floorplans/" + floorimg;
+    console.log(src)
+
+    // Map sprite
+    var mapSprite = new Image();
+    mapSprite.src = mediaUrl + "floorplans/" + floorimg;
+    // Draw map
+    mapSprite.onload = function() {
+        context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
+    };
+
+    // draw other peoples markers on this floor
+}
+
+
+function mouseClicked (mouse) {
 
     
     // Get current mouse coords
@@ -47,9 +58,9 @@ var mouseClicked = function (mouse) {
     var m = new Marker();
     m.XPos = mouseXPos - (m.Width / 2);
     m.YPos = mouseYPos - m.Height;
+    console.log(context);
 
-    context.clearRect(0,0,700,700);
-    window.onload();
+    drawMap();
 
     if (window.confirm("Make marker public?")){
     
@@ -62,7 +73,13 @@ var mouseClicked = function (mouse) {
    		m.YPos = mouseYPos - m.Height;
     
    		// Draw marker
-    	context.drawImage(markerSprite, m.XPos, m.YPos, m.Width, m.Height);
+        console.log(mouse);
+        console.log(m.XPos, m.YPos, m.Width, m.Height);
+        markerSprite.onload = function() {
+            context.drawImage(markerSprite, m.XPos, m.YPos, m.Width, m.Height);
+        };
+        console.log(m);
+        console.log(context);
 
     }else{
     
@@ -75,7 +92,9 @@ var mouseClicked = function (mouse) {
    		m.YPos = mouseYPos - m.Height;
     
    		// Draw marker
-    	context.drawImage(markerSprite, m.XPos, m.YPos, m.Width, m.Height);
+        markerSprite.onload = function() {
+            context.drawImage(markerSprite, m.XPos, m.YPos, m.Width, m.Height);
+        };
     
     }
 
@@ -89,19 +108,34 @@ var mouseClicked = function (mouse) {
 }
 
 
-// Add mouse click event listener to canvas
-canvas.addEventListener("mousedown", mouseClicked, false);
 
-var firstLoad = function () {
-    context.font = "15px Georgia";
-    context.textAlign = "center";
-}
-
-firstLoad();
 
 window.onload = function () {
-    // Draw map
-    context.drawImage(mapSprite, 0, 0, 800, 800);
+    canvas = document.getElementById('canvas');
+    context = canvas.getContext("2d");
+    context.font = "15px Georgia";
+    context.textAlign = "center";
+    // Add mouse click event listener to canvas
+    canvas.addEventListener("mousedown", mouseClicked, false);
+
+    // get height and width for canvas
+    var containerDiv = document.getElementById("mainbody")
+    canvasHeight = containerDiv.offsetHeight;
+    canvasWidth = containerDiv.offsetWidth;
+    canvas.height = canvasHeight;
+    canvas.width = canvasWidth;
+    //const xhttp = new XMLHttpRequest();
+    //xhttp.onreadystatechange = function () {
+            // console.log(this.responseText);
+      //      if (this.readyState === 4 && this.status === 200) {
+        //        document.getElementById("map").innerHTML = this.responseText;
+          //  }
+    //};
+    //xhttp.open("GET", "http://localhost:8000/libnav/put/", true);
+    //xhttp.send();
+
+    drawMap();
+
     //for(let i=0;i<Markers[1].length;i++){
     //    context.drawImage(friendSprite, Markers[1][i].x,Markers[1][i].y,20,20);
     //}

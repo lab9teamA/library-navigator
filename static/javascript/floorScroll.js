@@ -45,7 +45,6 @@ function updateImage(new_floor) {
     xhttp.onreadystatechange = function () {
         // console.log(this.responseText);
         if (this.readyState === 4 && this.status === 200) {
-            console.log(this.responseText);
             let floor = JSON.parse(this.responseText);
             updatePage(floor);
         }
@@ -56,12 +55,10 @@ function updateImage(new_floor) {
 
 
 function updatePage(floor) {
-    let floor_div = document.getElementById("imageLoc");
-    console.log(floor_div.children);
-    floor_div.children[0].src = floor.mediaUrl + "floorplans/" + floor.mapName;
-    floor_div.children[0].alt = "Level " + floor.number + " Floorplan";
+    sessionStorage.setItem("mediaUrl", floor.mediaUrl)
     sessionStorage.setItem("floornum", floor.number);
     sessionStorage.setItem("floorimg", floor.mapName);
+    drawMap();
 }
 
 
