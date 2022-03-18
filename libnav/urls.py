@@ -12,5 +12,8 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('put/', views.put, name='put'),
-    path('test/', views.testPage, name='test')
+    path('test/', views.testPage, name='test'),
+    path('send_friend_request/<username>/', views.send_friend_request, name = 'send friend request'),
+    path('accept_friend_request/<int:requestID>/', views.accept_friend_request, name = 'accept friend request'),
+    path('delete_friend_request/<int:requestID>/', views.delete_friend_request, name = 'delete friend request'),
 ]
