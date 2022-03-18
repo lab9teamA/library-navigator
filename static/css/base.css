@@ -238,7 +238,7 @@ body {
     border: 1px solid grey;
 }
 
-.arrow-down {
+#arrow-down {
     width: 0;
     height: 0;
     border-left: 20px solid transparent;
@@ -247,7 +247,7 @@ body {
     border-top: 20px solid #f00;
 }
 
-.arrow-up {
+#arrow-up {
     width: 0;
     height: 0;
     border-left: 20px solid transparent;

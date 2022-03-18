@@ -9,6 +9,7 @@ from libnav.models import Book, Bookcase, Floor, Subject, UserProfile
 # from libnav.forms import
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from library_navigator.settings import MEDIA_URL
 
 
 def home(request):
@@ -72,7 +73,7 @@ def map(request, floor_number):
 
 def updateMap(request, floor_number):
     floor = Floor.objects.get(number=floor_number)
-    return HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number}))
+    return HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
 
 def book(request, isbn):
     context_dict ={}

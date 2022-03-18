@@ -13,11 +13,11 @@ function genList() {
     ul.innerHTML = "";
 
     const upA = document.createElement("li");
-    upA.className = "arrow-up";
+    upA.id = "arrow-up";
     upA.onclick = onArrowUp;
 
     const downA = document.createElement("li");
-    downA.className = "arrow-down";
+    downA.id = "arrow-down";
     downA.onclick = onArrowDown;
 
 
@@ -47,7 +47,7 @@ function updateImage(new_floor) {
         if (this.readyState === 4 && this.status === 200) {
             console.log(this.responseText);
             let floor = JSON.parse(this.responseText);
-            updatePage(new_floor, floor.mapName);
+            updatePage(floor);
         }
     };
     xhttp.open("GET", url, true);
@@ -55,11 +55,13 @@ function updateImage(new_floor) {
 }
 
 
-function updatePage(floor_number, floor_image) {
+function updatePage(floor) {
     let floor_div = document.getElementById("imageLoc");
     console.log(floor_div.children);
-    floor_div.children[0].src = "../../../media/floorplans/" + floor_image;
-    floor_div.children[0].alt = "Level " + floor_number + " Floorplan";
+    floor_div.children[0].src = floor.mediaUrl + "floorplans/" + floor.mapName;
+    floor_div.children[0].alt = "Level " + floor.number + " Floorplan";
+    sessionStorage.setItem("floornum", floor.number);
+    sessionStorage.setItem("floorimg", floor.mapName);
 }
 
 

@@ -1,4 +1,4 @@
-var canvas = document.getElementById('Canvas');
+var canvas = document.getElementById('canvas');
 var context = canvas.getContext("2d");
 
 //const xhttp = new XMLHttpRequest();
