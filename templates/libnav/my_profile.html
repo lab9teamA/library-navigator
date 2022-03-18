@@ -9,68 +9,69 @@
 {% endblock %}
 
 {% block body_block %}
-
-<div id="pageWrapper">
-    <div id="bProfile">
-        <div class="content">
-            {% if userProfile.picture %}
-            <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}/{{userProfile.picture.path}}">
-            {% else %}
-            <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}profile_images/NONE.jpg">
-            {% endif %}
-            <h4>
-                {% if user %}
-                {{ user.username }}
+<div id="mainProfile">
+    <div id="pageWrapper">
+        <div id="bProfile">
+            <div class="content">
+                {% if userProfile.picture %}
+                <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}/{{userProfile.picture.path}}">
                 {% else %}
-                Unknown profile
+                <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}profile_images/NONE.jpg">
                 {% endif %}
-            </h4>
-            <a href="">Edit profile</a>
-        </div>
-    </div>
-    <div id="mFriends">
-        <div class="content">
-            <h3>your friends...</h3>
-            <div id="cFriendsInd">
-                {% if friends %}
-                {%for friend in friends%}
-                <li>
-                    <a href="{% url 'libnav:profile' friend.username %}">{{friend.username}}</a>
-                </li>
-                {%endfor%}
-                {% else %}
-                <p>No friends</p>
-                {% endif %}
+                <h4>
+                    {% if user %}
+                    {{ user.username }}
+                    {% else %}
+                    Unknown profile
+                    {% endif %}
+                </h4>
+                <a href="">Edit profile</a>
             </div>
         </div>
-    </div>
-    <div id="sidebar">
-        <div class="sWig">
-            <h4>your checked out books</h4>
-            <div class="sWigBlock">
-                {% if checkoutBooks %}
-                {%for book in checkoutBooks%}
-                <li>
-                    <a href="{% url 'libnav:book' book.title %}">{{book.title}}</a>
-                </li>
-                {%endfor%}
-                {% else %}
-                <p>No checked out books</p>
-                {% endif %}
+        <div id="mFriends">
+            <div class="content">
+                <h3>your friends...</h3>
+                <div id="cFriendsInd">
+                    {% if friends %}
+                    {%for friend in friends%}
+                    <li>
+                        <a href="{% url 'libnav:profile' friend.username %}">{{friend.username}}</a>
+                    </li>
+                    {%endfor%}
+                    {% else %}
+                    <p>No friends</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
-        <div class="sWig">
-            <h4>your recommendations</h4>
-            <div class="sWigBlock">
-                {% if recommendedBooks %}
-                {%for book in recommendedBooks%}
-                <li>
-                    <a href="{% url 'libnav:book' book.title %}">{{book.title}}</a>
-                </li>
-                {%endfor%}
-                {% else %}
-                <p>No recommendations</p>
-                {% endif %}
+        <div id="sidebar">
+            <div class="sWig">
+                <h4>your checked out books</h4>
+                <div class="sWigBlock">
+                    {% if checkoutBooks %}
+                    {%for book in checkoutBooks%}
+                    <li>
+                        <a href="{% url 'libnav:book' book.title %}">{{book.title}}</a>
+                    </li>
+                    {%endfor%}
+                    {% else %}
+                    <p>No checked out books</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="sWig">
+                <h4>your recommendations</h4>
+                <div class="sWigBlock">
+                    {% if recommendedBooks %}
+                    {%for book in recommendedBooks%}
+                    <li>
+                        <a href="{% url 'libnav:book' book.title %}">{{book.title}}</a>
+                    </li>
+                    {%endfor%}
+                    {% else %}
+                    <p>No recommendations</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

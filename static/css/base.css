@@ -313,6 +313,10 @@ body {
     flex-direction: column;
 }
 
+#bodyBlock #mainProfile #pageWrapper #mFriends .content img {
+    width: 150px;
+    height: 150px;
+}
 
 #bodyBlock #mainProfile #pageWrapper .sWig {
     height: 40%;
@@ -367,10 +371,15 @@ body {
     padding: 0 3% 0 0;
 }
 
+
 #bodyBlock #viewProfile #pageWrapper #bProfile .content {
     height: 100%;
 }
 
+#bodyBlock #viewProfile #pageWrapper #bProfile .content img {
+    width: 150px;
+    height: 150px;
+}
 
 #bodyBlock #viewProfile #pageWrapper #infoBlock {
     display: flex;
