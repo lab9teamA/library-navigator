@@ -27,7 +27,9 @@
                     {% endif %}
                 </h4>
                 <a href="{{userProfile.website}}">{{userProfile.website}}</a>
-                <a href="">Add friend</a>
+                {% if notFriends %}
+                <a href="{% url 'libnav:send friend request' user.username %}">send friend request</a>
+                {%endif%}
                 <!--    Not sure if this is necessary -->
                 <!--    <br />-->
                 <!--    <div id = "mainbodyPara">-->
