@@ -144,26 +144,28 @@ def user_logout(request):
 
 @login_required
 def api_get_loc(request):
-    username = request.user.username
+    username = request.user.id
 
-    user = User.objects.get(username=request.user.username)
+    user = User.objects.get(id=request.user.id)
     userProfile = UserProfile.objects.get(user=user)
 
-    user_loc = locations.get_all_by_users([username])
+    a = list()
+    a.append(user)
+    user_loc = locations.get_all_by_users(a)
 
-    friends = [x.username for x in userProfile.friends.all()]
+    friends = [x.id for x in userProfile.friends.all()]
     friends_locations = locations.get_all_by_users(friends)
 
     public_loc = [x for x in locations.get_all_public_locations() if x not in friends_locations]
     if user_loc in public_loc:
         public_loc.remove(user_loc)
 
-    response = [user_loc,friends_locations,public_loc]
-    return JsonResponse(locations.get_all_public_locations())
+    response = {"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc}
+    return JsonResponse(response)
 
 @login_required
 def api_set_loc(request):
-    l = location(user =  request.user.username,
+    l = location(user =  request.user.id,
              x = request.POST["x"],
              y = request.POST["y"],
              floor = request.POST["floor"],

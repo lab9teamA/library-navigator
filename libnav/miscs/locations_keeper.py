@@ -9,20 +9,21 @@ class location:
 
 
 class locations:
-    __locmap = dict()
+    locmap = dict()
+    @staticmethod
+    def add(loc: location):
+        locations.locmap[loc.user] = loc
+    @staticmethod
+    def remove(loc: location):
+        locations.locmap.pop(loc)
 
-    def add(self, loc: location):
-        self.__locmap[location.user] = loc
-
-    def remove(self, loc: location):
-        self.__locmap.pop(loc)
-
-    def get_all_by_users(self, user_list: list):
+    @staticmethod
+    def get_all_by_users(user_list):
         response = []
         for user in user_list:
-            if user in self.__locmap:
-                response.append(self.__locmap[user])
+            if user in locations.locmap:
+                response.append(locations.locmap[user])
         return response
-
-    def get_all_public_locations(self):
-        return [x for x in self.__locmap.items() if not x.private]
+    @staticmethod
+    def get_all_public_locations():
+        return [x for x in locations.locmap.items() if not x.private]
