@@ -19,5 +19,6 @@ urlpatterns = [
     path('accept_friend_request/<int:requestID>/', views.accept_friend_request, name = 'accept friend request'),
     path('delete_friend_request/<int:requestID>/', views.delete_friend_request, name = 'delete friend request'),
     path('edit_profile/', views.edit_profile, name = 'edit profile'),
-    path('updatemap/<floor_number>/', views.updateMap, name='updateMap')
+    path('updatemap/<floor_number>/', views.updateMap, name='updateMap'),
+    path('getcurrentfloor', views.getCurrentFloor, name='getCurrentFloor'),
 ]

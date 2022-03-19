@@ -2,9 +2,24 @@ let current_floor = 1;
 const nFloors = 12;
 
 $(document).ready(() => {
+    getCurrentFloor();
     updateImage(current_floor);
     genList();
 });
+
+
+function getCurrentFloor() {
+    let url = "http://127.0.0.1:8000/libnav/getcurrentfloor"
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let floor = JSON.parse(this.responseText);
+            current_floor = parseInt(floor.floor_number);
+        }
+    };
+    xhttp.open("GET", url, false);
+    xhttp.send();
+}
 
 
 function genList() {
@@ -49,7 +64,7 @@ function updateImage(new_floor) {
             updatePage(floor);
         }
     };
-    xhttp.open("GET", url, true);
+    xhttp.open("GET", url, false);
     xhttp.send();
 }
 

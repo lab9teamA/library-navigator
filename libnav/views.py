@@ -105,6 +105,9 @@ def edit_profile(request):
         context_dict = {'profile_form': UserProfileForm()}
         return render(request, 'libnav/edit_profile.html', context=context_dict)
 
+
+current_floor = 1
+
 def map(request, floor_number):
     context_dict ={}
     try:
@@ -116,11 +119,16 @@ def map(request, floor_number):
         context_dict['floor'] = None
         context_dict['books'] = None
     response = render(request, 'libnav/map.html', context = context_dict)
+    global current_floor
+    current_floor = floor_number
     return response
 
 def updateMap(request, floor_number):
     floor = Floor.objects.get(number=floor_number)
     return HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
+
+def getCurrentFloor(request):
+    return HttpResponse(json.dumps({"floor_number": current_floor}))
 
 def book(request, isbn):
     context_dict ={}
