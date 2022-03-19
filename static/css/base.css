@@ -506,3 +506,38 @@ body {
     height: 100%;
     background: var(--lightest-blue);
 }
+
+#floorList {
+    list-style-type: none;
+    text-align: center;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+#scrollBar {
+    position: absolute;
+    height: auto;
+    left: 50%;
+    top: 30%;
+    border: 1px solid grey;
+}
+
+#arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+
+    border-top: 20px solid #f00;
+}
+
+#arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+
+    border-bottom: 20px solid #f00;
+}
