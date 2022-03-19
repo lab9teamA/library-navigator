@@ -28,6 +28,8 @@
 	</div>
     <a href="{{userProfile.website}}">{{userProfile.website}}</a>
     <br />
+    <a href="{% url 'libnav:edit profile' %}">Edit Profile</a>
+    <br />
     <div id = "mainbodyPara">
         {{userProfile.description}}
     </div>

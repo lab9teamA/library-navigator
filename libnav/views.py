@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from libnav.models import Book, Bookcase, Floor, Subject, UserProfile, FriendRequest
 from libnav.forms import UserForm, UserProfileForm
-# from libnav.forms import
 from django.shortcuts import redirect
 from django.http import HttpResponse
 
@@ -82,19 +81,25 @@ def profile(request, username):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        image = request.POST.get('profile picture')
-        website = request.POST.get('website')
-        description = request.POST.get('description')
         current_user = request.user
-        try:
-            user_profile = UserProfile.get(user = current_user)
-            user_profile.image = image
-            user_profile.website = website
-            user_profile.description = description
-        except:
-            return HttpResponse("unable to update profile")
+        profile = UserProfile.objects.get(user = current_user)
+        profile_form = UserProfileForm(request.POST, request.FILES)
+        if profile_form.is_valid():
+            print(profile_form.cleaned_data)
+            data = profile_form.cleaned_data
+            if data['website']:
+                profile.website = data['website']
+            if data['description']:
+                profile.description = data['description']
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+            profile.save()
+            return redirect(reverse('libnav:profile', kwargs={'username': current_user.username}))
+        else:
+            print(profile_form.errors)
     else:
-        return render(request, 'libnav/edit_profile.html')
+        context_dict = {'profile_form': UserProfileForm()}
+        return render(request, 'libnav/edit_profile.html', context=context_dict)
 
 def map(request, floor_number):
     context_dict ={}
