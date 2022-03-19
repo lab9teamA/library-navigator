@@ -9,58 +9,85 @@
 {% endblock %}
 
 {% block body_block %}
-
-
-<div class="child" id="mainbody">
-    <h1>
-        {% if user %}
-            {{ user.username }}
-        {% else %}
-            Unknown profile
-        {% endif %}
-        </h1>
-    <div id = "imageProfile">
-        {% if userProfile.picture %}
-        <img src = "{{ MEDIA_URL }}/{{userProfile.picture.path}}" alt="{{user.username}}'s profile photo">
-		{% else %}
-		<img src = "{{ MEDIA_URL }}profile_images/NONE.jpg" alt="{{user.username}}'s profile photo">
-		{% endif %}
-	</div>
-    <a href="{{userProfile.website}}">{{userProfile.website}}</a>
-    <br />
-    <a href="{% url 'libnav:edit profile' %}">Edit Profile</a>
-    <br />
-    <div id = "mainbodyPara">
-        {{userProfile.description}}
-    </div>
-</div>
-<div class="child" id="sidebar">
-    {%if friends%}
-    <div class="sWig">
-        <h4>your friends</h4>
-        <div id="cFriendsInd">
-        {%for friend in friends%}
-            <li>
-                <a href="{% url 'libnav:profile' friend.username %}">{{friend.username}}</a>
-            </li>
-        {%endfor%}
+<div id="mainProfile">
+    <div id="pageWrapper">
+        <div id="bProfile">
+            <div class="content">
+                {% if userProfile.picture %}
+                <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}/{{userProfile.picture.path}}">
+                {% else %}
+                <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}profile_images/NONE.jpg">
+                {% endif %}
+                <h4>
+                    {% if user %}
+                    {{ user.username }}
+                    {% else %}
+                    Unknown profile
+                    {% endif %}
+                </h4>
+                <a href="">Edit profile</a>
+            </div>
+        </div>
+        <div id="mFriends">
+            <div class="content">
+                <h3>your friends...</h3>
+                <div id="cFriendsInd">
+                    {% if friends %}
+                    {%for friend in friends%}
+                    <li>
+                        <a href="{% url 'libnav:profile' friend.username %}">{{friend.username}}</a>
+                    </li>
+                    {%endfor%}
+                    {% else %}
+                    <p>No friends</p>
+                    {% endif %}
+                </div>
+            </div>
+            {%if requests%}
+            <div class="sWig">
+                <h4>friend requests</h4>
+                <div id="cFriendsInd">
+                    {%for request in requests %}
+                    <li>
+                        <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}</a>
+                        <a href="{% url 'libnav:accept friend request' request.id %}">accept</a>
+                        <a href="{% url 'libnav:delete friend request' request.id %}">delete</a>
+                    </li>
+                    {%endfor%}
+                </div>
+            </div>
+			{% endif %}
+        </div>
+        <div id="sidebar">
+            <div class="sWig">
+                <h4>your checked out books</h4>
+                <div class="sWigBlock">
+                    {% if checkoutBooks %}
+                    {%for book in checkoutBooks%}
+                    <li>
+                        <a href="{% url 'libnav:book' book.title %}">{{book.title}}</a>
+                    </li>
+                    {%endfor%}
+                    {% else %}
+                    <p>No checked out books</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="sWig">
+                <h4>your recommendations</h4>
+                <div class="sWigBlock">
+                    {% if recommendedBooks %}
+                    {%for book in recommendedBooks%}
+                    <li>
+                        <a href="{% url 'libnav:book' book.title %}">{{book.title}}</a>
+                    </li>
+                    {%endfor%}
+                    {% else %}
+                    <p>No recommendations</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
-    {% endif %}
-    {%if requests%}
-    <div class="sWig">
-        <h4>friend requests</h4>
-        <div id="cFriendsInd">
-        {%for request in requests %}
-            <li>
-                <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}</a>
-                <a href="{% url 'libnav:accept friend request' request.id %}">accept</a>
-                <a href="{% url 'libnav:delete friend request' request.id %}">delete</a>
-            </li>
-        {%endfor%}
-        </div>
-    </div>
-    {% endif %}
 </div>
-
 {% endblock %}

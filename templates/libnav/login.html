@@ -16,7 +16,7 @@
 </form>
 
 <h1>Register a new account</h1>
-<form id="login_form" method="post" action="{% url 'libnav:login' %}">
+<form id="login_form" method="post" action="{% url 'libnav:login' %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ user_form.as_p }}
 	{{ profile_form.as_p }}

@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 from libnav.models import Book, Bookcase, Floor, Subject, UserProfile, FriendRequest
 from libnav.forms import UserForm, UserProfileForm
 from django.shortcuts import redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+
+from libnav.miscs.locations_keeper import locations,location
 
 from django.http.response import JsonResponse
 
@@ -129,9 +131,9 @@ def book(request, isbn):
 def user_login(request):
     if request.user.is_authenticated:
         return redirect(reverse('libnav:profile', kwargs={'username': request.user.username}))
-    
+
     if request.method == 'POST':
-        # login form 
+        # login form
         if request.POST.get('submit') == 'login':
             username = request.POST.get('username')
             password = request.POST.get('password')
@@ -141,38 +143,43 @@ def user_login(request):
             if user:
                 if user.is_active:
                     login(request, user)
+                    user_id=UserProfile.objects.get(user=User.objects.get(username=username)).user_id
+                    print(user_id)
+                    request.session['user_id'] = UserProfile.objects.get(user=User.objects.get(username=username)).user_id
+                    print(request.session['user_id'])
                     return redirect(reverse('libnav:home'))
                 else:
                     return HttpResponse("Your LIBNAV account is disabled.")
             else:
                 print(f"Invalid login details: {username}, {password}")
                 return HttpResponse("Invalid login details supplied.")
-        # register form 
+        # register form
         elif request.POST.get('submit') == 'register':
             user_form = UserForm(request.POST)
             profile_form = UserProfileForm(request.POST)
-            
+
             if user_form.is_valid() and profile_form.is_valid():
                 user = user_form.save()
                 user.set_password(user.password)
                 user.save()
                 profile = profile_form.save(commit=False)
-                profile.user = user 
-                
+                profile.user = user
+
                 if 'picture' in request.FILES:
                     profile.picture = request.FILES['picture']
-                    
+
                 profile.save()
-                
+
                 login(request, user)
+                request.session['user_id'] = profile.user_id
                 return redirect(reverse('libnav:profile', kwargs={'username': user.username}))
             else:
                 print(user_form.errors, profile_form.errors)
-    # not post          
+    # not post
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-        
+
     return render(request,
         'libnav/login.html',
         context = {
@@ -182,9 +189,44 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
+    try:
+        del request.session['user_id']
+    except KeyError:
+        pass
     return redirect(reverse('libnav:home'))
 
 @login_required
+def api_get_loc(request):
+    username = request.user.id
+
+    user = User.objects.get(id=request.user.id)
+    userProfile = UserProfile.objects.get(user=user)
+
+    a = list()
+    a.append(user)
+    user_loc = locations.get_all_by_users(a)
+
+    friends = [x.id for x in userProfile.friends.all()]
+    friends_locations = locations.get_all_by_users(friends)
+
+    public_loc = [x for x in locations.get_all_public_locations() if x not in friends_locations]
+    if user_loc in public_loc:
+        public_loc.remove(user_loc)
+
+    response = {"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc}
+    return JsonResponse(response)
+
+@login_required
+def api_set_loc(request):
+    l = location(user =  request.user.id,
+             x = request.POST["x"],
+             y = request.POST["y"],
+             floor = request.POST["floor"],
+             private = request.POST["private"])
+    locations.add(l)
+
+    return HttpResponse()
+  
 def send_friend_request(request, username):
     from_user = request.user
     to_user = User.objects.get(username = username)
