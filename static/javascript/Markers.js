@@ -39,9 +39,8 @@ function drawMap() {
 
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        console.log(this.responseText);
         if (this.readyState === 4 && this.status === 200) {
-            //let locmap = JSON.parse(this.responseText);
+            let locmap = JSON.parse(this.responseText);
             console.log(this.responseText);
         }
     };

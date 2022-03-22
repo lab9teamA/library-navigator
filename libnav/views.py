@@ -238,9 +238,9 @@ def api_get_loc(request):
     if user_loc in public_loc:
         public_loc.remove(user_loc)
 
-    json_data = json.dumps({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
-    response = HttpResponse(json_data)
+    response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
     response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Headers"] = "*"
     return response
 
 @login_required
