@@ -77,7 +77,7 @@ def profile(request, username):
             context_dict["recommended"] = None
             context_dict["reading"] = None
             context_dict['notFriends'] = True
-        
+
         response = render(request, 'libnav/profile.html', context= context_dict)
     #if logged in return myprofile.html
     return response
@@ -125,10 +125,14 @@ def map(request, floor_number):
 
 def updateMap(request, floor_number):
     floor = Floor.objects.get(number=floor_number)
-    return HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
+    response = HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 def getCurrentFloor(request):
-    return HttpResponse(json.dumps({"floor_number": current_floor}))
+    response = HttpResponse(json.dumps({"floor_number": current_floor}))
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 def book(request, isbn):
     context_dict ={}
@@ -240,7 +244,7 @@ def api_set_loc(request):
     locations.add(l)
 
     return HttpResponse()
-  
+
 def send_friend_request(request, username):
     from_user = request.user
     to_user = User.objects.get(username = username)
@@ -262,7 +266,7 @@ def accept_friend_request(request, requestID):
         return HttpResponse('friend request accepted')
     else:
         return HttpResponse('friend request not accepted')
-        
+
 @login_required
 def delete_friend_request(request, requestID):
     friend_request = FriendRequest.objects.get(id = requestID)
