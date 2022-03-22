@@ -37,25 +37,27 @@ function drawMap() {
         context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
     };
 
-    //const xhttp = new XMLHttpRequest();
-    //xhttp.onreadystatechange = function () {
-        //console.log(this.responseText);
-        //if (this.readyState === 4 && this.status === 200) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        console.log(this.responseText);
+        if (this.readyState === 4 && this.status === 200) {
             //let locmap = JSON.parse(this.responseText);
-        //}
-    //};
-    //xhttp.open("GET", "http://localhost:8000/libnav/get-loc/", true);
-    //xhttp.send();
+            console.log(this.responseText);
+        }
+    };
+    xhttp.open("GET", "http://localhost:8000/libnav/api/get-loc/", true);
+    xhttp.send();
 
-    // draw other peoples markers on this floor
-    //mapSprite.onload = function(){
-        //for(let i=0; i<locmap["friends"].length;i++){
-            //context.drawImage(friendSprite, locmap["friends"][i].x, locmap["friends"][i].y,20,20);
-        //}
-        //for(let i=0; i<locmap["others"].length;i++){
-            //context.drawImage(randomSprite, locmap["others"][i].x, locmap["others"][i].y,20,20);
-        //}
-    //}
+
+    //draw other peoples markers on this floor
+    // mapSprite.onload = function(){
+    //     for(let i=0; i<locmap["friends"].length;i++){
+    //         context.drawImage(friendSprite, locmap["friends"][i].x, locmap["friends"][i].y,20,20);
+    //     }
+    //     for(let i=0; i<locmap["others"].length;i++){
+    //         context.drawImage(randomSprite, locmap["others"][i].x, locmap["others"][i].y,20,20);
+    //     }
+    // }
 
     
 }
