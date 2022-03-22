@@ -17,6 +17,7 @@ function getCurrentFloor() {
         }
     };
     xhttp.open("GET", url, false);
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.send();
 }
 
@@ -64,6 +65,7 @@ function updateImage(new_floor) {
         }
     };
     xhttp.open("GET", url, false);
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.send();
 }
 
