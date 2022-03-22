@@ -2,6 +2,7 @@ import json
 from multiprocessing import context
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -68,16 +69,16 @@ def profile(request, username):
             context_dict["recommended"] = recommended
             reading = userProfile.isReading.all()
             context_dict["reading"] = reading
-            if current_user.is_authenticated:
-                if userProfile.friends.filter(user = current_user).exists():
-                    context_dict['notFriends'] = False
-                else:
-                    context_dict['notFriends'] = True
+            
         except:
             context_dict["recommended"] = None
             context_dict["reading"] = None
-            context_dict['notFriends'] = True
-        
+        if current_user.is_authenticated:
+            if userProfile.friends.filter(username = current_user).exists():
+                context_dict['notFriends'] = False
+            else:
+                context_dict['notFriends'] = True
+    
         response = render(request, 'libnav/profile.html', context= context_dict)
     #if logged in return myprofile.html
     return response
@@ -246,9 +247,10 @@ def send_friend_request(request, username):
     to_user = User.objects.get(username = username)
     friend_request, created = FriendRequest.objects.get_or_create(from_user = from_user, to_user = to_user)
     if created:
-        return HttpResponse('friend request sent')
+        messages.info(request, 'friend request sent successfully!')
     else:
-        return HttpResponse('friend request was already sent')
+        messages.info(request, 'friend request was already sent')
+    return redirect(reverse('libnav:profile',kwargs={'username':username}))
 
 @login_required
 def accept_friend_request(request, requestID):
@@ -259,15 +261,37 @@ def accept_friend_request(request, requestID):
         to_user.friends.add(friend_request.from_user)
         from_user.friends.add(friend_request.to_user)
         friend_request.delete()
-        return HttpResponse('friend request accepted')
+        messages.info(request, 'friend request accepted')
     else:
-        return HttpResponse('friend request not accepted')
+        messages.info(request, 'friend request not accepted')
+    return redirect(reverse('libnav:profile',kwargs={'username':to_user.user.username}))
         
 @login_required
 def delete_friend_request(request, requestID):
     friend_request = FriendRequest.objects.get(id = requestID)
     if friend_request.to_user == request.user:
         friend_request.delete()
-        return HttpResponse('friend request deleted')
+        messages.info(request, 'friend request deleted')
     else:
-        return HttpResponse('friend request not deleted')
+        messages.info(request, 'friend request not deleted')
+    return redirect(reverse('libnav:profile',kwargs={'username':friend_request.to_user.username}))
+
+@login_required
+def delete_friend(request, username):
+    current_user = request.user
+    deleted = User.objects.get(username = username)
+    UserProfile.objects.get(user = current_user).friends.remove(deleted)
+    UserProfile.objects.get(user = deleted).friends.remove(current_user)
+    messages.info(request, 'friend deleted')
+    return redirect(reverse('libnav:profile',kwargs={'username':username}))
+
+
+def search(request):
+    term = request.GET['search']
+    
+    context_dict ={'term':term,
+        'books': Book.objects.filter(title__contains = term),
+        'users': User.objects.filter(username__contains = term),
+
+        }
+    return render(request, 'libnav/search.html', context=context_dict)
