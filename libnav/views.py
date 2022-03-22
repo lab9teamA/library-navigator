@@ -204,13 +204,6 @@ def user_login(request):
             'user_form': user_form,
             'profile_form': profile_form,})
 
-
-def search(request):
-    return None
-
-def delete_friend(request):
-    return None
-
 @login_required
 def user_logout(request):
     logout(request)
@@ -258,9 +251,10 @@ def send_friend_request(request, username):
     to_user = User.objects.get(username = username)
     friend_request, created = FriendRequest.objects.get_or_create(from_user = from_user, to_user = to_user)
     if created:
-        return HttpResponse('friend request sent')
+        messages.info(request, 'friend request sent successfully!')
     else:
-        return HttpResponse('friend request was already sent')
+        messages.info(request, 'friend request was already sent')
+    return redirect(reverse('libnav:profile',kwargs={'username':username}))
 
 @login_required
 def accept_friend_request(request, requestID):
@@ -271,15 +265,36 @@ def accept_friend_request(request, requestID):
         to_user.friends.add(friend_request.from_user)
         from_user.friends.add(friend_request.to_user)
         friend_request.delete()
-        return HttpResponse('friend request accepted')
+        messages.info(request, 'friend request accepted')
     else:
-        return HttpResponse('friend request not accepted')
+        messages.info(request, 'friend request not accepted')
+    return redirect(reverse('libnav:profile',kwargs={'username':to_user.user.username}))
         
 @login_required
 def delete_friend_request(request, requestID):
     friend_request = FriendRequest.objects.get(id = requestID)
     if friend_request.to_user == request.user:
         friend_request.delete()
-        return HttpResponse('friend request deleted')
+        messages.info(request, 'friend request deleted')
     else:
-        return HttpResponse('friend request not deleted')
+        messages.info(request, 'friend request not deleted')
+    return redirect(reverse('libnav:profile',kwargs={'username':friend_request.to_user.username}))
+
+@login_required
+def delete_friend(request, username):
+    current_user = request.user
+    deleted = User.objects.get(username = username)
+    UserProfile.objects.get(user = current_user).friends.remove(deleted)
+    UserProfile.objects.get(user = deleted).friends.remove(current_user)
+    messages.info(request, 'friend deleted')
+    return redirect(reverse('libnav:profile',kwargs={'username':username}))
+
+def search(request):
+    term = request.GET['search']
+    
+    context_dict ={'term':term,
+        'books': Book.objects.filter(title__contains = term),
+        'users': User.objects.filter(username__contains = term),
+
+        }
+    return render(request, 'libnav/search.html', context=context_dict)
