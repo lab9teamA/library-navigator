@@ -4,7 +4,7 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!--        <script src="{% static 'javascript/friendsCurrentLevelTest.js' %}"></script>-->
-
+    <script src="../../../static/javascript/floorScroll.js"></script>
     <link href="../../../static/css/base.css" rel="stylesheet">
     <!--        <link rel="stylesheet" href="{% static 'css/base.css' %}">-->
     <title>Test Page</title>
@@ -26,12 +26,15 @@
     <div id="bodyBlock">
         <div class="main">
             <div class="child" id="mainbody">
-                <div id="imageLoc">
-                    <!--Will be dynamically loaded-->
-                    <!--				<img src="{{ MEDIA_URL }}floorplans/Level1.jpg">-->
-                </div>
-                <div id="mainbodyPara">
-                    <p>on this floor? <a href="">check in</a> so others can see</p>
+                <div class="mainWrapper">
+                    <div id="scrollBar">
+                        <ul id="floorList">
+
+                        </ul>
+                    </div>
+                    <div id="imageLoc">
+                        <canvas id="canvas"></canvas>
+                    </div>
                 </div>
             </div>
 

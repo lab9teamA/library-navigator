@@ -13,22 +13,24 @@
 {% block body_block %}
 {% if floor %}
 <div class="main">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script javascriptsrc="{% static "
+    /Markers.js" %}"></script>
+    <script javascriptsrc="{% static "
+    /floorScroll.js" %}"></script>
     <div class="child" id="mainbody">
-        <div id="imageLoc">
-            <canvas id="canvas"></canvas>
+        <div class="mainWrapper">
+            <div id="scrollBar">
+                <ul id="floorList">
+
+                </ul>
+            </div>
+            <div id="imageLoc">
+                <canvas id="canvas"></canvas>
+            </div>
         </div>
     </div>
     <div class="child" id="sidebar">
-        {% block map_floors_block %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="{% static "javascript/Markers.js" %}"></script>
-        <script src="{% static "javascript/floorScroll.js" %}"></script>
-        <div id="scrollBar">
-            <ul id="floorList">
-
-            </ul>
-        </div>
-    {% endblock %}
     <div id="busyness">
         <h5>Busyness</h5>
         <!--Will be dynamically loaded-->
