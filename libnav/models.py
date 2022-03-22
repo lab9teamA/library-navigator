@@ -24,7 +24,7 @@ class Bookcase(models.Model):
 
 
 class Book(models.Model):
-    ISBN = models.CharField(max_length=13)
+    ISBN = models.CharField(max_length=13, primary_key=True, unique=True)
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     coverImage = models.ImageField(upload_to='book_cover_images',null=True)
