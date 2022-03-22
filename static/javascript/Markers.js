@@ -27,9 +27,6 @@ var Markers = new Array();
 function drawMap() {
     context.clearRect(0,0,canvasWidth,canvasHeight);
 
-    var floornum = sessionStorage.getItem("floornum");
-    var floorimg = sessionStorage.getItem("floorimg");
-    var mediaUrl = sessionStorage.getItem("mediaUrl");
     var src = mediaUrl + "floorplans/" + floorimg;
     console.log(src)
 

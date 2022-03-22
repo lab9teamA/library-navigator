@@ -112,7 +112,9 @@ body {
     font-size: 15px;
 }
 
-
+.main {
+    height: 100%;
+}
 
 .main .child {
 	margin: 10px;
