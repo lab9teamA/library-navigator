@@ -6,6 +6,7 @@ $(document).ready(() => {
     getCurrentFloor();
     updateImage(current_floor);
     genList();
+    main();
 });
 
 
