@@ -28,6 +28,12 @@ def populate():
         {"number": 4, "mapname": "level4alpha.png"},
         {"number": 5, "mapname": "level5alpha.png"},
         {"number": 6, "mapname": "level6alpha.png"},
+        {"number": 7, "mapname": "level7alpha.png"},
+        {"number": 8, "mapname": "level8alpha.png"},
+        {"number": 9, "mapname": "level9alpha.png"},
+        {"number": 10, "mapname": "level10alpha.png"},
+        {"number": 11, "mapname": "level11alpha.png"},
+        {"number": 12, "mapname": "level12alpha.png"},
     ]
     bookcases = [
         {"id": "abc-ddd-lll", "floor":1},
