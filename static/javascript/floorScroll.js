@@ -1,4 +1,3 @@
-let current_floor = 1;
 const nFloors = 12;
 
 $(document).ready(() => {
@@ -70,9 +69,9 @@ function updateImage(new_floor) {
 
 
 function updatePage(floor) {
-    sessionStorage.setItem("mediaUrl", floor.mediaUrl)
-    sessionStorage.setItem("floornum", floor.number);
-    sessionStorage.setItem("floorimg", floor.mapName);
+    floorimg = floor.mapName;
+    floornum = floor.number;
+    mediaUrl = floor.mediaUrl
     drawMap();
 }
 
