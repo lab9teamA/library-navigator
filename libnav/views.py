@@ -238,7 +238,8 @@ def api_get_loc(request):
     if user_loc in public_loc:
         public_loc.remove(user_loc)
 
-    response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
+    json_data = json.dumps({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
+    response = HttpResponse(json_data)
     response["Access-Control-Allow-Origin"] = "*"
     return response
 
