@@ -31,7 +31,6 @@ function drawMap() {
     var floorimg = sessionStorage.getItem("floorimg");
     var mediaUrl = sessionStorage.getItem("mediaUrl");
     var src = mediaUrl + "floorplans/" + floorimg;
-    console.log(src)
 
     // Map sprite
     var mapSprite = new Image();
@@ -41,7 +40,27 @@ function drawMap() {
         context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
     };
 
+    //const xhttp = new XMLHttpRequest();
+    //xhttp.onreadystatechange = function () {
+        //console.log(this.responseText);
+        //if (this.readyState === 4 && this.status === 200) {
+            //let locmap = JSON.parse(this.responseText);
+        //}
+    //};
+    //xhttp.open("GET", "http://localhost:8000/libnav/get-loc/", true);
+    //xhttp.send();
+
     // draw other peoples markers on this floor
+    //mapSprite.onload = function(){
+        //for(let i=0; i<locmap["friends"].length;i++){
+            //context.drawImage(friendSprite, locmap["friends"][i].x, locmap["friends"][i].y,20,20);
+        //}
+        //for(let i=0; i<locmap["others"].length;i++){
+            //context.drawImage(randomSprite, locmap["others"][i].x, locmap["others"][i].y,20,20);
+        //}
+    //}
+
+    
 }
 
 
@@ -98,13 +117,16 @@ function mouseClicked (mouse) {
     
     }
 
-    //const responseFromRequest = await fetch("https://silicondales.com/wp-content/uploads/2018/11/incognito-symbol-large.jpg", {
-      //      method: 'POST',
-       //     body: JSON.stringify({x: m.XPos, y: m.YPos})
-        //}).then((response) => response.json());
-    
-    
-    //Markers.push(m);
+    //const xhttp = new XMLHttpRequest();
+    //xhttp.onreadystatechange = function () {
+        //console.log(this.responseText);
+        //if (this.readyState === 4 && this.status === 200) {
+            //JSON.stringify(m.XPos,m.YPos);
+        //}
+    //};
+    //xhttp.open("POST", "http://localhost:8000/libnav/get-loc/", true);
+    //xhttp.send();
+
 }
 
 
@@ -124,22 +146,7 @@ window.onload = function () {
     canvasWidth = containerDiv.offsetWidth;
     canvas.height = canvasHeight;
     canvas.width = canvasWidth;
-    //const xhttp = new XMLHttpRequest();
-    //xhttp.onreadystatechange = function () {
-            // console.log(this.responseText);
-      //      if (this.readyState === 4 && this.status === 200) {
-        //        document.getElementById("map").innerHTML = this.responseText;
-          //  }
-    //};
-    //xhttp.open("GET", "http://localhost:8000/libnav/put/", true);
-    //xhttp.send();
 
     drawMap();
 
-    //for(let i=0;i<Markers[1].length;i++){
-    //    context.drawImage(friendSprite, Markers[1][i].x,Markers[1][i].y,20,20);
-    //}
-    //for(let i=0;i<Markers[2].length;i++){
-    //    context.drawImage(randomSprite, Markers[i].x,Markers[i].y,20,20)
-    //}
 };
