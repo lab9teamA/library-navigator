@@ -204,6 +204,13 @@ def user_login(request):
             'user_form': user_form,
             'profile_form': profile_form,})
 
+
+def search(request):
+    return None
+
+def delete_friend(request):
+    return None
+
 @login_required
 def user_logout(request):
     logout(request)
@@ -231,8 +238,9 @@ def api_get_loc(request):
     if user_loc in public_loc:
         public_loc.remove(user_loc)
 
-    response = {"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc}
-    return JsonResponse(response)
+    response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 @login_required
 def api_set_loc(request):
