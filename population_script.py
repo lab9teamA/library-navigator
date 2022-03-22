@@ -4,7 +4,6 @@ import random
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'library_navigator.settings')
 
 import django
-from random import randint
 
 django.setup()
 
@@ -51,19 +50,52 @@ def populate():
         {"ISBN": "9780393354324",
          "title": "Guns, Germs, and Steel",
          "author": "Jared Diamond",
-        "numberOfPage": 123,
-        "likes" : random.randint(0,212),
-         "location":"abc-ddd-lll",
-         'publishDate':'2001-01-01',
+         'publishDate': '2001-01-01',
+         "numberOfPage": 123,
+         "description": "Testosterone to the max",
+         "likes": random.randint(0,212),
+         "bookcase": "abc-ddd-lll",
+         "subjects": ["Anime"],
          },
-        {"ISBN": "9780393223324",
+        {"ISBN": "9780393354325",
          "title": "Head First Java",
          "author": "Bert Bates",
-        "numberOfPage": 123,
-        "likes" : random.randint(0,212),
-         "location":"hbb-ddd-cck",
          'publishDate': '2001-01-01',
-
+         "numberOfPage": 145,
+         "description": "Waste your time with OO programming",
+         "likes": random.randint(0, 212),
+         "bookcase": "ggg-ddd-ccc",
+         "subjects": ["Computing Science"],
+         },
+        {"ISBN": "9780393354326",
+         "title": "Kama Sutra",
+         "author": "Vātsyāyana",
+         'publishDate': '1882-01-01',
+         "numberOfPage": 94,
+         "description": "Shag",
+         "likes": random.randint(0, 212),
+         "bookcase": "bbb-ddd-lll",
+         "subjects": ["Romance"],
+         },
+        {"ISBN": "9780393354327",
+         "title": "A Brief History of Time",
+         "author": "Stephen Hawking",
+         'publishDate': '1988-06-21',
+         "numberOfPage": 312,
+         "description": "Your mind = blown",
+         "likes": random.randint(0, 212),
+         "bookcase": "bbb-ddd-lll",
+         "subjects": ["Philosophy", "Maths"],
+         },
+        {"ISBN": "9780393354328",
+         "title": "Little Red Riding Hood",
+         "author": "Bob Ross",
+         'publishDate': '1999-12-31',
+         "numberOfPage": 15,
+         "description": "Classic fairytale story",
+         "likes": random.randint(0, 212),
+         "bookcase": "bbb-ddd-lll",
+         "subjects": ["Engineering"],
          },
     ]
 
@@ -78,16 +110,19 @@ def populate():
         b = Bookcase.objects.get_or_create(id = bookcase["id"], floor = floor)[0]
         b.save()
     for book in books:
-        bc = Bookcase.objects.get(id=book["location"])
+        bc = Bookcase.objects.get(id=book["bookcase"])
         c = Book.objects.get_or_create(ISBN=book["ISBN"],
                                        title=book["title"],
                                        author=book["author"],
+                                       publishDate=book['publishDate'],
                                        numberOfPage=book["numberOfPage"],
+                                       description=book['description'],
                                        likes=book["likes"],
                                        bookcase=bc,
-                                       publishDate=book['publishDate']
                                        )[0]
         c.save()
+        for subj in book["subjects"]:
+            c.subjects.add(Subject.objects.get(name=subj))
         print(c,"-- added")
 
 

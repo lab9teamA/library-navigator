@@ -1,6 +1,7 @@
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
+import os
 
 class Subject(models.Model):
     id = models.AutoField(primary_key=True , unique=True)
@@ -28,12 +29,13 @@ class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     coverImage = models.ImageField(upload_to='book_cover_images',null=True)
-    checkedOut = models.DateTimeField(null=True)
+    checkedOut = models.BooleanField(default=False)
+    numCheckedOut = models.IntegerField(default=0)
     publishDate = models.DateField()
     numberOfPage = models.IntegerField()
     description = models.CharField(max_length=1000)
-    likes = models.IntegerField()
-    bookcase = models.ForeignKey(Bookcase , on_delete=models.PROTECT)
+    likes = models.IntegerField(default=0)
+    bookcase = models.ForeignKey(Bookcase, on_delete=models.PROTECT)
     subjects = models.ManyToManyField(Subject,related_name='book_subjects',blank=True)
 
     def __str__(self):
@@ -41,8 +43,8 @@ class Book(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE) 
-    picture = models.ImageField(upload_to="profile_images",blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    picture = models.ImageField(upload_to="profile_images",blank=True,default="profile_images/NONE.jpg")
     website = models.URLField(blank= True)
     description = models.CharField(max_length = 1000, blank=True)
     isReading = models.ManyToManyField(Book,related_name="user_isReading",blank=True)
