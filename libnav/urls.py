@@ -21,4 +21,6 @@ urlpatterns = [
     path('edit_profile/', views.edit_profile, name = 'edit profile'),
     path('updatemap/<floor_number>/', views.updateMap, name='updateMap'),
     path('getcurrentfloor', views.getCurrentFloor, name='getCurrentFloor'),
+    path('search/', views.search, name = 'search'),
+    path('delete_friend/<username>', views.delete_friend, name = 'delete friend'),
 ]

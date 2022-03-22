@@ -68,16 +68,16 @@ def profile(request, username):
             context_dict["recommended"] = recommended
             reading = userProfile.isReading.all()
             context_dict["reading"] = reading
-            if current_user.is_authenticated:
-                if userProfile.friends.filter(user = current_user).exists():
-                    context_dict['notFriends'] = False
-                else:
-                    context_dict['notFriends'] = True
+
         except:
             context_dict["recommended"] = None
             context_dict["reading"] = None
-            context_dict['notFriends'] = True
-        
+        if current_user.is_authenticated:
+            if userProfile.friends.filter(username = current_user).exists():
+                context_dict['notFriends'] = False
+            else:
+                context_dict['notFriends'] = True
+
         response = render(request, 'libnav/profile.html', context= context_dict)
     #if logged in return myprofile.html
     return response
@@ -125,10 +125,14 @@ def map(request, floor_number):
 
 def updateMap(request, floor_number):
     floor = Floor.objects.get(number=floor_number)
-    return HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
+    response = HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 def getCurrentFloor(request):
-    return HttpResponse(json.dumps({"floor_number": current_floor}))
+    response = HttpResponse(json.dumps({"floor_number": current_floor}))
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 def book(request, isbn):
     context_dict ={}
