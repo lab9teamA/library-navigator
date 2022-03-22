@@ -38,8 +38,6 @@
         <span class="dot"></span>
         <span class="dot"></span>
     </div>
-    <a href="{% url 'libnav:map' floor.number|add:"1" %}">up a floor</a>
-    <a href="{% url 'libnav:map' floor.number|add:"-1"  %}">down floor</a>
     {% if user.is_authenticated %}
     <div class="sWig">
         <h4>Friends on this level</h4>
