@@ -18,8 +18,8 @@
         <div id="navbar">
             <ul>
                 <li>
-                    <form action="">
-                        <input id="search" name="booksearch" placeholder="Search..." type="text">
+                    <form action="{% url 'libnav:search' %}" method="get">
+                        <input id="search" name="search" placeholder="Search..." type="text">
                     </form>
                 </li>
                 <li><a href="{% url 'libnav:home' %}">Home</a></li>

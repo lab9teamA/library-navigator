@@ -29,12 +29,20 @@
                 <a href="{{userProfile.website}}">{{userProfile.website}}</a>
                 {% if notFriends %}
                 <a href="{% url 'libnav:send friend request' user.username %}">send friend request</a>
+                {{notFriends}}
+                {%else%}
+                <a href="{% url 'libnav:delete friend' user.username %}">delete friend</a>
                 {%endif%}
-                <!--    Not sure if this is necessary -->
-                <!--    <br />-->
-                <!--    <div id = "mainbodyPara">-->
-                <!--        {{userProfile.description}}-->
-                <!--    </div>-->
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <div id = "mainbodyPara">
+                {{userProfile.description}}
+                </div>
             </div>
         </div>
         <div id="infoBlock">

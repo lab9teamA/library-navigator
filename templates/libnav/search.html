@@ -1,0 +1,27 @@
+{% extends 'libnav/base.html' %}
+{% load staticfiles %}
+{% load libnav_template_tags %}
+
+{% block title_block %}
+search
+{% endblock %}
+
+{% block body_block %}
+<div class="child" id="mainbody">
+
+    {%if term%}
+    {{term}}
+    {%endif%}
+    {%if books%}
+    {% for book in books%}
+    <li><a href="{% url 'libnav:book' book.ISBN %}">{{book.title}}</a></li>
+    {%endfor%}
+    {%endif%}
+    {%if users%}
+    {% for user in users%}
+    <li><a href="{% url 'libnav:profile' user.username %}">{{user.username}}</a></li>
+    {%endfor%}
+    {%endif%}
+
+</div>
+{% endblock %}

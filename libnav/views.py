@@ -68,15 +68,15 @@ def profile(request, username):
             context_dict["recommended"] = recommended
             reading = userProfile.isReading.all()
             context_dict["reading"] = reading
-            if current_user.is_authenticated:
-                if userProfile.friends.filter(user = current_user).exists():
-                    context_dict['notFriends'] = False
-                else:
-                    context_dict['notFriends'] = True
+
         except:
             context_dict["recommended"] = None
             context_dict["reading"] = None
-            context_dict['notFriends'] = True
+        if current_user.is_authenticated:
+            if userProfile.friends.filter(username = current_user).exists():
+                context_dict['notFriends'] = False
+            else:
+                context_dict['notFriends'] = True
 
         response = render(request, 'libnav/profile.html', context= context_dict)
     #if logged in return myprofile.html
@@ -244,7 +244,7 @@ def api_set_loc(request):
     locations.add(l)
 
     return HttpResponse()
-
+  
 def send_friend_request(request, username):
     from_user = request.user
     to_user = User.objects.get(username = username)
@@ -266,7 +266,7 @@ def accept_friend_request(request, requestID):
         return HttpResponse('friend request accepted')
     else:
         return HttpResponse('friend request not accepted')
-
+        
 @login_required
 def delete_friend_request(request, requestID):
     friend_request = FriendRequest.objects.get(id = requestID)
