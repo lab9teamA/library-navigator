@@ -5,21 +5,104 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Login to library navigator</h1>
-<form id="login_form" method="post" action="{% url 'libnav:login' %}">
-    {% csrf_token %}
-    Username: <input type="text" name="username" value="" size="50"/>
-    <br />
-    Password: <input type="password" name="password" value="" size="50"/>
-    <br />
-    <input type="submit" name="submit" value="login" />
-</form>
+<div id="loginPage">
+    <div class="lrBlock" id="loginBlock">
+        <div id="loginWrapper">
+            <h1>Login to library navigator</h1>
+            <form action="{% url 'libnav:login' %}" id="login_form" method="post">
+                {% csrf_token %}
+                <div class="input-container ic1">
+                    <input class="input" id="username" name="username" placeholder=" " type="text"/>
+                    <div class="cut"></div>
+                    <label class="placeholder" for="username">Username</label>
+                </div>
+                <div class="input-container ic2">
+                    <input class="input" id="password" name="password" placeholder=" " type="password"/>
+                    <div class="cut"></div>
+                    <label class="placeholder" for="password">Password</label>
+                </div>
+                <div class="submit-container">
+                    <input class="submit" name="submit" type="submit" value="Login"/>
+                </div>
+            </form>
+        </div>
+    </div>
 
-<h1>Register a new account</h1>
-<form id="login_form" method="post" action="{% url 'libnav:login' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-	{{ profile_form.as_p }}
-    <input type="submit" name="submit" value="register" />
-</form>
+    <div class="lrBlock" id="registerBlock">
+        <div id="registerWrapper">
+            <h1>Register a new account</h1>
+            <form action="{% url 'libnav:login' %}" enctype="multipart/form-data" id="register_form" method="post">
+                {% csrf_token %}
+
+                <div class="input-container">
+                    {{ user_form.username }}
+                    <div class="cut"></div>
+                    <label class="placeholder" for="id_username">Username</label>
+                </div>
+
+                <div class="input-container">
+                    {{ user_form.email }}
+                    <div class="cut"></div>
+                    <label class="placeholder" for="id_email">Email</label>
+                </div>
+
+                <!--                Class doesnt load for some reason when doing this?-->
+                <!--                <div class="input-container">-->
+                <!--                    {{ user_form.password }}-->
+                <!--                    <div class="cut"></div>-->
+                <!--                    <label for="id_password" class="placeholder">Password</label>-->
+                <!--                </div>-->
+
+                <div class="input-container">
+                    <input class="input" id="id_password" name="password" placeholder=" " type="password">
+                    <div class="cut"></div>
+                    <label class="placeholder" for="id_password">Password</label>
+                </div>
+
+                <div class="input-container">
+                    <label for="id_picture">Picture</label>
+                    {{ profile_form.picture }}
+                </div>
+
+                <div class="input-container">
+                    {{ profile_form.website }}
+                    <div class="cut"></div>
+                    <label class="placeholder" for="id_website">Website</label>
+                </div>
+
+                <div class="input-container">
+                    {{ profile_form.description }}
+                    <div class="cut"></div>
+                    <label class="placeholder" for="id_description">Description</label>
+                </div>
+
+
+                <!--                -->
+                <!--                {% for field in user_form%}-->
+                <!--                <div class="input-container">-->
+                <!--                    {{ field.errors }}-->
+                <!--                    {{ field }}-->
+                <!--                    <div class="cut"></div>-->
+                <!--                    {{ field.label_tag }}-->
+                <!--                </div>-->
+                <!--                {% endfor %}-->
+                <!--                {% for field in profile_form%}-->
+                <!--                <div class="input-container">-->
+                <!--                    {{ field.errors }}-->
+                <!--                    {{ field }}-->
+                <!--                    <div class="cut"></div>-->
+                <!--                    {{ field.label_tag }}-->
+                <!--                </div>-->
+                <!--                {% endfor %}-->
+                <!--&lt;!&ndash;                <div class="input-container ic1">&ndash;&gt;-->
+                <!--&lt;!&ndash;                    {{ user_form.as_p }}&ndash;&gt;-->
+                <!--&lt;!&ndash;                    {{ profile_form.as_p }}&ndash;&gt;-->
+                <!--&lt;!&ndash;                </div>&ndash;&gt;-->
+                <div class="submit-container">
+                    <input class="submit" name="submit" type="submit" value="Register"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
