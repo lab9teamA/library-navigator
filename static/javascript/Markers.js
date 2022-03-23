@@ -136,7 +136,7 @@ function mouseClicked (mouse) {
 
 
 
-window.onload = function () {
+function drawSetUp() {
     canvas = document.getElementById('canvas');
     context = canvas.getContext("2d");
     context.font = "15px Georgia";
