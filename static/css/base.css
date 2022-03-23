@@ -32,7 +32,7 @@ body {
 
 .wrapper div {
     /* remove at end maybe*/
-	border: 2px solid var(--blue);
+	/*border: 2px solid var(--blue);*/
 }
 
 
@@ -40,6 +40,7 @@ body {
 .wrapper #navbar {
 	flex: 0 1 auto;
     background-color: var(--dark-blue);
+    border: 2px solid var(--blue);
 }
 
 .wrapper #navbar ul {
@@ -294,27 +295,100 @@ body {
 #bodyBlock #mainHome #header {
     height: 10%;
     width: 80%;
+    text-align: center;
+
+}
+#bodyBlock #mainHome #header h1{
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+    font-weight: 300;
 }
 
 #bodyBlock #mainHome .mPanel {
-    height: 45%;
+    height: 40%;
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 70%;
+    margin-bottom: 2%;
+    border: 2px solid var(--blue);
+    border-radius: 15px;
+    box-shadow: 0 0 3px var(--lightest-blue), 0 0 5px #0000FF;
 }
 
-#bodyBlock #mainHome .mPanel div {
+#bodyBlock #mainHome .mPanel .selection {
     height: 100%;
     background-color: var(--lightest-blue);
+    border-radius: 0 0 15px 15px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 #bodyBlock #mainHome h4 {
-    margin: 0;
+    margin: 1% 0 1% 8px;
+    text-decoration: underline;
 }
 
-#mainHome > * {
-    margin: 0;
+
+#bodyBlock #mainHome .mPanel .selection #bookWrapper{
+    height: 95%;
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 }
+
+.gallery {
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 20%;
+    height: 50%;
+    position: relative;
+}
+
+.gallery .displayImage {
+    max-height:100%;
+    max-width:100%;
+    display:block;
+    margin:auto;
+}
+.desc{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #008CBA;
+    border-radius: 10px;
+ }
+.gallery:hover .desc {
+    opacity: 1;
+}
+
+.text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+/* TODO
+    fit the block inside currently overflowing into pReadingBlock
+ */
+
+
 
 
 /*---------------*/

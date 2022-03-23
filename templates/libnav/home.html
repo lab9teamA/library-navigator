@@ -7,23 +7,86 @@
 {% block body_block %}
 <div id="mainHome">
     <div id="header">
-        welcome to the home page of library navigator
+        <h1>Welcome to the home page of library navigator</h1>
     </div>
+
     <div class="mPanel">
         <h4>Popular books in the library</h4>
-        <div id="pBooksBlock">
-            <ul>
-                <!--Will be dynamically loaded-->
-                <li>The Bible</li>
-                <li>Cheryl - My Story</li>
-                <li>Test book</li>
-                <li>Test book</li>
-            </ul>
+        <div id="pBooksBlock" class="selection">
+            <div id="bookWrapper">
+                <div class="gallery">
+                    <a target="_blank" href="libnav/login">
+                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
+                        <div class="desc">
+                            <div class="text"> Book Name goes here</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="gallery">
+                    <a target="_blank" href="libnav/login">
+                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
+                        <div class="desc">
+                            <div class="text"> Book Name goes here</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="gallery">
+                    <a target="_blank" href="libnav/login">
+                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
+                        <div class="desc">
+                            <div class="text"> Book Name goes here</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="gallery">
+                    <a target="_blank" href="libnav/login">
+                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
+                        <div class="desc">
+                            <div class="text"> Book Name goes here</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="gallery">
+                    <a target="_blank" href="libnav/login">
+                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
+                        <div class="desc">
+                            <div class="text"> Book Name goes here</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="gallery">
+                    <a target="_blank" href="libnav/login">
+                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
+                        <div class="desc">
+                            <div class="text"> Book Name goes here</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="gallery">
+                    <a target="_blank" href="libnav/login">
+                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
+                        <div class="desc">
+                            <div class="text"> Book Name goes here</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="gallery">
+                    <a target="_blank" href="libnav/login">
+                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
+                        <div class="desc">
+                            <div class="text"> Book Name goes here</div>
+                        </div>
+                    </a>
+                </div>
+
+
+
+            </div>
         </div>
     </div>
     <div class="mPanel">
         <h4>People like reading</h4>
-        <div id="pReadingBlock">
+        <div id="pReadingBlock" class="selection">
             {%if popular%}
             <ul>
                 {%for book in popular%}
