@@ -118,6 +118,7 @@ def map(request, floor_number):
     except Floor.DoesNotExist or Bookcase.DoesNotExist:
         context_dict['floor'] = None
         context_dict['books'] = None
+    context_dict['user'] = request.user.id
     response = render(request, 'libnav/map.html', context = context_dict)
     global current_floor
     current_floor = floor_number
@@ -220,25 +221,29 @@ def user_logout(request):
         pass
     return redirect(reverse('libnav:home'))
 
-@login_required
+
 def api_get_loc(request):
-    username = request.user.id
+    user = request.GET.get('userID', None)
+    if user:
+        user = User.objects.get(id=user)
+        userProfile = UserProfile.objects.get(user=user)
 
-    user = User.objects.get(id=request.user.id)
-    userProfile = UserProfile.objects.get(user=user)
+        a = list()
+        a.append(user)
+        user_loc = locations.get_all_by_users(a)
 
-    a = list()
-    a.append(user)
-    user_loc = locations.get_all_by_users(a)
+        friends = [x.id for x in userProfile.friends.all()]
+        friends_locations = locations.get_all_by_users(friends)
 
-    friends = [x.id for x in userProfile.friends.all()]
-    friends_locations = locations.get_all_by_users(friends)
+        public_loc = [x for x in locations.get_all_public_locations() if x not in friends_locations]
+        if user_loc in public_loc:
+            public_loc.remove(user_loc)
 
-    public_loc = [x for x in locations.get_all_public_locations() if x not in friends_locations]
-    if user_loc in public_loc:
-        public_loc.remove(user_loc)
+        response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
+    else:
+        public_loc = [x for x in locations.get_all_public_locations()]
+        response = JsonResponse({"user_loc" : [], "friends" : [],"others" : public_loc})
 
-    response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
     response["Access-Control-Allow-Origin"] = "*"
     response["Access-Control-Allow-Headers"] = "*"
     return response

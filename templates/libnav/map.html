@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block body_block %}
+    {{ user|json_script:"user-id" }}
 {% if floor %}
 <div class="main">
     <div class="child" id="mainbody">

@@ -37,14 +37,17 @@ function drawMap() {
         context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
     };
 
+    const getLocUrl = new URL("http://localhost:8000/libnav/api/get-loc/")
+    const user = JSON.parse(document.getElementById('user-id').textContent);
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            let locmap = JSON.parse(this.responseText);
             console.log(this.responseText);
+            let locmap = JSON.parse(this.responseText);
         }
     };
-    xhttp.open("GET", "http://localhost:8000/libnav/api/get-loc/", true);
+    getLocUrl.searchParams.set("userID", user)
+    xhttp.open("GET", getLocUrl, true);
     xhttp.send();
 
 
