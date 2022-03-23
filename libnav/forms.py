@@ -46,13 +46,13 @@ class UserProfileForm(forms.ModelForm):
             'accept': 'image/*',
             }),
             'website': URLInput(attrs={
-            'type': 'email',
+            'type': 'url',
             'class': 'input',
             'id': 'id_email',
             'placeholder': ' ',
             }),
             'description': TextInput(attrs={
-            'type': 'password',
+            'type': 'text',
             'class': 'input',
             'id': 'id_password',
             'placeholder': ' ',

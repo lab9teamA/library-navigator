@@ -152,7 +152,7 @@ def user_login(request):
 
     if request.method == 'POST':
         # login form
-        if request.POST.get('submit') == 'login':
+        if request.POST.get('submit') == 'Login':
             username = request.POST.get('username')
             password = request.POST.get('password')
 
@@ -172,7 +172,7 @@ def user_login(request):
                 print(f"Invalid login details: {username}, {password}")
                 return HttpResponse("Invalid login details supplied.")
         # register form
-        elif request.POST.get('submit') == 'register':
+        elif request.POST.get('submit') == 'Register':
             user_form = UserForm(request.POST)
             profile_form = UserProfileForm(request.POST)
 
