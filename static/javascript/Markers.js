@@ -7,11 +7,6 @@ var friendSprite;
 var randomSprite;
 
 
-var friendSprite = new Image();
-friendSprite.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/1504px-Map_pin_icon_green.svg.png"
-
-var randomSprite = new Image();
-randomSprite.src = "https://www.clipartmax.com/png/middle/69-696141_map-pointer-map-marker-icon.png"
 
 
 var Marker = function () {
@@ -32,18 +27,33 @@ function drawMap() {
     // Map sprite
     var mapSprite = new Image();
     mapSprite.src = mediaUrl + "floorplans/" + floorimg;
-    // Draw map
-    mapSprite.onload = function() {
-        context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
-    };
+
+    var friendSprite = new Image();
+    friendSprite.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/1504px-Map_pin_icon_green.svg.png"
+
+    var randomSprite = new Image();
+    randomSprite.src = "https://www.clipartmax.com/png/middle/69-696141_map-pointer-map-marker-icon.png"
+
+
+    var locmap = {};
 
     const getLocUrl = new URL("http://localhost:8000/libnav/api/get-loc/")
     const user = JSON.parse(document.getElementById('user-id').textContent);
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            console.log(this.responseText);
-            let locmap = JSON.parse(this.responseText);
+            locmap = JSON.parse(this.responseText);
+            locmap["friends"] = [[100,100],[200,200]];
+            locmap["others"] = [[300,300],[400,400]];
+            mapSprite.onload = function(){
+                context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
+                for(let i=0; i<locmap["friends"].length;i++){
+                        context.drawImage(friendSprite, locmap["friends"][i][0], locmap["friends"][i][1],20,20);
+                }
+                for(let i=0; i<locmap["others"].length;i++){
+                        context.drawImage(randomSprite, locmap["others"][i][0], locmap["others"][i][1],20,20);
+                }
+            }    
         }
     };
     getLocUrl.searchParams.set("userID", user)
@@ -52,14 +62,7 @@ function drawMap() {
 
 
     //draw other peoples markers on this floor
-    // mapSprite.onload = function(){
-    //     for(let i=0; i<locmap["friends"].length;i++){
-    //         context.drawImage(friendSprite, locmap["friends"][i].x, locmap["friends"][i].y,20,20);
-    //     }
-    //     for(let i=0; i<locmap["others"].length;i++){
-    //         context.drawImage(randomSprite, locmap["others"][i].x, locmap["others"][i].y,20,20);
-    //     }
-    // }
+    
 
     
 }
