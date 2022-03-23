@@ -574,7 +574,7 @@ body {
     border-style: none;
 }
 
-#bodyBlock #loginPage .lrBlock {
+#bodyBlock .lrBlock {
     height: 80%;
     display: flex;
     flex-direction: row;
@@ -584,7 +584,7 @@ body {
 
 }
 
-#bodyBlock #loginPage .lrBlock #loginWrapper {
+#bodyBlock .lrBlock .lrWrapper {
     width: 60%;
     height: 100%;
     border-radius: 20px;
@@ -594,40 +594,19 @@ body {
 
 #bodyBlock #loginPage .lrBlock h1 {
     font-weight: 600;
-    margin: 1% 0 1% 0;
     padding: 0;
 }
 
 
-#bodyBlock #loginPage .lrBlock #registerWrapper {
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-}
-
-#register_form {
-    height: 100%;
-    width: 100%;
-}
-
-
-.input-container {
+#bodyBlock .lrBlock .lrWrapper .input-container {
     height: 50px;
     position: relative;
     width: 80%;
-    margin-top: 28px;
+    margin-top: 30px;
 }
 
 
-/*.ic1 {*/
-/*    margin-top: 40px;*/
-/*}*/
-
-/*.ic2 {*/
-/*    margin-top: 30px;*/
-/*}*/
-
-.input {
+#bodyBlock .lrBlock .lrWrapper .input {
     background-color: var(--lightest-blue);
     border-radius: 12px;
     border: 0;
@@ -639,6 +618,8 @@ body {
     width: 100%;
 }
 
+/* Not sure why it only works by itself (no parent hierarchy)*/
+/* Reset is only for login.html */
 .cut {
     background-color: var(--light-blue);
     border-radius: 10px;
@@ -706,7 +687,8 @@ body {
 
 
 .file-input {
-
+    padding: 0;
+    margin: 0;
 }
 
 

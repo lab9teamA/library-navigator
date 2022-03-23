@@ -7,7 +7,7 @@
 {% block body_block %}
 <div id="loginPage">
     <div class="lrBlock" id="loginBlock">
-        <div id="loginWrapper">
+        <div id="loginWrapper" class="lrWrapper">
             <h1>Login to library navigator</h1>
             <form action="{% url 'libnav:login' %}" id="login_form" method="post">
                 {% csrf_token %}
@@ -29,7 +29,7 @@
     </div>
 
     <div class="lrBlock" id="registerBlock">
-        <div id="registerWrapper">
+        <div id="registerWrapper" class="lrWrapper">
             <h1>Register a new account</h1>
             <form action="{% url 'libnav:login' %}" enctype="multipart/form-data" id="register_form" method="post">
                 {% csrf_token %}
