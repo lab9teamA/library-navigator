@@ -32,7 +32,7 @@
         </div>
         <div class="mFriends">
             <div class="content">
-                <h3>Your friends...</h3>
+                <h3>your friends...</h3>
                 <div class="list">
                     {% if friends %}
                     {%for friend in friends%}
@@ -46,10 +46,11 @@
                 </div>
             </div>
             <br />
+            
             <div class="content">
-                <h3>Your friends requests...</h3>
+                {%if requests%}
+                <h3>your friends requests...</h3>
                 <div class="list">
-                    {%if requests%}
                     {%for request in requests %}-->
                     <li>
                         <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}</a>
@@ -57,26 +58,25 @@
                         <a href="{% url 'libnav:delete friend request' request.id %}">delete</a>
                     </li>
                     {%endfor%}
-                    {%else%}
-                        No friends requests
-                    {%endif%}
-<!--                    {% if messages %}-->
-<!--                    <ul class="messages">-->
-<!--                        {% for message in messages %}-->
-<!--                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
-<!--                        {% endfor %}-->
-<!--                    </ul>-->
-<!--                    {% endif %}-->
+                   {% if messages %}
+                   <ul class="messages">
+                       {% for message in messages %}
+                       <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                       {% endfor %}
+                   </ul>
+                   {%endif%}
                 </div>
+                {% endif %}
             </div>
+            
             <br />
             <div class="content">
-                <h4>Checked in books</h4>
+                <h4>your checked out books</h4>
                 <div class="list">
-                    {% if checkoutBooks %}
-                    {%for book in checkoutBooks%}
+                    {% if reading %}
+                    {%for book in reading%}
                     <li>
-                        <a href="{% url 'libnav:book' book.title %}">{{book.title}}</a>
+                        <a href="{% url 'libnav:book' book.ISBN %}">{{book.title}}</a>
                     </li>
                     {%endfor%}
                     {% else %}
@@ -86,12 +86,12 @@
             </div>
             <br />
             <div class="content">
-                <h4>Recommendations</h4>
+                <h4>your recommendations</h4>
                 <div class="list">
-                    {% if recommendedBooks %}
-                    {%for book in recommendedBooks%}
+                    {% if recommended %}
+                    {%for book in recommended %}
                     <li>
-                        <a href="{% url 'libnav:book' book.title %}">{{book.title}}</a>
+                        <a href="{% url 'libnav:book' book.ISBN %}">{{book.title}}</a>
                     </li>
                     {%endfor%}
                     {% else %}

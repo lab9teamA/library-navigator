@@ -35,7 +35,7 @@ def update_book(request, isbn):
         if not request.META.get("HTTP_REFERER", '').endswith(reverse('libnav:book', kwargs={'isbn': isbn})):
             return redirect(reverse('libnav:home'))
         
-        profile = request.user.userprofile
+        profile = UserProfile.objects.get(user = request.user)
         if action=='checkout':
             if value>0:
                 profile.isReading.add(book)
@@ -101,13 +101,15 @@ def profile(request, username):
 
     if current_user.is_authenticated and user == current_user:
         try:
-            friends = userProfile.friends.all()
-            context_dict["friends"] = friends
-            friend_requests = FriendRequest.objects.filter(to_user = current_user)
-            context_dict["requests"] = friend_requests
+            context_dict["friends"] = userProfile.friends.all()
+            context_dict["requests"] = FriendRequest.objects.filter(to_user = current_user)
+            context_dict['recommended'] = userProfile.recommends.all()
+            context_dict['reading'] = userProfile.isReading.all()
         except:
             context_dict["friends"] = None
             context_dict['requests'] = None
+            context_dict['recommended'] = None
+            context_dict['reading'] = None
         response = render(request, 'libnav/my_profile.html', context= context_dict)
 
     else:
