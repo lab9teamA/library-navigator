@@ -48,7 +48,7 @@
         <div id="infoBlock">
             <div class="box" id="isReading">
                 <h3>{{user.username}} is reading</h3>
-                <div class="items">
+                <div class="list">
                     {%for book in recommended%}
                     <li>
                         <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
@@ -58,7 +58,7 @@
             </div>
             <div class="box" id="recommends">
                 <h3>{{user.username}} recommends</h3>
-                <div class="items">
+                <div class="list">
                     {%for book in reading%}
                     <li>
                         <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
@@ -66,7 +66,7 @@
                     {%endfor%}
                 </div>
             </div>
-            <h4>loves level 8</h4>
+            <h4>{{user.username }} loves {{userProfile.favouriteFloor}}</h4>
         </div>
     </div>
 </div>

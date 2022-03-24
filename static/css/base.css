@@ -33,7 +33,7 @@ body {
 
 .wrapper div {
     /* remove at end maybe*/
-	/*border: 2px solid var(--blue);*/  
+	/*border: 2px solid var(--blue);*/
 }
 
 
@@ -530,9 +530,15 @@ body {
     align-content: center;
 }
 
+#bodyBlock #mainProfile #pageWrapper #bProfile .profileContent{
+    padding: 10px;
+    margin: auto;
+}
+
 #bodyBlock #mainProfile #pageWrapper #bProfile .profileContent img{
-    height: auto;
     width: 100%;
+    height: auto;
+    
 }
 
 #bodyBlock #mainProfile #pageWrapper .mFriends {
@@ -547,12 +553,10 @@ body {
     color: var(--midnight);
     width: 45%;
     height: 50%;
-    border: 2px solid var(--blue);
-    padding:5px;
-    margin: 5px;
+    padding:10px;
+    margin: 10px;
     border-radius: 15px;
-    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
-
+    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--darkest-blue);
 }
 
 #bodyBlock #mainProfile #pageWrapper .profileContent {
@@ -563,8 +567,7 @@ body {
     margin: auto;
     padding-top: 30px;
     border-radius: 15px;
-    border: 3px solid var(--lightest-blue);
-    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
+    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--darkest-blue);
 }
 
 #bodyBlock #mainProfile #pageWrapper .content .list{
@@ -573,34 +576,6 @@ body {
     padding:10px;
     background: var(--lightest-blue);
     border-radius: 5px 5px 15px 15px;
-}
-
-
-#bodyBlock #mainProfile #pageWrapper .sWig {
-    height: 50%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid var(--blue);
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
-}
-
-#bodyBlock #mainProfile #pageWrapper .sWig h4 {
-    height: 10%;
-    width: 100%;
-    padding: 5px;
-    margin: 0;
-}
-
-#bodyBlock #mainProfile #pageWrapper .sWig .sWigBlock {
-    height: 90%;
-    width: 100%;
-    background: var(--lightest-blue);
-    border-radius: 0 0 15px 15px;
-
-
 }
 
 
@@ -638,30 +613,40 @@ body {
 
 
 #bodyBlock #viewProfile #pageWrapper #bProfile .content {
-    height: 100%;
+    color: var(--midnight);
+    padding:10px;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
 }
 
 #bodyBlock #viewProfile #pageWrapper #bProfile .content img {
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: auto;
 }
 
 #bodyBlock #viewProfile #pageWrapper #infoBlock {
+    color: var(--midnight);
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 50%;
     height: 100%;
 }
 
 #bodyBlock #viewProfile #pageWrapper #infoBlock h4 {
-    padding: 0;
-    margin: 0;
+    margin: auto;
 }
 
 #bodyBlock #viewProfile #pageWrapper #infoBlock .box {
     display: flex;
     flex-direction: column;
     height: 50%;
+    margin:10px;
+    padding: 10px;
+    border: 2px solid var(--light-blue);
+    border-radius: 15px;
+    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--darkest-blue);
+
 }
 
 #bodyBlock #viewProfile #pageWrapper #infoBlock .box h3 {
@@ -669,11 +654,11 @@ body {
     margin: 0;
 }
 
-#bodyBlock #viewProfile #pageWrapper #infoBlock .box .items {
+#bodyBlock #viewProfile #pageWrapper #infoBlock .box .list {
     height: 100%;
     background: var(--lightest-blue);
-    border: 2px solid var(--blue);
-    border-radius: 15px;
+    padding: 10px;
+    border-radius: 5px 5px 15px 15px;
 }
 
 
