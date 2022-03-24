@@ -250,7 +250,7 @@ def api_get_loc(request):
 
 @login_required
 def api_set_loc(request):
-    l = location(user =  request.user.id,
+    l = location(user =  request.GET.get('UserID',None),
              x = request.POST["x"],
              y = request.POST["y"],
              floor = request.POST["floor"],
