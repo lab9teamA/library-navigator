@@ -7,52 +7,32 @@
 {% block body_block %}
 <div id="mainHome">
     <div id="header">
+        <br />
         <h1>Welcome to the home page of library navigator</h1>
     </div>
-
     <div class="header">
         <h3>Popular books in the library</h3>
     </div>
+    {%if popular %}
     <div class="mPanel">
         <div id="pBooksBlock" class="selection">
             <div class="bookWrapper">
+                {% for book in popular %}
                 <div class="gallery">
-                    <a target="_blank" href="libnav/login">
-                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
+                    <a href="{% url 'libnav:book' book.ISBN %}">
+                        <img class="displayImage" src="{{MEDIA_URL}}{{book.coverImage}}" alt="{{book.title}}">
                         <div class="desc">
-                            <div class="text"> Book Name goes here</div>
+                            <div class="text">{{book.title}}</div>
                         </div>
                     </a>
                 </div>
-                <div class="gallery">
-                    <a target="_blank" href="libnav/login">
-                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
-                        <div class="desc">
-                            <div class="text"> Book Name goes here</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="gallery">
-                    <a target="_blank" href="libnav/login">
-                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
-                        <div class="desc">
-                            <div class="text"> Book Name goes here</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="gallery">
-                    <a target="_blank" href="libnav/login">
-                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
-                        <div class="desc">
-                            <div class="text"> Book Name goes here</div>
-                        </div>
-                    </a>
-                </div>
-
+                {%endfor%}
 
             </div>
         </div>
     </div>
+    {%endif%}
+    <br />
     <div class="header">
         <h3>People like reading</h3>
     </div>

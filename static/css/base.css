@@ -1,8 +1,4 @@
-html {
-    height: 100%;
-    margin: auto;
-    width: 80%;
-}
+html,
 
 body {
 	height: 100%;
@@ -31,12 +27,13 @@ body {
 .main {
 	display: flex;
 	flex-flow: row;
-	width: 100%;
+	width: 90%;
+    margin: auto;
 }
 
 .wrapper div {
     /* remove at end maybe*/
-	/*border: 2px solid var(--blue);*/
+	/*border: 2px solid var(--blue);*/  
 }
 
 
@@ -45,6 +42,7 @@ body {
 	flex: 0 1 auto;
     background-color: var(--dark-blue);
     border: 2px solid var(--blue);
+    position:sticky;
 }
 
 .wrapper #navbar ul {
@@ -95,7 +93,7 @@ body {
 
 
 .wrapper .footer {
-    border-top: 2px solid var(--blue);
+    border-top: 2px solid transparent;
 	flex: 0 1 40px;
 }
 
@@ -301,17 +299,18 @@ body {
     height: 10%;
     width: 80%;
     text-align: center;
+    color:var(--darkest-blue);
 
 }
 #bodyBlock #mainHome #header h1{
     margin: 0;
     padding: 0;
-    text-decoration: underline;
-    font-weight: 300;
+    font-weight: 600;
 }
 
 #bodyBlock #mainHome .header{
     width: 70%;
+    color: var(--midnight);
 }
 #bodyBlock #mainHome .header h3{
     margin: 5px;
@@ -326,7 +325,7 @@ body {
     margin: 0;
     /*border: 2px solid var(--blue);*/
     border-radius: 15px;
-    box-shadow: 0 0 3px var(--lightest-blue), 0 0 5px #0000FF;
+    box-shadow: 0 0 3px var(--lightest-blue), 0 0 5px var(--darkest-blue);
 }
 
 #bodyBlock #mainHome .mPanel .selection {
@@ -337,9 +336,6 @@ body {
     justify-content: center;
     align-content: center;
 }
-
-
-
 
 #bodyBlock #mainHome .mPanel .selection .bookWrapper{
     height: 95%;
@@ -354,8 +350,8 @@ body {
 
 .gallery {
     margin-right: 5px;
-    border: 1px solid var(--light-blue);
-    border-radius: 10px;
+    border: 2px solid var(--light-blue);
+    border-radius: 15px;
     width: 20%;
     height: 50%;
     position: relative;
@@ -385,7 +381,7 @@ body {
 }
 
 .text {
-    color: black;
+    color: var(--midnight);
     font-size: 20px;
     position: absolute;
     top: 50%;
@@ -448,7 +444,7 @@ body {
     margin: 10px;
     padding: 5px;
     height: 200px;
-    border: 2px solid black;
+    border: 2px solid var(--darkest-blue);
     overflow: hidden;
 }
 #mainSearch #searchPage .results ul li a {
@@ -515,10 +511,11 @@ body {
     width: 30%;
     height: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-content: center;
 }
+
 #sidebar {
     width: 30%;
     height: 100%;
@@ -534,42 +531,53 @@ body {
 }
 
 #bodyBlock #mainProfile #pageWrapper #bProfile .profileContent img{
-    height: 150px;
-    width: 150px;
+    height: auto;
+    width: 100%;
 }
 
-#bodyBlock #mainProfile #pageWrapper #mFriends {
-    width: 40%;
-    height: 100%;
-    margin: 10px;
+#bodyBlock #mainProfile #pageWrapper .mFriends {
+    width: 100%;
+    height: auto;
+    margin: 0px;
     display: flex;
-    flex-direction: column;
-
+    flex-wrap: wrap;
 }
 
 #bodyBlock #mainProfile #pageWrapper .content{
-    width: 100%;
+    color: var(--midnight);
+    width: 45%;
     height: 50%;
-    margin-top: 10px;
     border: 2px solid var(--blue);
+    padding:5px;
+    margin: 5px;
     border-radius: 15px;
+    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
 
 }
 
 #bodyBlock #mainProfile #pageWrapper .profileContent {
+    color: var(--midnight);
     width: 60%;
-    height: 100%;
+    height: auto;
     text-align: center;
-    margin: 10px;
+    margin: auto;
+    padding-top: 30px;
     border-radius: 15px;
-    border: 2px solid var(--blue);
+    border: 3px solid var(--lightest-blue);
+    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
 }
 
 #bodyBlock #mainProfile #pageWrapper .content .friends{
     height: 100%;
     width: 100%;
     background: var(--lightest-blue);
-    border-radius: 0 0 15px 15px;
+    border-radius: 5px 5px 15px 15px;
+}
+#bodyBlock #mainProfile #pageWrapper .content .list{
+    height: 100%;
+    width: 100%;
+    background: var(--lightest-blue);
+    border-radius: 5px 5px 15px 15px;
 }
 
 
@@ -579,9 +587,9 @@ body {
     display: flex;
     flex-direction: column;
     border: 2px solid var(--blue);
-    margin: 10px;
+    padding: 10px;
     border-radius: 15px;
-
+    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
 }
 
 #bodyBlock #mainProfile #pageWrapper .sWig h4 {
@@ -675,7 +683,7 @@ body {
 
 
 /*---------------*/
-/* VIEW PROFILE PAGE CSS */
+/* BOOK PROFILE PAGE CSS */
 /*---------------*/
 
 

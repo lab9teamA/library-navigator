@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div id="mFriends">
+        <div class="mFriends">
             <div class="content">
                 <h3>Your friends...</h3>
                 <div class="friends">
@@ -45,6 +45,7 @@
                     {% endif %}
                 </div>
             </div>
+            <br />
             <div class="content">
                 <h3>Your friends requests...</h3>
                 <div class="friends">
@@ -68,11 +69,10 @@
 <!--                    {% endif %}-->
                 </div>
             </div>
-        </div>
-        <div id="sidebar">
-            <div class="sWig">
+            <br />
+            <div class="content">
                 <h4>Checked in books</h4>
-                <div class="sWigBlock">
+                <div class="list">
                     {% if checkoutBooks %}
                     {%for book in checkoutBooks%}
                     <li>
@@ -84,9 +84,10 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="sWig">
+            <br />
+            <div class="content">
                 <h4>Recommendations</h4>
-                <div class="sWigBlock">
+                <div class="list">
                     {% if recommendedBooks %}
                     {%for book in recommendedBooks%}
                     <li>
