@@ -21,6 +21,51 @@ def put(request):
         return JsonResponse({"key": "value"})
     else:
         return HttpResponse()
+        
+def update_book(request, isbn):
+    if request.method == 'GET':
+        try:
+            book = Book.objects.get(ISBN=isbn)
+            value = int(request.GET.get('value'))
+            action = request.GET.get('action')
+        except (Book.DoesNotExist, ValueError, TypeError):
+            return redirect(reverse('libnav:home'))
+            
+        # check if the request has been made by clicking the button
+        if not request.META.get("HTTP_REFERER", '').endswith(reverse('libnav:book', kwargs={'isbn': isbn})):
+            return redirect(reverse('libnav:home'))
+        
+        profile = request.user.userprofile
+        if action=='checkout':
+            if value>0:
+                profile.isReading.add(book)
+                book.checkedOut = True 
+                book.numCheckedOut = book.numCheckedOut + 1
+            else:
+                profile.isReading.remove(book)
+                book.checkedOut = False 
+            book.save()
+            profile.save()
+        if action=='like':
+            book.likes = book.likes + value
+            book.save()
+            if value>0:
+                profile.likes.add(book)
+            else:
+                profile.likes.remove(book)
+            profile.save()
+        if action=='recommend':
+            if value>0:
+                profile.recommends.add(book)
+            else:
+                profile.recommends.remove(book)
+            profile.save()
+            
+        response = JsonResponse({"likes": book.likes})
+        response['Access-Control-Allow-Origin'] = 'http://127.0.0.1:8000'
+        return response
+    else:
+        return redirect(reverse('libnav:home'))
 
 def testPage(request):
     return render(request, "libnav/test.html")
@@ -144,6 +189,16 @@ def book(request, isbn):
         location = Bookcase.objects.get(id = book.bookcase.id)
         context_dict['book'] = book
         context_dict['bookcase'] = location
+        context_dict['checked_out'] = book.checkedOut
+        
+        if request.user.is_authenticated:
+            userprofile = request.user.userprofile
+            # keys indicate whether specified button should be displayed
+            # otherwise display the button that reverses the action
+            context_dict['flags'] = {
+                'checkout': userprofile.isReading.filter(ISBN=isbn).exists(), 
+                'like': userprofile.likes.filter(ISBN=isbn).exists(), 
+                'recommend': userprofile.recommends.filter(ISBN=isbn).exists(),}
     except Book.DoesNotExist:
         context_dict['book'] = None
     response = render(request, 'libnav/book.html', context=context_dict)
@@ -165,9 +220,7 @@ def user_login(request):
                 if user.is_active:
                     login(request, user)
                     user_id=UserProfile.objects.get(user=User.objects.get(username=username)).user_id
-                    print(user_id)
                     request.session['user_id'] = UserProfile.objects.get(user=User.objects.get(username=username)).user_id
-                    print(request.session['user_id'])
                     return redirect(reverse('libnav:home'))
                 else:
                     return HttpResponse("Your LIBNAV account is disabled.")
