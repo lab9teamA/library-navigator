@@ -50,6 +50,7 @@ class UserProfile(models.Model):
     recommends = models.ManyToManyField(Book,related_name="user_recommends",blank=True)
     likes = models.ManyToManyField(Book,related_name="user_likes",blank=True)
     friends = models.ManyToManyField(User,related_name='user_friends',blank=True)
+    favouriteFloor = models.ForeignKey(Floor, default=1, on_delete=models.PROTECT)
     def __str__(self):
         return self.user.username
 
