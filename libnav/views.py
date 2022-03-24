@@ -253,14 +253,14 @@ def api_get_loc(request):
 def api_set_loc(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        user = data["userID"]
-        print(user)
-        l = location(user =  user,
+        userID = data["userID"]
+        user = User.objects.get(id=userID)
+        if user is not None:
+            l = location(user = user,
                  x = data["x"],
                  y = data["y"],
                  floor = data["floor"],
                  private = data["private"])
-        if user is not None:
             locations.add(l)
 
     return HttpResponse()
