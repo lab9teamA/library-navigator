@@ -20,13 +20,14 @@ class locations:
         locations.locmap.pop(loc)
 
     @staticmethod
-    def get_all_by_users(user_list):
+    def get_all_by_users(user_list, floor):
         response = []
         for user in user_list:
             if user in locations.locmap:
                 response.append(locations.locmap[user])
+        response = [{"x": loc.x, "y": loc.y, "private": loc.private} for loc in response if loc.floor == floor]
         return response
 
     @staticmethod
-    def get_all_public_locations():
-        return [loc for loc in locations.locmap.values() if not loc.private]
+    def get_all_public_locations(floor):
+        return [{"x": loc.x, "y": loc.y} for loc in locations.locmap.values() if loc.floor == floor and not loc.private]
