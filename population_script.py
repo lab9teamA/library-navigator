@@ -8,6 +8,7 @@ import django
 django.setup()
 
 from libnav.models import *
+from django.core.files import File
 
 
 def populate():
@@ -50,6 +51,7 @@ def populate():
         {"ISBN": "9780393354324",
          "title": "Guns, Germs, and Steel",
          "author": "Jared Diamond",
+         "coverImage": "9780393354324.jpg",
          'publishDate': '2001-01-01',
          "numberOfPage": 123,
          "description": "Testosterone to the max",
@@ -60,6 +62,7 @@ def populate():
         {"ISBN": "9780393354325",
          "title": "Head First Java",
          "author": "Bert Bates",
+         "coverImage": "9780393354325.jpg",
          'publishDate': '2001-01-01',
          "numberOfPage": 145,
          "description": "Waste your time with OO programming",
@@ -70,6 +73,7 @@ def populate():
         {"ISBN": "9780393354326",
          "title": "Kama Sutra",
          "author": "Vātsyāyana",
+         "coverImage": "9780393354326.jpg",
          'publishDate': '1882-01-01',
          "numberOfPage": 94,
          "description": "Shag",
@@ -80,6 +84,7 @@ def populate():
         {"ISBN": "9780393354327",
          "title": "A Brief History of Time",
          "author": "Stephen Hawking",
+         "coverImage": "9780393354327.jpg",
          'publishDate': '1988-06-21',
          "numberOfPage": 312,
          "description": "Your mind = blown",
@@ -90,6 +95,7 @@ def populate():
         {"ISBN": "9780393354328",
          "title": "Little Red Riding Hood",
          "author": "Bob Ross",
+         "coverImage": "9780393354328.jpg",
          'publishDate': '1999-12-31',
          "numberOfPage": 15,
          "description": "Classic fairytale story",
@@ -120,6 +126,9 @@ def populate():
                                        likes=book["likes"],
                                        bookcase=bc,
                                        )[0]
+        if book.get("coverImage") is not None:
+        # media/coverImage can't have the same name or multiple copies of the image will be made
+            c.coverImage.save(book["coverImage"], File(open("populationImages/" +book["coverImage"], "rb")))
         c.save()
         for subj in book["subjects"]:
             c.subjects.add(Subject.objects.get(name=subj))

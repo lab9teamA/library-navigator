@@ -27,10 +27,13 @@ def testPage(request):
 
 
 def home(request):
-    popular_list = Book.objects.order_by('-likes')[:5]
+    people_like_list = Book.objects.order_by('-likes')[:4]
+    popular_list = Book.objects.order_by('-numCheckedOut')[:4]
+
 
     context_dict = {
-        'popular': popular_list,
+        'people_like': people_like_list,
+        'popular': popular_list
     }
     response = render(request, 'libnav/home.html', context= context_dict)
 

@@ -10,10 +10,12 @@
         <h1>Welcome to the home page of library navigator</h1>
     </div>
 
+    <div class="header">
+        <h3>Popular books in the library</h3>
+    </div>
     <div class="mPanel">
-        <h4>Popular books in the library</h4>
         <div id="pBooksBlock" class="selection">
-            <div id="bookWrapper">
+            <div class="bookWrapper">
                 <div class="gallery">
                     <a target="_blank" href="libnav/login">
                         <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
@@ -46,59 +48,31 @@
                         </div>
                     </a>
                 </div>
-                <div class="gallery">
-                    <a target="_blank" href="libnav/login">
-                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
-                        <div class="desc">
-                            <div class="text"> Book Name goes here</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="gallery">
-                    <a target="_blank" href="libnav/login">
-                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
-                        <div class="desc">
-                            <div class="text"> Book Name goes here</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="gallery">
-                    <a target="_blank" href="libnav/login">
-                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
-                        <div class="desc">
-                            <div class="text"> Book Name goes here</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="gallery">
-                    <a target="_blank" href="libnav/login">
-                        <img class="displayImage" src="https://www.collinsdictionary.com/images/full/book_181404689_1000.jpg" alt="Test 2">
-                        <div class="desc">
-                            <div class="text"> Book Name goes here</div>
-                        </div>
-                    </a>
-                </div>
-
 
 
             </div>
         </div>
     </div>
+    <div class="header">
+        <h3>People like reading</h3>
+    </div>
     <div class="mPanel">
-        <h4>People like reading</h4>
         <div id="pReadingBlock" class="selection">
-            {%if popular%}
-            <ul>
+            <div class="bookWrapper">
+                {%if popular%}
                 {%for book in popular%}
-                <li>
-                    <a href="{% url 'libnav:book' book.ISBN %}">{{ book.title }}</a>
-                </li>
-                {%endfor%}
-            </ul>
-            {%else%}
-            <strong>There are no books present.</strong>
-            {%endif%}
+                    <div class="gallery">
+                        <a href="{% url 'libnav:book' book.ISBN %}">
+                            <img class="displayImage" src="{{MEDIA_URL}}{{book.coverImage}}" alt="{{ book.title }}">
+                            <div class="desc">
+                                <div class="text">{{ book.title }}</div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+                {% endif %}
         </div>
     </div>
+</div>
 </div>
 {% endblock %}
