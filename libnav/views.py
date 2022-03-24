@@ -10,6 +10,7 @@ from libnav.forms import UserForm, UserProfileForm
 from django.shortcuts import redirect
 from library_navigator.settings import MEDIA_URL
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from libnav.miscs.locations_keeper import locations,location
 
@@ -118,6 +119,12 @@ def map(request, floor_number):
     except Floor.DoesNotExist or Bookcase.DoesNotExist:
         context_dict['floor'] = None
         context_dict['books'] = None
+    context_dict['user'] = request.user.id
+    business = min(locations.get_business_of_floor(floor_number)//5, 5)
+    business_list = list(range(business))
+    unbusiness_list = list(range(5-business))
+    context_dict['business'] = business_list
+    context_dict['unbusiness'] = unbusiness_list
     response = render(request, 'libnav/map.html', context = context_dict)
     global current_floor
     current_floor = floor_number
@@ -213,36 +220,51 @@ def user_logout(request):
         pass
     return redirect(reverse('libnav:home'))
 
-@login_required
+
 def api_get_loc(request):
-    username = request.user.id
+    user = request.GET.get('userID', None)
+    floor = request.GET.get('floor', None)
+    if floor is not None:
+        floor = int(floor)
+    if user is not None and user != "null" and floor is not None:
+        user = User.objects.get(id=user)
+        userProfile = UserProfile.objects.get(user=user)
 
-    user = User.objects.get(id=request.user.id)
-    userProfile = UserProfile.objects.get(user=user)
+        a = list()
+        a.append(user)
+        user_loc = locations.get_all_by_users(a, floor)
 
-    a = list()
-    a.append(user)
-    user_loc = locations.get_all_by_users(a)
+        friends = [x.id for x in userProfile.friends.all()]
+        friends_locations = locations.get_all_by_users(friends, floor)
 
-    friends = [x.id for x in userProfile.friends.all()]
-    friends_locations = locations.get_all_by_users(friends)
+        public_loc = [x for x in locations.get_all_public_locations(floor) if x not in friends_locations and x not in user_loc]
+        # if user_loc in public_loc:
+        #     public_loc.remove(user_loc)
 
-    public_loc = [x for x in locations.get_all_public_locations() if x not in friends_locations]
-    if user_loc in public_loc:
-        public_loc.remove(user_loc)
+        response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
+    elif floor is not None:
+        public_loc = locations.get_all_public_locations(floor)
+        response = JsonResponse({"user_loc" : [], "friends" : [],"others" : public_loc})
+    else:
+        return JsonResponse({"user_loc" : [], "friends" : [],"others" : []})
 
-    response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
     response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Headers"] = "*"
     return response
 
-@login_required
+@csrf_exempt
 def api_set_loc(request):
-    l = location(user =  request.user.id,
-             x = request.POST["x"],
-             y = request.POST["y"],
-             floor = request.POST["floor"],
-             private = request.POST["private"])
-    locations.add(l)
+    if request.method == "POST":
+        data = json.loads(request.body)
+        userID = data["userID"]
+        if userID is not None:
+            user = User.objects.get(id=userID)
+            l = location(user = user,
+                 x = data["x"],
+                 y = data["y"],
+                 floor = data["floor"],
+                 private = data["private"])
+            locations.add(l)
 
     return HttpResponse()
   

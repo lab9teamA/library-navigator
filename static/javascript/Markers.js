@@ -2,16 +2,12 @@ var canvas;
 var canvasHeight;
 var canvasWidth;
 var context;
-var mapSprite;
 var friendSprite;
 var randomSprite;
+var markerSpritePublic;
+var markerSpritePrivate;
 
 
-var friendSprite = new Image();
-friendSprite.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/1504px-Map_pin_icon_green.svg.png"
-
-var randomSprite = new Image();
-randomSprite.src = "https://www.clipartmax.com/png/middle/69-696141_map-pointer-map-marker-icon.png"
 
 
 var Marker = function () {
@@ -25,20 +21,62 @@ var Markers = new Array();
 
 
 function drawMap() {
-    context.clearRect(0,0,canvasWidth,canvasHeight);
+    context.clearRect(0, 0, canvasWidth, canvasHeight);
 
     var src = mediaUrl + "floorplans/" + floorimg;
-    console.log(src)
 
     // Map sprite
     var mapSprite = new Image();
     mapSprite.src = mediaUrl + "floorplans/" + floorimg;
-    // Draw map
-    mapSprite.onload = function() {
-        context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
-    };
 
-    // draw other peoples markers on this floor
+    var locmap = {};
+
+    const getLocUrl = new URL("http://localhost:8000/libnav/api/get-loc/")
+    const user = JSON.parse(document.getElementById('user-id').textContent);
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            locmap = JSON.parse(this.responseText);
+            locmap["friends"] = [{"x": 100, "y": 100}, {"x": 200, "y": 200}, {"x": 250, "y": 100}, {
+                "x": 150,
+                "y": 500
+            }];
+            locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
+            mapSprite.onload = function () {
+                console.log("Map loaded");
+                context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
+                console.log("User loc: " + JSON.stringify(locmap["user_loc"]))
+                if (locmap["user_loc"].length > 0) {
+                    drawMarker(locmap["user_loc"][0]["x"], locmap["user_loc"][0]["y"], locmap["user_loc"][0]["private"]);
+                }
+                console.log("Friend markers loaded");
+                for (let i = 0; i < locmap["friends"].length; i++) {
+                    context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"], 20, 20);
+                }
+                console.log("Random Markers loaded")
+                for (let i = 0; i < locmap["others"].length; i++) {
+                    context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 20, 20);
+                }
+            }
+            let amount = locmap["friends"].length + locmap["others"].length;
+            let busyness = Math.trunc(amount / 5);
+            console.log("Busyness: " + busyness);
+        }
+    };
+    getLocUrl.searchParams.set("userID", user)
+    getLocUrl.searchParams.set("floor", floornum)
+    xhttp.open("GET", getLocUrl, false);
+    xhttp.send();
+}
+
+function drawMarker(xpos, ypos, private) {
+    if (private) {
+        // Draw marker
+        context.drawImage(markerSpritePrivate, xpos, ypos, 20, 20);
+    } else {
+        // Draw marker
+        context.drawImage(markerSpritePublic, xpos, ypos, 20, 20);
+    }
 }
 
 
@@ -50,64 +88,43 @@ function mouseClicked (mouse) {
     var mouseXPos = (mouse.x - rect.left);
     var mouseYPos = (mouse.y - rect.top);
 
-
     // Move the marker when placed to a better location
     var m = new Marker();
     m.XPos = mouseXPos - (m.Width / 2);
     m.YPos = mouseYPos - m.Height;
-    console.log(context);
 
-    drawMap();
+    //drawMap();
 
     if (window.confirm("Make marker public?")){
-    
-    	var markerSprite = new Image();
-		markerSprite.src = "https://www.pinclipart.com/picdir/middle/126-1269086_google-map-marker-red-peg-png-image-red.png"
-    
-    	// Move the marker when placed to a better location
-    	var m = new Marker();
-    	m.XPos = mouseXPos - (m.Width / 2);
-   		m.YPos = mouseYPos - m.Height;
-    
-   		// Draw marker
-        console.log(mouse);
-        console.log(m.XPos, m.YPos, m.Width, m.Height);
-        markerSprite.onload = function() {
-            context.drawImage(markerSprite, m.XPos, m.YPos, m.Width, m.Height);
-        };
-        console.log(m);
-        console.log(context);
-
+        var private = false;
+        drawMarker(m.XPos, m.YPos, private);
     }else{
-    
-    	var markerSprite = new Image();
-		markerSprite.src = "https://silicondales.com/wp-content/uploads/2018/11/incognito-symbol-large.jpg"
-    
-    	// Move the marker when placed to a better location
-    	var m = new Marker();
-    	m.XPos = mouseXPos - (m.Width / 2);
-   		m.YPos = mouseYPos - m.Height;
-    
-   		// Draw marker
-        markerSprite.onload = function() {
-            context.drawImage(markerSprite, m.XPos, m.YPos, m.Width, m.Height);
-        };
-    
+        var private = true;
+        drawMarker(m.XPos, m.YPos, private);
     }
 
-    //const responseFromRequest = await fetch("https://silicondales.com/wp-content/uploads/2018/11/incognito-symbol-large.jpg", {
-      //      method: 'POST',
-       //     body: JSON.stringify({x: m.XPos, y: m.YPos})
-        //}).then((response) => response.json());
-    
-    
-    //Markers.push(m);
+    const setLocUrl = new URL("http://localhost:8000/libnav/api/set-loc/")
+    const user = JSON.parse(document.getElementById('user-id').textContent);
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            console.log("Post worked");
+        }
+    };
+    console.log("User id is " + user);
+    let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": floornum, "private": private }
+    console.log("Json data: " + JSON.stringify(post_data))
+    xhttp.open("POST", setLocUrl, false);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(post_data));
+
+    drawMap();
 }
 
 
 
 
-function main() {
+function drawSetUp() {
     canvas = document.getElementById('canvas');
     context = canvas.getContext("2d");
     context.font = "15px Georgia";
@@ -121,22 +138,20 @@ function main() {
     canvasWidth = containerDiv.offsetWidth;
     canvas.height = canvasHeight;
     canvas.width = canvasWidth;
-    //const xhttp = new XMLHttpRequest();
-    //xhttp.onreadystatechange = function () {
-            // console.log(this.responseText);
-      //      if (this.readyState === 4 && this.status === 200) {
-        //        document.getElementById("map").innerHTML = this.responseText;
-          //  }
-    //};
-    //xhttp.open("GET", "http://localhost:8000/libnav/put/", true);
-    //xhttp.send();
+
+    friendSprite = new Image();
+    friendSprite.onload = function(){}
+    friendSprite.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/1504px-Map_pin_icon_green.svg.png";
+    randomSprite = new Image();
+    randomSprite.onload = function(){}
+    randomSprite.src = "https://img.favpng.com/20/11/24/google-map-maker-google-maps-computer-icons-map-collection-png-favpng-BNWkuCw9tdsBqxLR2PTzGbS6V.jpg";
+    markerSpritePublic = new Image();
+    markerSpritePublic.onload = function(){}
+    markerSpritePublic.src = "https://www.pinclipart.com/picdir/middle/126-1269086_google-map-marker-red-peg-png-image-red.png";
+    markerSpritePrivate = new Image()
+    markerSpritePrivate.onload = function(){}
+    markerSpritePrivate.src = "https://cdn-icons-png.flaticon.com/512/446/446075.png";
 
     drawMap();
 
-    //for(let i=0;i<Markers[1].length;i++){
-    //    context.drawImage(friendSprite, Markers[1][i].x,Markers[1][i].y,20,20);
-    //}
-    //for(let i=0;i<Markers[2].length;i++){
-    //    context.drawImage(randomSprite, Markers[i].x,Markers[i].y,20,20)
-    //}
 };

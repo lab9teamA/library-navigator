@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block body_block %}
+    {{ user|json_script:"user-id" }}
 {% if floor %}
 <div class="main">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -31,12 +32,12 @@
     <div class="child" id="sidebar">
     <div id="busyness">
         <h5>Busyness</h5>
-        <!--Will be dynamically loaded-->
-        <span class="dot-on"></span>
-        <span class="dot-on"></span>
-        <span class="dot-on"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+        {% for x in business %}
+            <span class="dot-on"></span>
+        {% endfor %}
+        {% for x in unbusiness %}
+            <span class="dot"></span>
+        {% endfor %}
     </div>
     {% if user.is_authenticated %}
     <div class="sWig">

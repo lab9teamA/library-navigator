@@ -1,12 +1,10 @@
 const nFloors = 12;
-// Defaulting current floor
-let current_floor = 1;
 
 $(document).ready(() => {
     getCurrentFloor();
     updateImage(current_floor);
     genList();
-    main();
+    drawSetUp();
 });
 
 
@@ -26,6 +24,7 @@ function getCurrentFloor() {
 
 
 function genList() {
+
     const ul = document.getElementById("floorList");
     ul.innerHTML = "";
 
