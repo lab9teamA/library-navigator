@@ -10,6 +10,7 @@ from libnav.forms import UserForm, UserProfileForm
 from django.shortcuts import redirect
 from library_navigator.settings import MEDIA_URL
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from libnav.miscs.locations_keeper import locations,location
 
@@ -224,7 +225,7 @@ def user_logout(request):
 
 def api_get_loc(request):
     user = request.GET.get('userID', None)
-    if user:
+    if user is not None and user != "null":
         user = User.objects.get(id=user)
         userProfile = UserProfile.objects.get(user=user)
 
@@ -248,14 +249,19 @@ def api_get_loc(request):
     response["Access-Control-Allow-Headers"] = "*"
     return response
 
-@login_required
+@csrf_exempt
 def api_set_loc(request):
-    l = location(user =  request.GET.get('UserID',None),
-             x = request.POST["x"],
-             y = request.POST["y"],
-             floor = request.POST["floor"],
-             private = request.POST["private"])
-    locations.add(l)
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user = data["userID"]
+        print(user)
+        l = location(user =  user,
+                 x = data["x"],
+                 y = data["y"],
+                 floor = data["floor"],
+                 private = data["private"])
+        if user is not None:
+            locations.add(l)
 
     return HttpResponse()
   

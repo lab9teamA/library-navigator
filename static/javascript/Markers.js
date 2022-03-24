@@ -46,21 +46,28 @@ function drawMap() {
             locmap["friends"] = [[100,100],[200,200],[250,100],[150,500]];
             locmap["others"] = [[300,300],[400,400]];
             mapSprite.onload = function(){
+                console.log("Map loaded");
                 context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
-                for(let i=0; i<locmap["friends"].length;i++){
-                        context.drawImage(friendSprite, locmap["friends"][i][0], locmap["friends"][i][1],20,20);
+                friendSprite.onload = function() {
+                    console.log("Friend markers loaded");
+                    for (let i = 0; i < locmap["friends"].length; i++) {
+                        context.drawImage(friendSprite, locmap["friends"][i][0], locmap["friends"][i][1], 20, 20);
+                    }
                 }
-                for(let i=0; i<locmap["others"].length;i++){
-                        context.drawImage(randomSprite, locmap["others"][i][0], locmap["others"][i][1],20,20);
+                randomSprite.onload = function() {
+                    console.log("Random Markers loaded")
+                    for (let i = 0; i < locmap["others"].length; i++) {
+                        context.drawImage(randomSprite, locmap["others"][i][0], locmap["others"][i][1], 20, 20);
+                    }
                 }
             }
             let amount = locmap["friends"].length+locmap["others"].length;
             let busyness = Math.trunc(amount/5);
-            console.log(busyness);    
+            console.log("Busyness: " + busyness);
         }
     };
     getLocUrl.searchParams.set("userID", user)
-    xhttp.open("GET", getLocUrl, true);
+    xhttp.open("GET", getLocUrl, false);
     xhttp.send();
 
 
@@ -84,7 +91,6 @@ function mouseClicked (mouse) {
     var m = new Marker();
     m.XPos = mouseXPos - (m.Width / 2);
     m.YPos = mouseYPos - m.Height;
-    console.log(context);
 
     drawMap();
 
@@ -100,13 +106,9 @@ function mouseClicked (mouse) {
    		m.YPos = mouseYPos - m.Height;
     
    		// Draw marker
-        console.log(mouse);
-        console.log(m.XPos, m.YPos, m.Width, m.Height);
         markerSprite.onload = function() {
             context.drawImage(markerSprite, m.XPos, m.YPos, m.Width, m.Height);
         };
-        console.log(m);
-        console.log(context);
 
     }else{
         
@@ -131,12 +133,15 @@ function mouseClicked (mouse) {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            JSON.stringify({"x": m.XPos, "y": m.YPos, "floor": floornum, "private": private });
+            console.log("Post worked");
         }
     };
-    setLocUrl.searchParams.set("userID", user)
+    console.log("User id is " + user);
+    let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": floornum, "private": private }
+    console.log("Json data: " + JSON.stringify(post_data))
     xhttp.open("POST", setLocUrl, true);
-    xhttp.send();
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(post_data));
 
 }
 

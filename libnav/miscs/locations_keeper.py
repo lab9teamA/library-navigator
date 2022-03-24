@@ -10,9 +10,11 @@ class location:
 
 class locations:
     locmap = dict()
+
     @staticmethod
     def add(loc: location):
         locations.locmap[loc.user] = loc
+
     @staticmethod
     def remove(loc: location):
         locations.locmap.pop(loc)
@@ -24,6 +26,7 @@ class locations:
             if user in locations.locmap:
                 response.append(locations.locmap[user])
         return response
+
     @staticmethod
     def get_all_public_locations():
-        return [x for x in locations.locmap.items() if not x.private]
+        return [loc for loc in locations.locmap.values() if not loc.private]
