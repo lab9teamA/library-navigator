@@ -31,3 +31,7 @@ class locations:
     @staticmethod
     def get_all_public_locations(floor):
         return [{"x": loc.x, "y": loc.y} for loc in locations.locmap.values() if loc.floor == floor and not loc.private]
+
+    @staticmethod
+    def get_business_of_floor(floor):
+        return len([loc for loc in locations.locmap.values() if loc.floor == floor])

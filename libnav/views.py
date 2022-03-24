@@ -120,6 +120,11 @@ def map(request, floor_number):
         context_dict['floor'] = None
         context_dict['books'] = None
     context_dict['user'] = request.user.id
+    business = min(locations.get_business_of_floor(floor_number)//5, 5)
+    business_list = list(range(business))
+    unbusiness_list = list(range(5-business))
+    context_dict['business'] = business_list
+    context_dict['unbusiness'] = unbusiness_list
     response = render(request, 'libnav/map.html', context = context_dict)
     global current_floor
     current_floor = floor_number

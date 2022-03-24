@@ -32,12 +32,12 @@
     {% endblock %}
     <div id="busyness">
         <h5>Busyness</h5>
-        <!--Will be dynamically loaded-->
-        <span class="dot-on"></span>
-        <span class="dot-on"></span>
-        <span class="dot-on"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+        {% for x in business %}
+            <span class="dot-on"></span>
+        {% endfor %}
+        {% for x in unbusiness %}
+            <span class="dot"></span>
+        {% endfor %}
     </div>
     <a href="{% url 'libnav:map' floor.number|add:"1" %}">up a floor</a>
     <a href="{% url 'libnav:map' floor.number|add:"-1"  %}">down floor</a>
