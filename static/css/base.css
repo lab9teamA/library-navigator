@@ -487,6 +487,10 @@ body {
 /*---------------*/
 
 
+#bodyBlock #mainProfile div{
+    /*border: 2px solid black;*/
+}
+
 #bodyBlock #mainProfile {
     height: 100%;
     display: flex;
@@ -500,58 +504,96 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
-
 }
 
-#bodyBlock #mainProfile #pageWrapper #bProfile,
-#bodyBlock #mainProfile #pageWrapper #sidebar {
+
+#bodyBlock #mainProfile #pageWrapper #bProfile{
     width: 30%;
     height: 100%;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+#sidebar {
+    width: 30%;
+    height: 100%;
+}
+
+
+
+.content{
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+#bodyBlock #mainProfile #pageWrapper #bProfile .profileContent img{
+    height: 150px;
+    width: 150px;
 }
 
 #bodyBlock #mainProfile #pageWrapper #mFriends {
     width: 40%;
     height: 100%;
+    margin: 10px;
     display: flex;
     flex-direction: column;
+
 }
 
-
-#bodyBlock #mainProfile #pageWrapper .content {
+#bodyBlock #mainProfile #pageWrapper .content{
     width: 100%;
+    height: 50%;
+    margin-top: 10px;
+    border: 2px solid var(--blue);
+    border-radius: 15px;
+
+}
+
+#bodyBlock #mainProfile #pageWrapper .profileContent {
+    width: 60%;
     height: 100%;
+    text-align: center;
+    margin: 10px;
+    border-radius: 15px;
+    border: 2px solid var(--blue);
 }
 
-#bodyBlock #mainProfile #pageWrapper #mFriends .content {
-    display: flex;
-    flex-direction: column;
+#bodyBlock #mainProfile #pageWrapper .content .friends{
+    height: 100%;
+    width: 100%;
+    background: var(--lightest-blue);
+    border-radius: 0 0 15px 15px;
 }
 
-#bodyBlock #mainProfile #pageWrapper #mFriends .content img {
-    width: 150px;
-    height: 150px;
-}
 
 #bodyBlock #mainProfile #pageWrapper .sWig {
-    height: 40%;
+    height: 50%;
     width: 100%;
     display: flex;
     flex-direction: column;
+    border: 2px solid var(--blue);
+    margin: 10px;
+    border-radius: 15px;
 
 }
 
 #bodyBlock #mainProfile #pageWrapper .sWig h4 {
     height: 10%;
     width: 100%;
-    padding: 0;
+    padding: 5px;
     margin: 0;
 }
 
 #bodyBlock #mainProfile #pageWrapper .sWig .sWigBlock {
     height: 90%;
     width: 100%;
+    background: var(--lightest-blue);
+    border-radius: 0 0 15px 15px;
+
+
 }
 
 
@@ -623,6 +665,8 @@ body {
 #bodyBlock #viewProfile #pageWrapper #infoBlock .box .items {
     height: 100%;
     background: var(--lightest-blue);
+    border: 2px solid var(--blue);
+    border-radius: 15px;
 }
 
 
