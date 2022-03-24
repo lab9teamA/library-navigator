@@ -32,7 +32,7 @@ body {
 
 .wrapper div {
     /* remove at end maybe*/
-	border: 2px solid var(--blue);
+	/*border: 2px solid var(--blue);*/
 }
 
 
@@ -40,10 +40,11 @@ body {
 .wrapper #navbar {
 	flex: 0 1 auto;
     background-color: var(--dark-blue);
+    border: 2px solid var(--blue);
 }
 
 .wrapper #navbar ul {
-	margin: 0px;
+	margin: 0;
 }
 
 .wrapper #navbar li {
@@ -90,11 +91,12 @@ body {
 
 
 .wrapper .footer {
+    border-top: 2px solid var(--blue);
 	flex: 0 1 40px;
 }
 
 .wrapper .footer ul {
-	margin: 0px;
+	margin: 0;
 }
 
 .wrapper .footer li {
@@ -294,33 +296,200 @@ body {
 #bodyBlock #mainHome #header {
     height: 10%;
     width: 80%;
+    text-align: center;
+
+}
+#bodyBlock #mainHome #header h1{
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+    font-weight: 300;
+}
+
+#bodyBlock #mainHome .header{
+    width: 70%;
+}
+#bodyBlock #mainHome .header h3{
+    margin: 5px;
+    padding: 0;
 }
 
 #bodyBlock #mainHome .mPanel {
-    height: 45%;
+    height: 40%;
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 70%;
+    margin: 0;
+    /*border: 2px solid var(--blue);*/
+    border-radius: 15px;
+    box-shadow: 0 0 3px var(--lightest-blue), 0 0 5px #0000FF;
 }
 
-#bodyBlock #mainHome .mPanel div {
+#bodyBlock #mainHome .mPanel .selection {
     height: 100%;
     background-color: var(--lightest-blue);
+    border-radius: 15px 15px 15px 15px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
-#bodyBlock #mainHome h4 {
-    margin: 0;
+
+
+
+#bodyBlock #mainHome .mPanel .selection .bookWrapper{
+    height: 95%;
+    width: 95%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 }
 
-#mainHome > * {
-    margin: 0;
+.gallery {
+    margin-right: 5px;
+    border: 1px solid var(--light-blue);
+    border-radius: 10px;
+    width: 20%;
+    height: 50%;
+    position: relative;
 }
+
+.gallery .displayImage {
+    max-height:100%;
+    max-width:100%;
+    display:block;
+    margin:auto;
+}
+.desc{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: 0.5s ease ;
+    background-color: var(--light-blue);
+    border-radius: 10px;
+ }
+.gallery:hover .desc {
+    opacity: 1;
+}
+
+.text {
+    color: black;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+
+
+/*---------------*/
+/* SEARCH PAGE CSS */
+/*---------------*/
+
+#mainSearch div {
+    /*border: 2px solid black;*/
+}
+
+#mainSearch{
+    height: 90%;
+    width: 100%;
+    max-height: 90%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+
+#mainSearch #searchPage{
+    width: 80%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#mainSearch #searchPage .header h2{
+    padding: 0;
+    margin-left: 3%;
+}
+
+
+#mainSearch #searchPage .results{
+    border-radius: 15px 15px 15px 15px;
+    border: 2px solid var(--blue);
+    height: 100%;
+    background: var(--lightest-blue);
+    overflow-x: hidden;
+}
+
+#mainSearch #searchPage .results ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#mainSearch #searchPage .results ul li{
+    margin: 10px;
+    padding: 5px;
+    height: 200px;
+    border: 2px solid black;
+    overflow: hidden;
+}
+#mainSearch #searchPage .results ul li a {
+    text-decoration: none;
+}
+#mainSearch #searchPage .results ul li img {
+    height: 200px;
+    width: 200px;
+    margin: auto;
+}
+#mainSearch #searchPage .results .resultWrapper .resultImage{
+    height: 50%;
+}
+
+
+
+#mainSearch #searchPage .results .resultWrapper{
+    display: flex;
+}
+
+#mainSearch #searchPage .results .resultWrapper .resultText{
+    width: 100%;
+    align-content: center;
+    padding: 2%;
+}
+#mainSearch #searchPage .results .resultWrapper .resultText .text-content{
+    font-size: 1.5em;
+}
+
+
+
+/*TODO
+    the footer just disappears no idea why
+ */
+
 
 
 /*---------------*/
 /* LOGGED PROFILE PAGE CSS */
 /*---------------*/
 
+
+#bodyBlock #mainProfile div{
+    /*border: 2px solid black;*/
+}
 
 #bodyBlock #mainProfile {
     height: 100%;
@@ -335,58 +504,96 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
-
 }
 
-#bodyBlock #mainProfile #pageWrapper #bProfile,
-#bodyBlock #mainProfile #pageWrapper #sidebar {
+
+#bodyBlock #mainProfile #pageWrapper #bProfile{
     width: 30%;
     height: 100%;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+#sidebar {
+    width: 30%;
+    height: 100%;
+}
+
+
+
+.content{
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+#bodyBlock #mainProfile #pageWrapper #bProfile .profileContent img{
+    height: 150px;
+    width: 150px;
 }
 
 #bodyBlock #mainProfile #pageWrapper #mFriends {
     width: 40%;
     height: 100%;
+    margin: 10px;
     display: flex;
     flex-direction: column;
+
 }
 
-
-#bodyBlock #mainProfile #pageWrapper .content {
+#bodyBlock #mainProfile #pageWrapper .content{
     width: 100%;
+    height: 50%;
+    margin-top: 10px;
+    border: 2px solid var(--blue);
+    border-radius: 15px;
+
+}
+
+#bodyBlock #mainProfile #pageWrapper .profileContent {
+    width: 60%;
     height: 100%;
+    text-align: center;
+    margin: 10px;
+    border-radius: 15px;
+    border: 2px solid var(--blue);
 }
 
-#bodyBlock #mainProfile #pageWrapper #mFriends .content {
-    display: flex;
-    flex-direction: column;
+#bodyBlock #mainProfile #pageWrapper .content .friends{
+    height: 100%;
+    width: 100%;
+    background: var(--lightest-blue);
+    border-radius: 0 0 15px 15px;
 }
 
-#bodyBlock #mainProfile #pageWrapper #mFriends .content img {
-    width: 150px;
-    height: 150px;
-}
 
 #bodyBlock #mainProfile #pageWrapper .sWig {
-    height: 40%;
+    height: 50%;
     width: 100%;
     display: flex;
     flex-direction: column;
+    border: 2px solid var(--blue);
+    margin: 10px;
+    border-radius: 15px;
 
 }
 
 #bodyBlock #mainProfile #pageWrapper .sWig h4 {
     height: 10%;
     width: 100%;
-    padding: 0;
+    padding: 5px;
     margin: 0;
 }
 
 #bodyBlock #mainProfile #pageWrapper .sWig .sWigBlock {
     height: 90%;
     width: 100%;
+    background: var(--lightest-blue);
+    border-radius: 0 0 15px 15px;
+
+
 }
 
 
@@ -458,6 +665,8 @@ body {
 #bodyBlock #viewProfile #pageWrapper #infoBlock .box .items {
     height: 100%;
     background: var(--lightest-blue);
+    border: 2px solid var(--blue);
+    border-radius: 15px;
 }
 
 
@@ -575,7 +784,7 @@ body {
 }
 
 #bodyBlock .lrBlock {
-    height: 80%;
+    height: 90%;
     display: flex;
     flex-direction: row;
     width: 50%;
@@ -598,15 +807,20 @@ body {
 }
 
 
-#bodyBlock .lrBlock .lrWrapper .input-container {
+.input-container {
     height: 50px;
     position: relative;
     width: 80%;
     margin-top: 30px;
 }
 
-
-#bodyBlock .lrBlock .lrWrapper .input {
+#bodyBlock .lrBlock .lrWrapper #pic{
+    height: 50px;
+    position: relative;
+    width: 80%;
+    margin: 0;
+}
+.input {
     background-color: var(--lightest-blue);
     border-radius: 12px;
     border: 0;
@@ -691,7 +905,21 @@ body {
     margin: 0;
 }
 
+/* EDIT PROFILE PAGE */
 
+
+#bodyBlock #editPage{
+    height: 100%;
+    width: 100%;
+}
+#bodyBlock #editPage div{
+    /*border: 2px solid black;*/
+}
+
+#editPage .lrBlock #profile_form{
+    width: 100%;
+    margin-left: 5%;
+}
 
 
 

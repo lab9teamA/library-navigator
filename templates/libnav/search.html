@@ -7,21 +7,75 @@ search
 {% endblock %}
 
 {% block body_block %}
-<div class="child" id="mainbody">
-
-    {%if term%}
-    {{term}}
-    {%endif%}
-    {%if books%}
-    {% for book in books%}
-    <li><a href="{% url 'libnav:book' book.ISBN %}">{{book.title}}</a></li>
-    {%endfor%}
-    {%endif%}
-    {%if users%}
-    {% for user in users%}
-    <li><a href="{% url 'libnav:profile' user.username %}">{{user.username}}</a></li>
-    {%endfor%}
-    {%endif%}
-
+<div class="child" id="mainSearch">
+    <div id="searchPage">
+        <div class="header">
+            <h2><u>Results for:</u> "{{term}}"</h2>
+        </div>
+        <div class="results">
+            <ul>
+                {%if books%}
+                {% for book in books%}
+                <li>
+                    <a href="{% url 'libnav:book' book.ISBN %}">
+                        <div class="resultWrapper">
+                            <div class="resultImage">
+                                <img src="{{MEDIA_URL}}{{book.coverImage}}" alt="{{ book.title }}">
+                            </div>
+                            <div class="resultText">
+                                <div class="text-content">
+                                    Book: {{book.title}}
+                                </div>
+                                <div class="text-content">
+                                    Author: {{book.author}}
+                                </div>
+                                <div class="text-content">
+                                    Is available:
+                                    {% if book.checkedOut%}
+                                        No
+                                    {%else%}
+                                        Yes
+                                    {%endif%}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {%endfor%}
+                {%endif%}
+                {%if users%}
+                {% for user in users%}
+                <li>
+                    <a href="{% url 'libnav:profile' user.user.username %}">
+                        <div class="resultWrapper">
+                            <div class="resultImage">
+                                <img src="{{MEDIA_URL}}{{user.picture}}" alt="{{ user.user.username }}">
+                            </div>
+                            <div class="resultText">
+                                <div class="text-content">
+                                    User: {{ user.user.username }}
+                                </div>
+                                <div class="text-content">
+                                    Description: {{user.description}}
+                                </div>
+                                <div class="text-content">
+                                    Website: {{user.website}}
+                                </div>
+                                <div class="text-content">
+                                    {%if user.isReading.Book%}
+                                    Reading: {{user.isReading.Book.title}}
+                                    {%else%}
+                                    Reading: Nothing
+                                    {%endif%}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {%endfor%}
+                {%endif%}
+            </ul>
+        </div>
+    </div>
 </div>
 {% endblock %}

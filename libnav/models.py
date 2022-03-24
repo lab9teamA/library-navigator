@@ -49,6 +49,7 @@ class UserProfile(models.Model):
     description = models.CharField(max_length = 1000, blank=True)
     isReading = models.ManyToManyField(Book,related_name="user_isReading",blank=True)
     recommends = models.ManyToManyField(Book,related_name="user_recommends",blank=True)
+    likes = models.ManyToManyField(Book,related_name="user_likes",blank=True)
     friends = models.ManyToManyField(User,related_name='user_friends',blank=True)
     def __str__(self):
         return self.user.username

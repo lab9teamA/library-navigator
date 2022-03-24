@@ -5,11 +5,35 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>{{user.username}} - Edit Profile</h1>
-<form id="profile_form" method="post" action="{% url 'libnav:edit profile' %}">
-    {% csrf_token %}
-    {{ profile_form.as_p }}
+<div id="editPage">
 
-    <input type="submit" name="submit" value="save" />
-</form>
+    <div class="lrBlock">
+        <form id="profile_form" method="post" action="{% url 'libnav:edit profile' %}">
+            {% csrf_token %}
+
+            <h1>{{user.username}} - Edit Profile</h1>
+            <div class="input-container" >
+                <label for="id_picture">Picture</label>
+                {{ profile_form.picture }}
+            </div>
+
+            <div class="input-container" id="pic">
+                {{ profile_form.website }}
+                <div class="cut"></div>
+                <label class="placeholder" for="id_website">Website</label>
+            </div>
+
+            <div class="input-container">
+                {{ profile_form.description }}
+                <div class="cut"></div>
+                <label class="placeholder" for="id_description">Description</label>
+            </div>
+
+
+            <div class="submit-container">
+                <input class="submit" name="submit" type="submit" value="save"/>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
