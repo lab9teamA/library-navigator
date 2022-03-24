@@ -1,4 +1,6 @@
 {% extends 'libnav/base.html' %}
+{% load staticfiles %}
+{% load libnav_template_tags %}
 
 {% block title_block %}
 {% if book %}
@@ -11,18 +13,33 @@ Unknown Book
 {% block body_block %}
 
 
+<script src="{% static 'javascript/bookPageButtons.js' %}"></script>
+<script type="text/javascript">
+	var flags = {{ flags | set_variables }};
+</script>
+
 <div id="bookProfile">
     {% if book %}
     <div id="pageWrapper">
         <div id="bBook">
             <div class="content">
                 <img src="https://image.shutterstock.com/image-vector/open-book-vector-clipart-silhouette-260nw-358417976.jpg">
-                <h4>2000 like this</h4>
+                <h4><p id="likes">{{ book.likes }} like this</p></h4>
+				{% if user.is_authenticated %}
                 <ul>
-                    <li><a href="">Check Out</a></li>
-                    <li><a href="">Like</a></li>
-                    <li><a href="">Recommend</a></li>
+					<!-- if the book is checked out by someone else -->
+					{% if checked_out and not flags.checkout %}
+						<li>Currently not available for checkout</li>
+					{% else %}
+						<li id="checkoutButton"><button onclick="updateBook('checkout', 1)">Check Out</button></li>
+						<li id="checkinButton" hidden><button onclick="updateBook('checkout', -1)">Check In</button></li>
+					{% endif %}
+                    <li id="likeButton"><button onclick="updateBook('like', 1)">Like</button></li>
+					<li id="unlikeButton" hidden><button onclick="updateBook('like', -1)">Remove Like</button></li>
+                    <li id="recommendButton"><button onclick="updateBook('recommend', 1)">Recommend</button></li>
+					<li id="unrecommendButton" hidden><button onclick="updateBook('recommend', -1)">Remove Recommendation</button></li>
                 </ul>
+				{% endif %}
             </div>
         </div>
         <div id="infoBlock">
