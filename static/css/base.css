@@ -394,6 +394,86 @@ body {
 
 
 
+/*---------------*/
+/* SEARCH PAGE CSS */
+/*---------------*/
+
+#mainSearch div {
+    /*border: 2px solid black;*/
+}
+
+#mainSearch{
+    height: 90%;
+    width: 100%;
+    max-height: 90%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+
+#mainSearch #searchPage{
+    width: 80%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#mainSearch #searchPage .header h2{
+    padding: 0;
+    margin-left: 3%;
+    text-decoration: underline;
+}
+
+#mainSearch #searchPage .results{
+    border-radius: 15px 15px 15px 15px;
+    border: 2px solid var(--blue);
+    height: 100%;
+    background: var(--lightest-blue);
+    overflow-x: hidden;
+}
+
+#mainSearch #searchPage .results ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#mainSearch #searchPage .results ul li{
+    margin: 10px;
+    padding: 5px;
+    height: 200px;
+    border: 2px solid black;
+    overflow: hidden;
+}
+
+#mainSearch #searchPage .results ul li img {
+    height: 200px;
+    width: 200px;
+    margin: auto;
+}
+#mainSearch #searchPage .results .resultWrapper .resultImage{
+    height: 50%;
+}
+
+
+
+#mainSearch #searchPage .results .resultWrapper{
+    display: flex;
+}
+
+#mainSearch #searchPage .results .resultWrapper .resultText{
+    width: 100%;
+    align-content: center;
+    padding: 2%;
+
+}
+
+/*TODO
+    the footer just disappears no idea why
+ */
+
 
 
 /*---------------*/
