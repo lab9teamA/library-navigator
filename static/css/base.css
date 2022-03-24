@@ -567,15 +567,10 @@ body {
     box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
 }
 
-#bodyBlock #mainProfile #pageWrapper .content .friends{
-    height: 100%;
-    width: 100%;
-    background: var(--lightest-blue);
-    border-radius: 5px 5px 15px 15px;
-}
 #bodyBlock #mainProfile #pageWrapper .content .list{
     height: 100%;
-    width: 100%;
+    width: 95%;
+    padding:10px;
     background: var(--lightest-blue);
     border-radius: 5px 5px 15px 15px;
 }
