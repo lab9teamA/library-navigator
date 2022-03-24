@@ -422,8 +422,8 @@ body {
 #mainSearch #searchPage .header h2{
     padding: 0;
     margin-left: 3%;
-    text-decoration: underline;
 }
+
 
 #mainSearch #searchPage .results{
     border-radius: 15px 15px 15px 15px;
@@ -447,7 +447,9 @@ body {
     border: 2px solid black;
     overflow: hidden;
 }
-
+#mainSearch #searchPage .results ul li a {
+    text-decoration: none;
+}
 #mainSearch #searchPage .results ul li img {
     height: 200px;
     width: 200px;
@@ -467,8 +469,12 @@ body {
     width: 100%;
     align-content: center;
     padding: 2%;
-
 }
+#mainSearch #searchPage .results .resultWrapper .resultText .text-content{
+    font-size: 1.5em;
+}
+
+
 
 /*TODO
     the footer just disappears no idea why
@@ -734,7 +740,7 @@ body {
 }
 
 #bodyBlock .lrBlock {
-    height: 80%;
+    height: 90%;
     display: flex;
     flex-direction: row;
     width: 50%;
@@ -764,6 +770,12 @@ body {
     margin-top: 30px;
 }
 
+#bodyBlock .lrBlock .lrWrapper #pic{
+    height: 50px;
+    position: relative;
+    width: 80%;
+    margin: 0;
+}
 
 #bodyBlock .lrBlock .lrWrapper .input {
     background-color: var(--lightest-blue);

@@ -297,7 +297,7 @@ def search(request):
     
     context_dict ={'term':term,
         'books': Book.objects.filter(title__contains = term),
-        'users': User.objects.filter(username__contains = term),
+        'users': UserProfile.objects.filter(user__username__contains = term),
 
         }
     return render(request, 'libnav/search.html', context=context_dict)
