@@ -43,20 +43,16 @@ Unknown Book
             </div>
         </div>
         <div id="infoBlock">
+            <h2>{{ book.title }}</h2>
+            <p>{{book.author}}</p>
             <div class="box" id="book">
-                <h3>{{ book.title }}</h3>
-                <div class="items">
-                    <p>Books blurb goes here</p>
-                </div>
+                <p>{{book.description}}</p>
             </div>
             <div class="box" id="location">
-                <!--                <h3>Can be found...</h3>-->
-                <div class="items">
-                    {{book.author}}
-                    {{book.publishDate}}
-                    <p>this book can be found at bookcase {{bookcase.id}} on <a
-                            href="{% url 'libnav:map' bookcase.floor.number %}">floor {{bookcase.floor.number}}</a></p>
-                </div>
+                <p>published {{book.publishDate}}</p>
+                <p>this book can be found at bookcase {{bookcase.id}} on <a
+                        href="{% url 'libnav:map' bookcase.floor.number %}">floor {{bookcase.floor.number}}</a></p>
+
             </div>
         </div>
     </div>
