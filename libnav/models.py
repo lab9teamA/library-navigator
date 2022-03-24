@@ -1,7 +1,6 @@
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
-import os
 
 class Subject(models.Model):
     id = models.AutoField(primary_key=True , unique=True)
