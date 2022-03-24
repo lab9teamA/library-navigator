@@ -807,7 +807,7 @@ body {
 }
 
 
-#bodyBlock .lrBlock .lrWrapper .input-container {
+.input-container {
     height: 50px;
     position: relative;
     width: 80%;
@@ -820,8 +820,7 @@ body {
     width: 80%;
     margin: 0;
 }
-
-#bodyBlock .lrBlock .lrWrapper .input {
+.input {
     background-color: var(--lightest-blue);
     border-radius: 12px;
     border: 0;
@@ -906,7 +905,21 @@ body {
     margin: 0;
 }
 
+/* EDIT PROFILE PAGE */
 
+
+#bodyBlock #editPage{
+    height: 100%;
+    width: 100%;
+}
+#bodyBlock #editPage div{
+    /*border: 2px solid black;*/
+}
+
+#editPage .lrBlock #profile_form{
+    width: 100%;
+    margin-left: 5%;
+}
 
 
 
