@@ -21,8 +21,11 @@ var Markers = new Array();
 
 
 function drawMap() {
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
-
+    try {
+        context.clearRect(0, 0, canvasWidth, canvasHeight);
+    }catch(e){
+        //nothing
+    }
     var src = mediaUrl + "floorplans/" + floorimg;
 
     // Map sprite
