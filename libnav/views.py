@@ -120,8 +120,9 @@ def profile(request, username):
     return render(request, 'libnav/profile.html', context= context_dict)
 
 def my_profile(request, username, context_dict):
-    userProfile = UserProfile.objects.get(username = username)
-    user = User.objects.get(username)
+    user = User.objects.get(username = username)
+    userProfile = UserProfile.objects.get(user = user)
+    
     try:
         context_dict["friends"] = userProfile.friends.all()
         context_dict["requests"] = FriendRequest.objects.filter(to_user = user)
