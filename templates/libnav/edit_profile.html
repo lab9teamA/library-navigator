@@ -8,7 +8,7 @@
 <div id="editPage">
 
     <div class="lrBlock">
-        <form id="profile_form" method="post" action="{% url 'libnav:edit profile' %}">
+        <form id="profile_form" method="post" action="{% url 'libnav:edit profile' %}" enctype="multipart/form-data">
             {% csrf_token %}
 
             <h1>{{user.username}} - Edit Profile</h1>
