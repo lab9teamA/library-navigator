@@ -95,8 +95,14 @@ def profile(request, username):
         context_dict["user"]= user
         context_dict["userProfile"] = userProfile
     except User.DoesNotExist:
-        context_dict["user"]= None
-        context_dict["userProfile"] = None
+        if current_user.is_authenticated:
+            UserProfile.objects.get_or_create(user = current_user)
+            user = User.objects.get(username = username)
+            context_dict["user"]= user
+            context_dict["userProfile"] = userProfile
+        else:
+            context_dict["user"]= None
+            context_dict["userProfile"] = None
 
     if current_user.is_authenticated and user == current_user:
         try:
@@ -237,35 +243,27 @@ def user_login(request):
         # register form
         elif request.POST.get('submit') == 'Register':
             user_form = UserForm(request.POST)
-            profile_form = UserProfileForm(request.POST)
 
-            if user_form.is_valid() and profile_form.is_valid():
+            if user_form.is_valid():
                 user = user_form.save()
                 user.set_password(user.password)
                 user.save()
-                profile = profile_form.save(commit=False)
-                profile.user = user
-
-                if 'picture' in request.FILES:
-                    profile.picture = request.FILES['picture']
-
+                profile = UserProfile.objects.get_or_create(user = user)
                 profile.save()
 
                 login(request, user)
                 request.session['user_id'] = profile.user_id
                 return redirect(reverse('libnav:profile', kwargs={'username': user.username}))
             else:
-                print(user_form.errors, profile_form.errors)
+                print(user_form.errors)
     # not post
     else:
         user_form = UserForm()
-        profile_form = UserProfileForm()
 
     return render(request,
         'libnav/login.html',
         context = {
-            'user_form': user_form,
-            'profile_form': profile_form,})
+            'user_form': user_form,})
 
 @login_required
 def user_logout(request):
