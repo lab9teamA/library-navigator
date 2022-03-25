@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from libnav.models import Book, Bookcase, Floor, Subject, UserProfile, FriendRequest
 from libnav.forms import UserForm, UserProfileForm
 from django.shortcuts import redirect
@@ -248,7 +249,7 @@ def user_login(request):
                 user.set_password(user.password)
                 user.save()
                 profile = UserProfile.objects.get_or_create(user = user)[0]
-
+                profile.save()
                 login(request, user)
                 request.session['user_id'] = profile.user_id
                 return redirect(reverse('libnav:profile', kwargs={'username': user.username}))
