@@ -25,7 +25,7 @@
                 <li><a href="{% url 'libnav:home' %}">Home</a></li>
                 <li><a href="{% url 'libnav:map' 1 %}">Map</a></li>
                 {% if current_user.is_authenticated %}
-                <li><a href="{% url 'libnav:profile' username %}">My profile</a></li>
+                <li><a href="{% url 'libnav:profile' current_user.username %}">My profile</a></li>
                 <li><a href="{% url 'libnav:logout' %}">Logout</a></li>
                 {% else %}
                 <li><a href="{% url 'libnav:login' %}">Log in</a></li>
