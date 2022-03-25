@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import TextInput, PasswordInput, EmailInput, URLInput, FileInput
+from django.forms import TextInput, PasswordInput, EmailInput, URLInput, FileInput, Textarea, Select
 from libnav.models import User, UserProfile
 
 
@@ -37,7 +37,7 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('picture','website', 'description',)
+        fields = ('picture','website', 'description', 'favouriteFloor',)
         widgets = {
             'picture': FileInput(attrs={
             'type': 'file',
@@ -51,9 +51,16 @@ class UserProfileForm(forms.ModelForm):
             'id': 'id_email',
             'placeholder': ' ',
             }),
-            'description': TextInput(attrs={
+            'description': Textarea(attrs={
             'type': 'text',
             'class': 'input',
             'id': 'id_password',
             'placeholder': ' ',
-            })}
+            }),
+            'favouriteFloor': Select(attrs={
+                'type': 'select',
+                'class': 'input',
+                'id':'id_floor',
+                'placeholder':' ',
+            })
+            }
