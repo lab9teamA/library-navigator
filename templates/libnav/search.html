@@ -56,16 +56,24 @@ search
                                     User: {{ user.user.username }}
                                 </div>
                                 <div class="text-content">
-                                    Description: {{user.description}}
+                                    {% if user.description %}
+                                        Description: {{user.description}}
+                                    {%else%}
+                                        Description: None
+                                    {%endif%}
                                 </div>
                                 <div class="text-content">
-                                    Website: {{user.website}}
+                                    {% if user.website %}
+                                        Website: {{user.website}}
+                                    {%else%}
+                                        Website: None
+                                    {%endif%}
                                 </div>
                                 <div class="text-content">
                                     {%if user.isReading.Book%}
-                                    Reading: {{user.isReading.Book.title}}
+                                        Reading: {{user.isReading.Book.title}}
                                     {%else%}
-                                    Reading: Nothing
+                                        Reading: Nothing
                                     {%endif%}
                                 </div>
                             </div>

@@ -171,7 +171,7 @@ def map(request, floor_number):
         context_dict['floor'] = floor
         books = Book.objects.filter(bookcase__in=Bookcase.objects.filter(floor=Floor.objects.get(number=floor_number))).order_by('-likes')
         context_dict['books'] = books
-    except Floor.DoesNotExist or Bookcase.DoesNotExist:
+    except (Floor.DoesNotExist, Bookcase.DoesNotExist, ValueError):
         context_dict['floor'] = None
         context_dict['books'] = None
     context_dict['user'] = request.user.id
@@ -222,8 +222,11 @@ def user_login(request):
     if request.user.is_authenticated:
         return redirect(reverse('libnav:profile', kwargs={'username': request.user.username}))
 
+
     if request.method == 'POST':
         # login form
+        login_form = ""
+
         if request.POST.get('submit') == 'Login':
             username = request.POST.get('username')
             password = request.POST.get('password')
@@ -238,8 +241,9 @@ def user_login(request):
                 else:
                     return HttpResponse("Your LIBNAV account is disabled.")
             else:
-                print(f"Invalid login details: {username}, {password}")
-                return HttpResponse("Invalid login details supplied.")
+                login_form = "Invalid login details supplied."
+                user_form = UserForm()
+
         # register form
         elif request.POST.get('submit') == 'Register':
             user_form = UserForm(request.POST)
@@ -257,12 +261,14 @@ def user_login(request):
                 print(user_form.errors)
     # not post
     else:
+        login_form = ""
         user_form = UserForm()
 
     return render(request,
         'libnav/login.html',
         context = {
-            'user_form': user_form,})
+            'user_form': user_form,
+            'login_form': login_form})
 
 @login_required
 def user_logout(request):
@@ -277,6 +283,9 @@ def user_logout(request):
 def api_get_loc(request):
     user = request.GET.get('userID', None)
     floor = request.GET.get('floor', None)
+    user_loc = []
+    friends_loc = []
+    public_loc = []
     if floor is not None:
         floor = int(floor)
     if user is not None and user != "null" and floor is not None:
@@ -287,19 +296,18 @@ def api_get_loc(request):
         a.append(user)
         user_loc = locations.get_all_by_users(a, floor)
 
-        friends = [x.id for x in userProfile.friends.all()]
-        friends_locations = locations.get_all_by_users(friends, floor)
+        friends = [x for x in userProfile.friends.all()]
+        friends_loc = locations.get_all_by_users(friends, floor)
 
-        public_loc = [x for x in locations.get_all_public_locations(floor) if x not in friends_locations and x not in user_loc]
-        # if user_loc in public_loc:
-        #     public_loc.remove(user_loc)
-
-        response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
+        public_loc = [x for x in locations.get_all_public_locations(floor) if x not in friends_loc and x not in user_loc]
     elif floor is not None:
         public_loc = locations.get_all_public_locations(floor)
-        response = JsonResponse({"user_loc" : [], "friends" : [],"others" : public_loc})
-    else:
-        return JsonResponse({"user_loc" : [], "friends" : [],"others" : []})
+
+    # convert location array to arrays of dicts of info
+    user_loc = [{"x": loc.x, "y": loc.y, "private": loc.private, "name": loc.user.username} for loc in user_loc]
+    friends_loc = [{"x": loc.x, "y": loc.y, "private": loc.private, "name": loc.user.username} for loc in friends_loc]
+    public_loc = [{"x": loc.x, "y": loc.y} for loc in public_loc]
+    response = JsonResponse({"user_loc": user_loc, "friends": friends_loc, "others": public_loc})
 
     response["Access-Control-Allow-Origin"] = "*"
     response["Access-Control-Allow-Headers"] = "*"

@@ -53,7 +53,7 @@ class UserProfileForm(forms.ModelForm):
             }),
             'description': Textarea(attrs={
             'type': 'text',
-            'class': 'input',
+            'class': 'input textarea',
             'id': 'id_password',
             'placeholder': ' ',
             }),
