@@ -81,7 +81,7 @@ body {
 
 .wrapper #navbar a:hover {
     background-color: var(--lightest-blue);
-    color: var(--midnight)
+    color: var(--midnight);
 }
 
 
@@ -162,6 +162,7 @@ body {
 #scrollBar {
     width: 5%;
     height: 100%;
+    text-align: center;
 
 }
 
@@ -593,14 +594,12 @@ body {
 }
 
 #bodyBlock #viewProfile #pageWrapper {
-    height: 80%;
+    height: 50%;
     display: flex;
     flex-direction: row;
     width: 100%;
     align-items: center;
     justify-content: center;
-
-
 }
 
 #bodyBlock #viewProfile #pageWrapper #bProfile {
@@ -644,7 +643,6 @@ body {
     height: 50%;
     margin:10px;
     padding: 10px;
-    border: 2px solid var(--light-blue);
 }
 
 #bodyBlock #viewProfile #pageWrapper #infoBlock .box h3 {
