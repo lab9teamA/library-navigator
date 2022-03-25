@@ -108,14 +108,15 @@ def profile(request, username):
         context_dict["recommended"] = None
         context_dict["reading"] = None
 
-    if current_user.is_authenticated and user == current_user:
-        return my_profile(request, username, context_dict= context_dict)
+    else:
+        if current_user.is_authenticated and user == current_user:
+            return my_profile(request, username, context_dict= context_dict)
 
-    if current_user.is_authenticated:
-        if userProfile.friends.filter(username = current_user).exists():
-            context_dict['notFriends'] = False
-        else:
-            context_dict['notFriends'] = True
+        if current_user.is_authenticated:
+            if userProfile.friends.filter(username = current_user).exists():
+                context_dict['notFriends'] = False
+            else:
+                context_dict['notFriends'] = True
 
     return render(request, 'libnav/profile.html', context= context_dict)
 
