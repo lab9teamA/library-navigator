@@ -25,7 +25,7 @@ class locations:
         for user in user_list:
             if user in locations.locmap:
                 response.append(locations.locmap[user])
-        response = [{"x": loc.x, "y": loc.y, "private": loc.private} for loc in response if loc.floor == floor]
+        response = [{"x": loc.x, "y": loc.y, "private": loc.private, "name": loc.user.username} for loc in response if loc.floor == floor]
         return response
 
     @staticmethod
