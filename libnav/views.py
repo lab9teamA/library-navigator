@@ -249,7 +249,6 @@ def user_login(request):
                 user.set_password(user.password)
                 user.save()
                 profile = UserProfile.objects.get_or_create(user = user)
-                profile.save()
 
                 login(request, user)
                 request.session['user_id'] = profile.user_id
