@@ -594,7 +594,7 @@ body {
 }
 
 #bodyBlock #viewProfile #pageWrapper {
-    height: 50%;
+    height: 80%;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -615,11 +615,10 @@ body {
     color: var(--midnight);
     padding:10px;
     margin: auto;
+    width:100%;
    }
 
 #bodyBlock #viewProfile #pageWrapper #bProfile .content img {
-    width: 100%;
-    height: auto;
     border-radius: 15px;
     box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
 
