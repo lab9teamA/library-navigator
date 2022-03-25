@@ -9,7 +9,7 @@ django.setup()
 
 from libnav.models import *
 from django.core.files import File
-
+from django.contrib.auth.models import User
 
 def populate():
     subjects = [
@@ -105,6 +105,27 @@ def populate():
          },
     ]
 
+    users = [
+        {"name": "bob",
+         "email": "bob@gmail.com",
+         "password": "hi"},
+        {"name": "steve",
+         "email": "steve@gmail.com",
+         "password": "hi"},
+        {"name": "jim",
+         "email": "jim@gmail.com",
+         "password": "hi"},
+        {"name": "amy",
+         "email": "amy@gmail.com",
+         "password": "hi"},
+        {"name": "dylan",
+         "email": "dylan@gmail.com",
+         "password": "hi"},
+        {"name": "francesca",
+         "email": "francesca@gmail.com",
+         "password": "hi"}
+    ]
+
     for sub in subjects:
         s = Subject.objects.get_or_create(name=sub["name"])[0]
         s.save()
@@ -133,7 +154,12 @@ def populate():
         for subj in book["subjects"]:
             c.subjects.add(Subject.objects.get(name=subj))
         print(c,"-- added")
-
+    for user in users:
+        u = User.objects.get_or_create(username=user["name"], email=user["email"])[0]
+        u.set_password(user["password"])
+        u.save()
+        UserProfile.objects.get_or_create(user=u)
+        print(u, "-- added")
 
 
 if __name__ == "__main__":

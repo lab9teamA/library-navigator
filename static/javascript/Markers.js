@@ -38,7 +38,7 @@ function drawMap() {
         if (this.readyState === 4 && this.status === 200) {
             locmap = JSON.parse(this.responseText);
             //locmap["friends"] = [{"x": 100, "y": 100}, {"x": 200, "y": 200}, {"x": 250, "y": 100}, {"x": 150, "y": 500}];
-            locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
+            //locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
             mapSprite.onload = function () {
                 context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
                 if (locmap["user_loc"].length > 0) {

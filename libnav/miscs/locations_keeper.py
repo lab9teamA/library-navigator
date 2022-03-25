@@ -24,13 +24,13 @@ class locations:
         response = []
         for user in user_list:
             if user in locations.locmap:
-                response.append(locations.locmap[user])
-        response = [{"x": loc.x, "y": loc.y, "private": loc.private, "name": loc.user.username} for loc in response if loc.floor == floor]
+                if locations.locmap[user].floor == floor:
+                    response.append(locations.locmap[user])
         return response
 
     @staticmethod
     def get_all_public_locations(floor):
-        return [{"x": loc.x, "y": loc.y} for loc in locations.locmap.values() if loc.floor == floor and not loc.private]
+        return [loc for loc in locations.locmap.values() if loc.floor == floor and not loc.private]
 
     @staticmethod
     def get_business_of_floor(floor):

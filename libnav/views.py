@@ -171,7 +171,7 @@ def map(request, floor_number):
         context_dict['floor'] = floor
         books = Book.objects.filter(bookcase__in=Bookcase.objects.filter(floor=Floor.objects.get(number=floor_number))).order_by('-likes')
         context_dict['books'] = books
-    except Floor.DoesNotExist or Bookcase.DoesNotExist:
+    except (Floor.DoesNotExist, Bookcase.DoesNotExist, ValueError):
         context_dict['floor'] = None
         context_dict['books'] = None
     context_dict['user'] = request.user.id
@@ -283,6 +283,9 @@ def user_logout(request):
 def api_get_loc(request):
     user = request.GET.get('userID', None)
     floor = request.GET.get('floor', None)
+    user_loc = []
+    friends_loc = []
+    public_loc = []
     if floor is not None:
         floor = int(floor)
     if user is not None and user != "null" and floor is not None:
@@ -294,16 +297,17 @@ def api_get_loc(request):
         user_loc = locations.get_all_by_users(a, floor)
 
         friends = [x for x in userProfile.friends.all()]
-        friends_locations = locations.get_all_by_users(friends, floor)
+        friends_loc = locations.get_all_by_users(friends, floor)
 
-        public_loc = [x for x in locations.get_all_public_locations(floor) if x not in friends_locations and x not in user_loc]
-
-        response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
+        public_loc = [x for x in locations.get_all_public_locations(floor) if x not in friends_loc and x not in user_loc]
     elif floor is not None:
         public_loc = locations.get_all_public_locations(floor)
-        response = JsonResponse({"user_loc" : [], "friends" : [],"others" : public_loc})
-    else:
-        return JsonResponse({"user_loc" : [], "friends" : [],"others" : []})
+
+    # convert location array to arrays of dicts of info
+    user_loc = [{"x": loc.x, "y": loc.y, "private": loc.private, "name": loc.user.username} for loc in user_loc]
+    friends_loc = [{"x": loc.x, "y": loc.y, "private": loc.private, "name": loc.user.username} for loc in friends_loc]
+    public_loc = [{"x": loc.x, "y": loc.y} for loc in public_loc]
+    response = JsonResponse({"user_loc": user_loc, "friends": friends_loc, "others": public_loc})
 
     response["Access-Control-Allow-Origin"] = "*"
     response["Access-Control-Allow-Headers"] = "*"
