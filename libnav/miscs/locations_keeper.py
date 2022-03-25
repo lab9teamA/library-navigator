@@ -1,6 +1,6 @@
 
 class location:
-    def __init__(self ,x :int ,y: int, floor: int, user: int, private:bool):
+    def __init__(self ,x :int ,y: int, floor: int, user, private:bool):
         self.x = x
         self.y = y
         self.floor = floor
@@ -16,8 +16,8 @@ class locations:
         locations.locmap[loc.user] = loc
 
     @staticmethod
-    def remove(loc: location):
-        locations.locmap.pop(loc)
+    def remove(user):
+        locations.locmap.pop(user)
 
     @staticmethod
     def get_all_by_users(user_list, floor):

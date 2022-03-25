@@ -319,6 +319,17 @@ def api_set_loc(request):
             locations.add(l)
 
     return HttpResponse()
+
+@csrf_exempt
+def api_remove_loc(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        userID = data["userID"]
+        if userID is not None:
+            user = User.objects.get(id=userID)
+            locations.remove(user)
+
+    return HttpResponse()
   
 def send_friend_request(request, username):
     from_user = request.user

@@ -74,6 +74,21 @@ function drawMarker(xpos, ypos, private) {
 }
 
 
+function deleteMarker() {
+    const deleteMarkerUrl = new URL("http://127.0.0.1:8000/libnav/api/remove-loc/");
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            console.log("Marker deleted");
+        }
+    };
+    let post_data = {"userID": user}
+    xhttp.open("POST", deleteMarkerUrl, false);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(post_data));
+}
+
+
 function mouseClicked (mouse) {
 
     
@@ -82,39 +97,62 @@ function mouseClicked (mouse) {
     var mouseXPos = (mouse.x - rect.left);
     var mouseYPos = (mouse.y - rect.top);
 
-    // Move the marker when placed to a better location
-    var m = new Marker();
-    m.XPos = mouseXPos - (m.Width / 2);
-    m.YPos = mouseYPos - m.Height;
-
-    //drawMap();
     var user = JSON.parse(document.getElementById('user-id').textContent);
-    if(user!=null){
-        if (window.confirm("Make marker public?")){
-            var private = false;
-            drawMarker(m.XPos, m.YPos, private);
-        }else{
-            var private = true;
-            drawMarker(m.XPos, m.YPos, private);
-        }
-    
-        const setLocUrl = new URL("http://127.0.0.1:8000/libnav/api/set-loc/");
-        const xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                console.log("Post worked");
+
+    var marker_clicked = false;
+    const getLocUrl = new URL("http://127.0.0.1:8000/libnav/api/get-loc/");
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var locmap = JSON.parse(this.responseText);
+            if (locmap["user_loc"].length > 0) {
+                var user_loc = locmap["user_loc"][0]
+                if (user_loc["x"] > mouseXPos && user_loc["x"] < (mouseXPos+18)) {
+                    if (user_loc["y"] > mouseYPos && user_loc["y"] < (mouseYPos+22)) {
+                        marker_clicked = true;
+                        if (window.confirm("Delete marker?")){
+                            deleteMarker(user);
+                        }
+                    }
+                }
             }
-        };
-        console.log("User id is " + user);
-        let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": floornum, "private": private }
-        console.log("Json data: " + JSON.stringify(post_data))
-        xhttp.open("POST", setLocUrl, false);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(JSON.stringify(post_data));
-    
-        drawMap();
+        }
+    };
+    xhttp.open("GET", getLocUrl, false);
+    xhttp.send();
+
+    if (!marker_clicked) {
+        // Move the marker when placed to a better location
+        var m = new Marker();
+        m.XPos = mouseXPos - (m.Width / 2);
+        m.YPos = mouseYPos - m.Height;
+
+        if (user != null) {
+            if (window.confirm("Make marker public?")) {
+                var private = false;
+                drawMarker(m.XPos, m.YPos, private);
+            } else {
+                var private = true;
+                drawMarker(m.XPos, m.YPos, private);
+            }
+
+            const setLocUrl = new URL("http://127.0.0.1:8000/libnav/api/set-loc/");
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    console.log("Post worked");
+                }
+            };
+            console.log("User id is " + user);
+            let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": floornum, "private": private}
+            console.log("Json data: " + JSON.stringify(post_data))
+            xhttp.open("POST", setLocUrl, false);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(JSON.stringify(post_data));
+
+            drawMap();
+        }
     }
-    
 }
 
 
