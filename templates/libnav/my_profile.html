@@ -21,11 +21,11 @@
                     {% endif %}
                 </div>
                 <div>
-                    <h3>Name: {% if user %}
+                    <h2>{% if user %}
                         {{ user.username }}
                         {% else %}
                         Unknown profile
-                        {% endif %}</h3>
+                        {% endif %}</h2>
                     <h3><a href="{% url 'libnav:edit profile' %}">edit profile</a></h3>
                 </div>
             </div>
@@ -45,13 +45,12 @@
                     {% endif %}
                 </div>
             </div>
-            <br />
-            
+            {%if requests%}
             <div class="content">
-                {%if requests%}
+                
                 <h3>your friends requests...</h3>
                 <div class="list">
-                    {%for request in requests %}-->
+                    {%for request in requests %}
                     <li>
                         <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}</a>
                         <a href="{% url 'libnav:accept friend request' request.id %}">accept</a>
@@ -66,10 +65,9 @@
                    </ul>
                    {%endif%}
                 </div>
-                {% endif %}
+                
             </div>
-            
-            <br />
+            {% endif %}
             <div class="content">
                 <h4>your checked out books</h4>
                 <div class="list">
@@ -84,7 +82,6 @@
                     {% endif %}
                 </div>
             </div>
-            <br />
             <div class="content">
                 <h4>your recommendations</h4>
                 <div class="list">

@@ -41,7 +41,8 @@ body {
 .wrapper #navbar {
 	flex: 0 1 auto;
     background-color: var(--dark-blue);
-    border: 2px solid var(--blue);
+    border: 2px solid var(--dark-blue);
+    box-shadow: 0 0 3px var(--blue), 0 0 5px var(--midnight);
     position:sticky;
 }
 
@@ -75,13 +76,20 @@ body {
 }
 
 .wrapper #navbar input {
+    height: fit-content;
     text-align: left;
     font-size: 12px;
+    background-color: var(--lightest-blue);
+    color: var(--darkest-blue);
+    border: 5px solid var(--lightest-blue);
+    border-radius: 2px;
 }
 
 .wrapper #navbar a:hover {
     background-color: var(--lightest-blue);
-    color: var(--midnight);
+    color: var(--dark-blue);
+    border-radius: 2px 2px 5px 5px;
+
 }
 
 
@@ -350,9 +358,11 @@ body {
 }
 
 .gallery {
-    margin-right: 5px;
+    margin-right: 10px;
     border: 2px solid var(--light-blue);
+    background-color: var(--light-blue);
     border-radius: 15px;
+    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--lightest-blue);
     width: 20%;
     height: 50%;
     position: relative;
@@ -404,6 +414,7 @@ body {
 }
 
 #mainSearch{
+    color: var(--darkest-blue);
     height: 90%;
     width: 100%;
     max-height: 90%;
@@ -428,10 +439,11 @@ body {
 
 #mainSearch #searchPage .results{
     border-radius: 15px 15px 15px 15px;
-    border: 2px solid var(--blue);
+    border: 2px solid var(--lightest-blue);
     height: 100%;
     background: var(--lightest-blue);
     overflow-x: hidden;
+    box-shadow: 0 0 3px var(--lightest-blue), 0 0 5px var(--darkest-blue);
 }
 
 #mainSearch #searchPage .results ul{
@@ -445,7 +457,9 @@ body {
     margin: 10px;
     padding: 5px;
     height: 200px;
-    border: 2px solid var(--darkest-blue);
+    border: 2px solid var(--dark-blue);
+    background-color: var(--light-blue);
+    border-radius: 5px;
     overflow: hidden;
 }
 #mainSearch #searchPage .results ul li a {
@@ -455,6 +469,7 @@ body {
     height: 200px;
     width: 200px;
     margin: auto;
+    border-radius: 5px;
 }
 #mainSearch #searchPage .results .resultWrapper .resultImage{
     height: 50%;
@@ -522,8 +537,6 @@ body {
     height: 100%;
 }
 
-
-
 .content{
     display: flex;
     flex-direction: column;
@@ -540,7 +553,7 @@ body {
     width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--darkest-blue);
+    box-shadow: 0 0 3px var(--blue), 0 0 5px var(--darkest-blue);
 }
 
 #bodyBlock #mainProfile #pageWrapper .mFriends {
@@ -552,7 +565,7 @@ body {
 }
 
 #bodyBlock #mainProfile #pageWrapper .content{
-    color: var(--midnight);
+    color: var(--darkest-blue);
     width: 45%;
     height: 50%;
     padding:10px;
@@ -560,7 +573,7 @@ body {
 }
 
 #bodyBlock #mainProfile #pageWrapper .profileContent {
-    color: var(--midnight);
+    color: var(--dark-blue);
     width: 60%;
     height: auto;
     text-align: center;
@@ -576,7 +589,9 @@ body {
     background: var(--lightest-blue);
     border-radius: 5px 15px 15px 15px;
     box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--darkest-blue);
-
+}
+#bodyBlock #mainProfile #pageWrapper .content .list li{
+    padding: 5px;
 }
 
 
@@ -590,7 +605,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-
+    overflow: visible;
 }
 
 #bodyBlock #viewProfile #pageWrapper {
@@ -616,16 +631,34 @@ body {
     padding:10px;
     margin: auto;
     width:100%;
-   }
+    text-align: center;
+}
 
 #bodyBlock #viewProfile #pageWrapper #bProfile .content img {
     border-radius: 15px;
-    box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
+    box-shadow: 0 0 3px var(--blue), 0 0 5px var(--dark-blue);
+}
+#bodyBlock #viewProfile #pageWrapper #bProfile .content h2 {
+    color: var(--darkest-blue);
+}
 
+#bodyBlock #viewProfile #pageWrapper #bProfile .content #description{
+    margin: 10px 0 10px 0;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--lightest-blue);
+    box-shadow: 0 0 3px var(--lightest-blue), 0 0 5px var(--dark-blue);
+    color:var(--midnight);
+    overflow-wrap: break-word;
+}
+#bodyBlock #viewProfile #pageWrapper #bProfile .content a {
+    color: var(--lighest-blue);
+    padding: 5px;
+    text-decoration: none;
 }
 
 #bodyBlock #viewProfile #pageWrapper #infoBlock {
-    color: var(--midnight);
+    color: var(--darkest-blue);
     display: flex;
     flex-direction: column;
     width: 50%;
@@ -655,7 +688,10 @@ body {
     padding: 10px;
     border-radius: 5px 15px 15px 15px;
     box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--dark-blue);
-
+}
+#bodyBlock #viewProfile #pageWrapper #infoBlock .box .list li{
+    padding: 5px;
+    font-size: large;
 }
 
 
@@ -704,10 +740,9 @@ body {
 }
 
 #bodyBlock #bookProfile #pageWrapper #bBook .content img {
-    height: auto;
     width: 100%;
     border-radius: 10px;
-    box-shadow: 0 0 3px var(--lightest-blue), 0 0 5px var(--darkest-blue);
+    box-shadow: 0 0 3px var(--blue), 0 0 5px var(--darkest-blue);
 }
 
 
