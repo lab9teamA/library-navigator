@@ -1,6 +1,7 @@
 from django import template
 from django.utils.safestring import mark_safe
 from libnav.models import UserProfile
+from libnav.miscs.locations_keeper import locations
 import json
 
 register = template.Library()
@@ -18,6 +19,12 @@ def set_variables(input_dict):
     # make sure the string isn't weird
     # and convert python dict to json string
     return mark_safe(json.dumps(input_dict))
+    
+@register.inclusion_tag('friend_list.html')
+def show_friends(user, floor):
+    friends = user.userprofile.friends.all()
+    friends = [friend for friend in friends if locations.get_floor(friend) == floor]
+    return {'friends': friends}
 
 # @register.inclusion_tag('libnav/floors.html')
 # def get_floor_list(current_floor=None):

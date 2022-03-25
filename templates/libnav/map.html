@@ -12,7 +12,7 @@
 
 {% block body_block %}
     {{ user|json_script:"user-id" }}
-    {{ floor.number|json_script:"floor_number" }}
+	{{ floor.number|json_script:"floor_number" }}
 {% if floor %}
 <div class="main">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -40,23 +40,11 @@
             <span class="dot"></span>
         {% endfor %}
     </div>
-    {% if user.is_authenticated %}
+    {% if request.user.is_authenticated %}
     <div class="sWig">
         <h4>Friends on this level</h4>
         <div id="cFriendsInd">
-            <ul>
-                <!--Will be dynamically loaded-->
-                <li><img alt="Profile Pic 1" src="/../../media/profile_images/profileImage1.jpg">Billybob - 5
-                    mins ago
-                </li>
-                <li><img alt="Profile Pic 2" src="/../../media/profile_images/profileImage2.jpg">suizy - 2 hrs
-                    ago
-                </li>
-                <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
-                <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
-                <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
-                <li><img alt="EMPTY" src="/../../media/profile_images/NONE.jpg">Test user</li>
-            </ul>
+			{% show_friends request.user floor.number %}
         </div>
     </div>
     {%endif%}

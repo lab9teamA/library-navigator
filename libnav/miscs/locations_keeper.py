@@ -27,6 +27,12 @@ class locations:
                 if locations.locmap[user].floor == floor:
                     response.append(locations.locmap[user])
         return response
+        
+    @staticmethod
+    def get_floor(user):
+        if user in locations.locmap:
+            return locations.locmap[user].floor
+        return -1 
 
     @staticmethod
     def get_all_public_locations(floor):
