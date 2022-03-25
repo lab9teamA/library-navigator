@@ -65,7 +65,19 @@
                 </div>
 
                 {% if user_form.errors %}
-                    {{user_form.errors}}
+                <ul class="errorList">
+                    {% for key, value in user_form.errors.items reversed %}
+                    <li>
+                        {% if key == "password"%}
+                            Password was not a valid entry.
+                        {%elif key == "username"%}
+                            Username is already taken.
+                        {%else%}
+                            Email is invalid.
+                        {%endif%}
+                    </li>
+                    {%endfor%}
+                </ul>
                 {%endif%}
             </form>
         </div>
