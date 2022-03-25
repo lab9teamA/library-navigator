@@ -6,10 +6,10 @@ import json
 register = template.Library()
 
 @register.simple_tag(takes_context=True)
-def get_username(context):
+def get_user(context):
     request = context['request']
     try:
-        return UserProfile.objects.get(user_id=request.session['user_id']).user.username
+        return request.user
     except KeyError:
         return None
         
