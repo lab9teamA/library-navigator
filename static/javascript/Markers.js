@@ -31,31 +31,25 @@ function drawMap() {
 
     var locmap = {};
 
-    const getLocUrl = new URL("http://localhost:8000/libnav/api/get-loc/")
+    const getLocUrl = new URL("http://127.0.0.1:8000/libnav/api/get-loc/")
     const user = JSON.parse(document.getElementById('user-id').textContent);
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             locmap = JSON.parse(this.responseText);
-            locmap["friends"] = [{"x": 100, "y": 100}, {"x": 200, "y": 200}, {"x": 250, "y": 100}, {
-                "x": 150,
-                "y": 500
-            }];
+            //locmap["friends"] = [{"x": 100, "y": 100}, {"x": 200, "y": 200}, {"x": 250, "y": 100}, {"x": 150, "y": 500}];
             locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
             mapSprite.onload = function () {
-                console.log("Map loaded");
                 context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
-                console.log("User loc: " + JSON.stringify(locmap["user_loc"]))
                 if (locmap["user_loc"].length > 0) {
                     drawMarker(locmap["user_loc"][0]["x"], locmap["user_loc"][0]["y"], locmap["user_loc"][0]["private"]);
                 }
-                console.log("Friend markers loaded");
                 for (let i = 0; i < locmap["friends"].length; i++) {
-                    context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"], 20, 20);
+                    console.log(locmap["friends"][i]["name"]);
+                    context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"], 18, 22);
                 }
-                console.log("Random Markers loaded")
                 for (let i = 0; i < locmap["others"].length; i++) {
-                    context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 20, 20);
+                    context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 18, 22);
                 }
             }
             let amount = locmap["friends"].length + locmap["others"].length;
@@ -72,10 +66,10 @@ function drawMap() {
 function drawMarker(xpos, ypos, private) {
     if (private) {
         // Draw marker
-        context.drawImage(markerSpritePrivate, xpos, ypos, 20, 20);
+        context.drawImage(markerSpritePrivate, xpos, ypos, 18, 22);
     } else {
         // Draw marker
-        context.drawImage(markerSpritePublic, xpos, ypos, 20, 20);
+        context.drawImage(markerSpritePublic, xpos, ypos, 18, 22);
     }
 }
 
@@ -104,7 +98,7 @@ function mouseClicked (mouse) {
             drawMarker(m.XPos, m.YPos, private);
         }
     
-        const setLocUrl = new URL("http://localhost:8000/libnav/api/set-loc/");
+        const setLocUrl = new URL("http://127.0.0.1:8000/libnav/api/set-loc/");
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {

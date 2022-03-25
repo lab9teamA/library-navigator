@@ -293,12 +293,10 @@ def api_get_loc(request):
         a.append(user)
         user_loc = locations.get_all_by_users(a, floor)
 
-        friends = [x.id for x in userProfile.friends.all()]
+        friends = [x for x in userProfile.friends.all()]
         friends_locations = locations.get_all_by_users(friends, floor)
 
         public_loc = [x for x in locations.get_all_public_locations(floor) if x not in friends_locations and x not in user_loc]
-        # if user_loc in public_loc:
-        #     public_loc.remove(user_loc)
 
         response = JsonResponse({"user_loc" : user_loc, "friends" : friends_locations,"others" : public_loc})
     elif floor is not None:
