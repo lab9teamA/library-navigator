@@ -162,8 +162,6 @@ def edit_profile(request):
         return render(request, 'libnav/edit_profile.html', context=context_dict)
 
 
-current_floor = 1
-
 def map(request, floor_number):
     context_dict ={}
     try:
@@ -181,18 +179,11 @@ def map(request, floor_number):
     context_dict['business'] = business_list
     context_dict['unbusiness'] = unbusiness_list
     response = render(request, 'libnav/map.html', context = context_dict)
-    global current_floor
-    current_floor = floor_number
     return response
 
 def updateMap(request, floor_number):
     floor = Floor.objects.get(number=floor_number)
     response = HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
-    response["Access-Control-Allow-Origin"] = "*"
-    return response
-
-def getCurrentFloor(request):
-    response = HttpResponse(json.dumps({"floor_number": current_floor}))
     response["Access-Control-Allow-Origin"] = "*"
     return response
 

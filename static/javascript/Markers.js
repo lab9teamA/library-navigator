@@ -52,9 +52,9 @@ function drawMap() {
                     context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 18, 22);
                 }
             }
-            let amount = locmap["friends"].length + locmap["others"].length;
-            let busyness = Math.trunc(amount / 5);
-            console.log("Busyness: " + busyness);
+            let amount = locmap["user_loc"] + locmap["friends"].length + locmap["others"].length;
+            let business = Math.trunc(amount / 5);
+            console.log("Busyness: " + business);
         }
     };
     getLocUrl.searchParams.set("userID", user)
