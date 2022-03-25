@@ -1,4 +1,5 @@
 import json
+from multiprocessing import context
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -90,53 +91,45 @@ def about(request):
 def profile(request, username):
     context_dict = {}
     current_user = request.user
+
     try:
         user = User.objects.get(username = username)
         userProfile = UserProfile.objects.get(user = user)
         context_dict["user"]= user
         context_dict["userProfile"] = userProfile
+        recommended = userProfile.recommends.all()
+        context_dict["recommended"] = recommended
+        reading = userProfile.isReading.all()
+        context_dict["reading"] = reading
+        
     except User.DoesNotExist:
-        if current_user.is_authenticated:
-            UserProfile.objects.get_or_create(user = current_user)
-            user = User.objects.get(username = username)
-            context_dict["user"]= user
-            context_dict["userProfile"] = userProfile
-        else:
-            context_dict["user"]= None
-            context_dict["userProfile"] = None
+        context_dict["user"]= None
+        context_dict["userProfile"] = None
+        context_dict["recommended"] = None
+        context_dict["reading"] = None
 
     if current_user.is_authenticated and user == current_user:
-        try:
-            context_dict["friends"] = userProfile.friends.all()
-            context_dict["requests"] = FriendRequest.objects.filter(to_user = current_user)
-            context_dict['recommended'] = userProfile.recommends.all()
-            context_dict['reading'] = userProfile.isReading.all()
-        except:
-            context_dict["friends"] = None
-            context_dict['requests'] = None
-            context_dict['recommended'] = None
-            context_dict['reading'] = None
-        response = render(request, 'libnav/my_profile.html', context= context_dict)
+        return my_profile(request, username, context_dict= context_dict)
 
-    else:
-        try:
-            recommended = userProfile.recommends.all()
-            context_dict["recommended"] = recommended
-            reading = userProfile.isReading.all()
-            context_dict["reading"] = reading
+    if current_user.is_authenticated:
+        if userProfile.friends.filter(username = current_user).exists():
+            context_dict['notFriends'] = False
+        else:
+            context_dict['notFriends'] = True
 
-        except:
-            context_dict["recommended"] = None
-            context_dict["reading"] = None
-        if current_user.is_authenticated:
-            if userProfile.friends.filter(username = current_user).exists():
-                context_dict['notFriends'] = False
-            else:
-                context_dict['notFriends'] = True
+    return render(request, 'libnav/profile.html', context= context_dict)
 
-        response = render(request, 'libnav/profile.html', context= context_dict)
-    #if logged in return myprofile.html
-    return response
+def my_profile(request, username, context_dict):
+    user = User.objects.get(username = username)
+    userProfile = UserProfile.objects.get(user = user)
+    
+    try:
+        context_dict["friends"] = userProfile.friends.all()
+        context_dict["requests"] = FriendRequest.objects.filter(to_user = user)
+    except:
+        context_dict["friends"] = None
+        context_dict['requests'] = None
+    return render(request, 'libnav/my_profile.html', context= context_dict)
 
 @login_required
 def edit_profile(request):
