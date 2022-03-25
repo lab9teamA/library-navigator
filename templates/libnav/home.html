@@ -39,8 +39,8 @@
     <div class="mPanel">
         <div id="pReadingBlock" class="selection">
             <div class="bookWrapper">
-                {%if popular%}
-                {%for book in popular%}
+                {%if liked%}
+                {%for book in liked%}
                     <div class="gallery">
                         <a href="{% url 'libnav:book' book.ISBN %}">
                             <img class="displayImage" src="{{MEDIA_URL}}{{book.coverImage}}" alt="{{ book.title }}">

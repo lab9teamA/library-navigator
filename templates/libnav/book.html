@@ -23,7 +23,11 @@ Unknown Book
     <div id="pageWrapper">
         <div id="bBook">
             <div class="content">
+                {% if book.coverImage %}
+                <img src="{{MEDIA_URL}}{{book.coverImage}}" alt="{{book.title}}">
+                {%else%}
                 <img src="https://image.shutterstock.com/image-vector/open-book-vector-clipart-silhouette-260nw-358417976.jpg">
+                {%endif%}
                 <h4><p id="likes">{{ book.likes }} like this</p></h4>
 				{% if user.is_authenticated %}
                 <ul>
