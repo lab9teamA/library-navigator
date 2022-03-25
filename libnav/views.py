@@ -221,8 +221,11 @@ def user_login(request):
     if request.user.is_authenticated:
         return redirect(reverse('libnav:profile', kwargs={'username': request.user.username}))
 
+
     if request.method == 'POST':
         # login form
+        login_form = ""
+
         if request.POST.get('submit') == 'Login':
             username = request.POST.get('username')
             password = request.POST.get('password')
@@ -237,8 +240,9 @@ def user_login(request):
                 else:
                     return HttpResponse("Your LIBNAV account is disabled.")
             else:
-                print(f"Invalid login details: {username}, {password}")
-                return HttpResponse("Invalid login details supplied.")
+                login_form = "Invalid login details supplied."
+                user_form = UserForm()
+
         # register form
         elif request.POST.get('submit') == 'Register':
             user_form = UserForm(request.POST)
@@ -256,12 +260,14 @@ def user_login(request):
                 print(user_form.errors)
     # not post
     else:
+        login_form = ""
         user_form = UserForm()
 
     return render(request,
         'libnav/login.html',
         context = {
-            'user_form': user_form,})
+            'user_form': user_form,
+            'login_form': login_form})
 
 @login_required
 def user_logout(request):
