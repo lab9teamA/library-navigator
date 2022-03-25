@@ -824,6 +824,7 @@ body {
     outline: 0;
     padding: 4px 20px 0;
     width: 100%;
+    resize: none;
 }
 
 /* Not sure why it only works by itself (no parent hierarchy)*/
@@ -838,6 +839,10 @@ body {
     transform: translateY(0);
     transition: transform 200ms;
     width: 76px;
+}
+
+#floorSelector{
+    width: 100px;
 }
 
 .cut-short {
