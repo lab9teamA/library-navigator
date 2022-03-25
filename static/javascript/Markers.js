@@ -94,31 +94,33 @@ function mouseClicked (mouse) {
     m.YPos = mouseYPos - m.Height;
 
     //drawMap();
-
-    if (window.confirm("Make marker public?")){
-        var private = false;
-        drawMarker(m.XPos, m.YPos, private);
-    }else{
-        var private = true;
-        drawMarker(m.XPos, m.YPos, private);
-    }
-
-    const setLocUrl = new URL("http://localhost:8000/libnav/api/set-loc/")
-    const user = JSON.parse(document.getElementById('user-id').textContent);
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            console.log("Post worked");
+    var user = JSON.parse(document.getElementById('user-id').textContent);
+    if(user!=null){
+        if (window.confirm("Make marker public?")){
+            var private = false;
+            drawMarker(m.XPos, m.YPos, private);
+        }else{
+            var private = true;
+            drawMarker(m.XPos, m.YPos, private);
         }
-    };
-    console.log("User id is " + user);
-    let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": floornum, "private": private }
-    console.log("Json data: " + JSON.stringify(post_data))
-    xhttp.open("POST", setLocUrl, false);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(post_data));
-
-    drawMap();
+    
+        const setLocUrl = new URL("http://localhost:8000/libnav/api/set-loc/");
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                console.log("Post worked");
+            }
+        };
+        console.log("User id is " + user);
+        let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": floornum, "private": private }
+        console.log("Json data: " + JSON.stringify(post_data))
+        xhttp.open("POST", setLocUrl, false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(post_data));
+    
+        drawMap();
+    }
+    
 }
 
 
