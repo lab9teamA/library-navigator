@@ -169,15 +169,15 @@ def map(request, floor_number):
         context_dict['floor'] = floor
         books = Book.objects.filter(bookcase__in=Bookcase.objects.filter(floor=Floor.objects.get(number=floor_number))).order_by('-likes')
         context_dict['books'] = books
+        context_dict['user'] = request.user.id
+        business = min(locations.get_business_of_floor(int(floor_number)) // 5, 5)
+        business_list = list(range(business))
+        unbusiness_list = list(range(5 - business))
+        context_dict['business'] = business_list
+        context_dict['unbusiness'] = unbusiness_list
     except (Floor.DoesNotExist, Bookcase.DoesNotExist, ValueError):
         context_dict['floor'] = None
         context_dict['books'] = None
-    context_dict['user'] = request.user.id
-    business = min(locations.get_business_of_floor(floor_number)//5, 5)
-    business_list = list(range(business))
-    unbusiness_list = list(range(5-business))
-    context_dict['business'] = business_list
-    context_dict['unbusiness'] = unbusiness_list
     response = render(request, 'libnav/map.html', context = context_dict)
     return response
 
