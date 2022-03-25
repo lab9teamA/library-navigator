@@ -162,8 +162,6 @@ def edit_profile(request):
         return render(request, 'libnav/edit_profile.html', context=context_dict)
 
 
-current_floor = 1
-
 def map(request, floor_number):
     context_dict ={}
     try:
@@ -171,28 +169,21 @@ def map(request, floor_number):
         context_dict['floor'] = floor
         books = Book.objects.filter(bookcase__in=Bookcase.objects.filter(floor=Floor.objects.get(number=floor_number))).order_by('-likes')
         context_dict['books'] = books
+        context_dict['user'] = request.user.id
+        business = min(locations.get_business_of_floor(int(floor_number)) // 5, 5)
+        business_list = list(range(business))
+        unbusiness_list = list(range(5 - business))
+        context_dict['business'] = business_list
+        context_dict['unbusiness'] = unbusiness_list
     except (Floor.DoesNotExist, Bookcase.DoesNotExist, ValueError):
         context_dict['floor'] = None
         context_dict['books'] = None
-    context_dict['user'] = request.user.id
-    business = min(locations.get_business_of_floor(floor_number)//5, 5)
-    business_list = list(range(business))
-    unbusiness_list = list(range(5-business))
-    context_dict['business'] = business_list
-    context_dict['unbusiness'] = unbusiness_list
     response = render(request, 'libnav/map.html', context = context_dict)
-    global current_floor
-    current_floor = floor_number
     return response
 
 def updateMap(request, floor_number):
     floor = Floor.objects.get(number=floor_number)
     response = HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
-    response["Access-Control-Allow-Origin"] = "*"
-    return response
-
-def getCurrentFloor(request):
-    response = HttpResponse(json.dumps({"floor_number": current_floor}))
     response["Access-Control-Allow-Origin"] = "*"
     return response
 
@@ -253,7 +244,7 @@ def user_login(request):
                 user.set_password(user.password)
                 user.save()
                 profile = UserProfile.objects.get_or_create(user = user)[0]
-
+                profile.save()
                 login(request, user)
                 request.session['user_id'] = profile.user_id
                 return redirect(reverse('libnav:profile', kwargs={'username': user.username}))

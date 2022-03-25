@@ -1,26 +1,12 @@
 const nFloors = 12;
+var current_floor;
 
 $(document).ready(() => {
-    getCurrentFloor();
+    current_floor = parseInt(document.getElementById("floor_number").textContent);
     updateImage(current_floor);
     genList();
     drawSetUp();
 });
-
-
-function getCurrentFloor() {
-    let url = "http://127.0.0.1:8000/libnav/getcurrentfloor"
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            let floor = JSON.parse(this.responseText);
-            current_floor = parseInt(floor.floor_number);
-        }
-    };
-    xhttp.open("GET", url, false);
-    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhttp.send();
-}
 
 
 function genList() {
@@ -59,7 +45,6 @@ function updateImage(new_floor) {
     let url = "http://127.0.0.1:8000/libnav/updatemap/" + new_floor
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        // console.log(this.responseText);
         if (this.readyState === 4 && this.status === 200) {
             let floor = JSON.parse(this.responseText);
             updatePage(floor);

@@ -44,20 +44,20 @@ function drawMap() {
             //locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
             mapSprite.onload = function () {
                 context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
-                if (locmap["user_loc"].length > 0) {
-                    drawMarker(locmap["user_loc"][0]["x"], locmap["user_loc"][0]["y"], locmap["user_loc"][0]["private"]);
+                for (let i = 0; i < locmap["others"].length; i++) {
+                    context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 18, 22);
                 }
                 for (let i = 0; i < locmap["friends"].length; i++) {
                     console.log(locmap["friends"][i]["name"]);
                     context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"], 18, 22);
                 }
-                for (let i = 0; i < locmap["others"].length; i++) {
-                    context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 18, 22);
+                if (locmap["user_loc"].length > 0) {
+                    drawMarker(locmap["user_loc"][0]["x"], locmap["user_loc"][0]["y"], locmap["user_loc"][0]["private"]);
                 }
             }
-            let amount = locmap["friends"].length + locmap["others"].length;
-            let busyness = Math.trunc(amount / 5);
-            console.log("Busyness: " + busyness);
+            let amount = locmap["user_loc"] + locmap["friends"].length + locmap["others"].length;
+            let business = Math.trunc(amount / 5);
+            console.log("Busyness: " + business);
         }
     };
     getLocUrl.searchParams.set("userID", user)
