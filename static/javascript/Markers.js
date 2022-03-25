@@ -48,16 +48,12 @@ function drawMap() {
                     context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 18, 22);
                 }
                 for (let i = 0; i < locmap["friends"].length; i++) {
-                    console.log(locmap["friends"][i]["name"]);
                     context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"], 18, 22);
                 }
                 if (locmap["user_loc"].length > 0) {
                     drawMarker(locmap["user_loc"][0]["x"], locmap["user_loc"][0]["y"], locmap["user_loc"][0]["private"]);
                 }
             }
-            let amount = locmap["user_loc"] + locmap["friends"].length + locmap["others"].length;
-            let business = Math.trunc(amount / 5);
-            console.log("Busyness: " + business);
         }
     };
     getLocUrl.searchParams.set("userID", user)
@@ -77,7 +73,7 @@ function drawMarker(xpos, ypos, private) {
 }
 
 
-function deleteMarker() {
+function deleteMarker(user) {
     const deleteMarkerUrl = new URL("http://127.0.0.1:8000/libnav/api/remove-loc/");
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -93,44 +89,47 @@ function deleteMarker() {
 
 
 function mouseClicked (mouse) {
-
-    
-    // Get current mouse coords
-    var rect = canvas.getBoundingClientRect();
-    var mouseXPos = (mouse.x - rect.left);
-    var mouseYPos = (mouse.y - rect.top);
-
     var user = JSON.parse(document.getElementById('user-id').textContent);
 
-    var marker_clicked = false;
-    const getLocUrl = new URL("http://127.0.0.1:8000/libnav/api/get-loc/");
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            var locmap = JSON.parse(this.responseText);
-            if (locmap["user_loc"].length > 0) {
-                var user_loc = locmap["user_loc"][0]
-                if (user_loc["x"] > mouseXPos && user_loc["x"] < (mouseXPos+18)) {
-                    if (user_loc["y"] > mouseYPos && user_loc["y"] < (mouseYPos+22)) {
-                        marker_clicked = true;
-                        if (window.confirm("Delete marker?")){
-                            deleteMarker(user);
-                        }
-                    }
-                }
-            }
-        }
-    };
-    xhttp.open("GET", getLocUrl, false);
-    xhttp.send();
+    // clicking should only do anything when user is logged in
+    if (user != null) {
+        // Get current mouse coords
+        var rect = canvas.getBoundingClientRect();
+        var mouseXPos = (mouse.x - rect.left);
+        var mouseYPos = (mouse.y - rect.top);
 
-    if (!marker_clicked) {
         // Move the marker when placed to a better location
         var m = new Marker();
         m.XPos = mouseXPos - (m.Width / 2);
         m.YPos = mouseYPos - m.Height;
 
-        if (user != null) {
+        // check if existing marker has been clicked, if yes, ask if it should be deleted
+        var marker_clicked = false;
+        const getLocUrl = new URL("http://127.0.0.1:8000/libnav/api/get-loc/");
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var locmap = JSON.parse(this.responseText);
+                if (locmap["user_loc"].length > 0) {
+                    var user_loc = locmap["user_loc"][0]
+                    if (mouseXPos > user_loc["x"] && mouseXPos < (user_loc["x"]+20)) {
+                        if (mouseYPos > user_loc["y"] && mouseYPos < (user_loc["y"]+26)) {
+                            marker_clicked = true;
+                            if (window.confirm("Delete marker?")){
+                                deleteMarker(user);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        getLocUrl.searchParams.set("userID", user);
+        getLocUrl.searchParams.set("floor", floornum);
+        xhttp.open("GET", getLocUrl, false);
+        xhttp.send();
+
+        // if marker hasn't been clicked, i.e somewhere else on page clicked, move marker
+        if (!marker_clicked) {
             if (window.confirm("Make marker public?")) {
                 var private = false;
                 drawMarker(m.XPos, m.YPos, private);
@@ -143,18 +142,16 @@ function mouseClicked (mouse) {
             const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
-                    console.log("Post worked");
+                    console.log("location set");
                 }
             };
-            console.log("User id is " + user);
             let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": floornum, "private": private}
-            console.log("Json data: " + JSON.stringify(post_data))
             xhttp.open("POST", setLocUrl, false);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(JSON.stringify(post_data));
-
-            drawMap();
         }
+
+        drawMap();
     }
 }
 
