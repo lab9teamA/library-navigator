@@ -3,7 +3,6 @@ from django.db import IntegrityError
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.urls import reverse
-from django.http import HttpResponse
 
 from libnav.models import User, UserProfile, Floor
 from libnav.views import user_login
@@ -18,6 +17,24 @@ class AuthTestCase(TestCase):
         merchant = User.objects.create(username="testuser2", email="email@website.com", password="mycabbages")
         UserProfile.objects.get_or_create(user=merchant)
         
+    # check whether accounts can be created
+    def test_register(self):
+    
+        # set up data to send through the register form
+        data = {}
+        data['submit'] = 'Register'
+        data['username'] = 'newuser'
+        data['password'] = 'bobross'
+        
+        # send request 
+        response = self.client.post(reverse('libnav:login'), data)
+        response.client = self.client
+        self.assertRedirects(response, reverse('libnav:profile', kwargs={'username': 'newuser'}))
+        
+        # check email field 
+        test_user = User.objects.get(username="newuser")
+        self.assertEqual(test_user.email, '')
+      
     # test to ensure you can't create account with an existing username
     def test_existing_account(self):
         self.assertRaises(IntegrityError, User.objects.create, username="testuser", password="newpassword")
@@ -49,7 +66,7 @@ class AuthTestCase(TestCase):
         
         # check whether response says that the account is disabled
         response = self.client.post(reverse('libnav:login'), data)
-        self.assertEqual(response.content, HttpResponse("Your LIBNAV account is disabled.").content)
+        self.assertContains(response, "Your LIBNAV account is disabled.")
         
         # re-enable account
         test_user.is_active = True
@@ -57,11 +74,19 @@ class AuthTestCase(TestCase):
     
     # can't log in with wrong password 
     def test_password(self):
-        self.assertIsNone(authenticate(username="testuser", password="warinbasignse"))
+        # set up data to send through the login form
+        data = {}
+        data['submit'] = 'Login'
+        data['username'] = 'testuser'
+        data['password'] = 'warinbasignse'
+        
+        # send request 
+        response = self.client.post(reverse('libnav:login'), data)
+        self.assertContains(response, "Invalid login details supplied.")
         
     # if user already logged in, test whether it redirects to the profile page
     def test_profile_page_redirect(self):
-        #log user in
+        # log user in
         test_user = User.objects.get(username="testuser")
         self.client.login(username='testuser', password='warinbasingse')
         
