@@ -219,12 +219,11 @@ def user_login(request):
             user = authenticate(username= username, password = password)
 
             if user:
-                if user.is_active:
-                    login(request, user)
-                    request.session['user_id'] = user.userprofile.user_id
-                    return redirect(reverse('libnav:home'))
-                else:
-                    return HttpResponse("Your LIBNAV account is disabled.")
+                login(request, user)
+                request.session['user_id'] = user.userprofile.user_id
+                return redirect(reverse('libnav:home'))
+            elif User.objects.filter(username=username).exists() and not User.objects.get(username=username).is_active:
+                return HttpResponse("Your LIBNAV account is disabled.")
             else:
                 login_form = "Invalid login details supplied."
                 user_form = UserForm()
