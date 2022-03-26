@@ -25,3 +25,7 @@ def show_friends(user, floor):
     friends = user.userprofile.friends.all()
     friends = [friend for friend in friends if locations.get_floor(friend) == floor]
     return {'friends': friends}
+
+@register.filter()
+def floor_range(r):
+    return range(r,0,-1)

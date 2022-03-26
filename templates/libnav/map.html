@@ -21,22 +21,20 @@
         <div class="mainWrapper">
             <div id="scrollBar">
                 <ul id="floorList">
-                    {% for i in '01234567891'|make_list %}
-                        <li>
-                        {% if forloop.counter == floor.number%}
-                            {%if forloop.counter != 12%}
-                            <li><a href="{% url 'libnav:map' floor.number|add:"-1"  %}" id="arrow-up"></a>
+                    {% for i in 12|floor_range %}
+                        {% if i == floor.number%}
+                            {%if i != 12%}
+                                <li><a href="{% url 'libnav:map' floor.number|add:"1"  %}" class="arrow" id="arrow-up"></a></li>
                             {%endif%}
 
-                            <li><a href="{% url 'libnav:map' forloop.counter  %}">{{forloop.counter}}</a></li>
+                            <li><a href="{% url 'libnav:map' i  %}">{{i}}</a></li>
 
-                            {% if forloop.counter != 1%}
-                                <a href="{% url 'libnav:map' floor.number|add:"1" %}" id="arrow-down"></a></li>
+                            {% if i != 1%}
+                                <li><a href="{% url 'libnav:map' floor.number|add:"-1" %}" class="arrow" id="arrow-down"></a></li>
                             {%endif%}
 
                         {%else%}
-                            <a href="{% url 'libnav:map' forloop.counter  %}">{{forloop.counter}}</a>
-                        </li>
+                            <li><a href="{% url 'libnav:map' i  %}">{{i}}</a></li>
                         {%endif%}
                     {% endfor %}
                 </ul>

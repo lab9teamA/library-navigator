@@ -180,23 +180,21 @@ body {
 
 }
 
-#arrow-down {
+.arrow {
     width: 0;
     height: 0;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     align-content: center;
-    border-top: 20px solid #f00;
+    display: inline-block;
+}
 
+#arrow-down {
+    border-top: 20px solid #f00;
 }
 
 #arrow-up {
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
     border-bottom: 20px solid #f00;
-    align-content: center;
 }
 
 
@@ -230,6 +228,7 @@ body {
 
 .main #sidebar #busyness {
 	flex: 0 1 auto;
+    text-align: center;
 }
 
 .main #sidebar #busyness h5 {
