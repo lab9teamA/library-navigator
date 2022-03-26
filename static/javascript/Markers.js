@@ -57,6 +57,8 @@ function drawMap() {
     mapSprite.src = mediaUrl + "floorplans/" + floorimg;
 
     var locmap = {};
+    var text;
+    var measurements
 
     const getLocUrl = new URL("http://127.0.0.1:8000/libnav/api/get-loc/")
     const user = JSON.parse(document.getElementById('user-id').textContent);
@@ -64,7 +66,7 @@ function drawMap() {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             locmap = JSON.parse(this.responseText);
-            locmap["friends"] = [{"x": 100, "y": 100, "name": "Duncan"}, {"x": 200, "y": 200, "name": "Jahan"}, {"x": 250, "y": 100, "name": "David"}, {"x": 150, "y": 500, "name": "Leo"}];
+            locmap["friends"] = [{"x": 1100, "y": 500, "name": "Duncan"}, {"x": 400, "y": 300, "name": "Jahan"}, {"x": 550, "y": 350, "name": "David"}, {"x": 650, "y": 500, "name": "Leo"}];
             locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
             mapSprite.onload = function () {
                 context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
@@ -72,18 +74,27 @@ function drawMap() {
                     context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 18, 22);
                 }
                 for (let i = 0; i < locmap["friends"].length; i++) {
-                    var text = locmap["friends"][i]["name"];
-                    var measurements = context.measureText(text);
-                    context.fillStyle = "#666";
-                    context.globalAlpha = 0.7;
-                    context.fillRect(locmap["friends"][i]["x"] - (measurements.width/20), locmap["friends"][i]["y"] - 10, measurements.width, 15);
+                    text = locmap["friends"][i]["name"];
+                    measurements = context.measureText(text);
+                    context.fillStyle = "#000000";
+                    context.globalAlpha = 0.8;
+                    context.fillRect(locmap["friends"][i]["x"] - (measurements.width/20)-2, locmap["friends"][i]["y"] - 10, measurements.width+4, 15);
                     context.globalAlpha = 1;
-                    context.fillStyle = "#000";
+                    context.fillStyle = "#ffffff";
                     context.fillText(text, locmap["friends"][i]["x"]-1, locmap["friends"][i]["y"]);
                     context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"]+5, 18, 22);
                 }
                 if (locmap["user_loc"].length > 0) {
-                    drawMarker(locmap["user_loc"][0]["x"], locmap["user_loc"][0]["y"], locmap["user_loc"][0]["private"]);
+                    text = "You";
+                    measurements = context.measureText(text);
+                    context.fillStyle = "#000000";
+                    context.globalAlpha = 0.8;
+                    context.fillRect(locmap["user_loc"][0]["x"] - (measurements.width/20)-2, locmap["user_loc"][0]["y"] - 10, measurements.width+4, 15);
+                    context.globalAlpha = 1;
+                    context.fillStyle = "#ffffff";
+                    context.fillText(text, locmap["user_loc"][0]["x"]-1, locmap["user_loc"][0]["y"]);
+                    console.log(text);
+                    drawMarker(locmap["user_loc"][0]["x"], locmap["user_loc"][0]["y"]+5, locmap["user_loc"][0]["private"]);
                 }
             }
         }
