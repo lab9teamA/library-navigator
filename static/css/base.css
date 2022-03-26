@@ -167,6 +167,12 @@ body {
     cursor: pointer;
 }
 
+#floorList a{
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
 #scrollBar {
     width: 5%;
     height: 100%;
@@ -181,6 +187,7 @@ body {
     border-right: 20px solid transparent;
     align-content: center;
     border-top: 20px solid #f00;
+
 }
 
 #arrow-up {

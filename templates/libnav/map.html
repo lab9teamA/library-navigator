@@ -17,12 +17,28 @@
 <div class="main">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="{% static "javascript/Markers.js" %}"></script>
-    <script src="{% static "javascript/floorScroll.js" %}"></script>
     <div class="child" id="mainbody">
         <div class="mainWrapper">
             <div id="scrollBar">
                 <ul id="floorList">
+                    {% for i in '01234567891'|make_list %}
+                        <li>
+                        {% if forloop.counter == floor.number%}
+                            {%if forloop.counter != 12%}
+                            <li><a href="{% url 'libnav:map' floor.number|add:"-1"  %}" id="arrow-up"></a>
+                            {%endif%}
 
+                            <li><a href="{% url 'libnav:map' forloop.counter  %}">{{forloop.counter}}</a></li>
+
+                            {% if forloop.counter != 1%}
+                                <a href="{% url 'libnav:map' floor.number|add:"1" %}" id="arrow-down"></a></li>
+                            {%endif%}
+
+                        {%else%}
+                            <a href="{% url 'libnav:map' forloop.counter  %}">{{forloop.counter}}</a>
+                        </li>
+                        {%endif%}
+                    {% endfor %}
                 </ul>
             </div>
             <div id="imageLoc">
