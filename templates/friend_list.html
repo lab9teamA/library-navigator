@@ -1,5 +1,5 @@
 <ul>
 {% for friend in friends %}
-	<li><img alt="{{ friend.username }}" src="{{ friend.userprofile.picture.url }}">{{ friend.username }}</li>
+    <li><a href="{% url 'libnav:profile' friend.username %}"><img alt="{{ friend.username }}" src="{{ friend.userprofile.picture.url }}">{{ friend.username }}</a></li>
 {% endfor %}
 </ul>
