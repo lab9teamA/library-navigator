@@ -64,7 +64,7 @@ function drawMap() {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             locmap = JSON.parse(this.responseText);
-            locmap["friends"] = [{"x": 100, "y": 100}, {"x": 200, "y": 200}, {"x": 250, "y": 100}, {"x": 150, "y": 500}];
+            locmap["friends"] = [{"x": 100, "y": 100, "name": "Duncan"}, {"x": 200, "y": 200, "name": "Jahan"}, {"x": 250, "y": 100, "name": "David"}, {"x": 150, "y": 500, "name": "Leo"}];
             locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
             mapSprite.onload = function () {
                 context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
@@ -72,7 +72,15 @@ function drawMap() {
                     context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 18, 22);
                 }
                 for (let i = 0; i < locmap["friends"].length; i++) {
-                    context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"], 18, 22);
+                    var text = locmap["friends"][i]["name"];
+                    var measurements = context.measureText(text);
+                    context.fillStyle = "#666";
+                    context.globalAlpha = 0.7;
+                    context.fillRect(locmap["friends"][i]["x"] - (measurements.width/20), locmap["friends"][i]["y"] - 10, measurements.width, 15);
+                    context.globalAlpha = 1;
+                    context.fillStyle = "#000";
+                    context.fillText(text, locmap["friends"][i]["x"]-1, locmap["friends"][i]["y"]);
+                    context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"]+5, 18, 22);
                 }
                 if (locmap["user_loc"].length > 0) {
                     drawMarker(locmap["user_loc"][0]["x"], locmap["user_loc"][0]["y"], locmap["user_loc"][0]["private"]);
