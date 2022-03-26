@@ -64,8 +64,8 @@ function drawMap() {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             locmap = JSON.parse(this.responseText);
-            //locmap["friends"] = [{"x": 100, "y": 100}, {"x": 200, "y": 200}, {"x": 250, "y": 100}, {"x": 150, "y": 500}];
-            //locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
+            locmap["friends"] = [{"x": 100, "y": 100}, {"x": 200, "y": 200}, {"x": 250, "y": 100}, {"x": 150, "y": 500}];
+            locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
             mapSprite.onload = function () {
                 context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
                 for (let i = 0; i < locmap["others"].length; i++) {
@@ -199,16 +199,20 @@ function drawSetUp() {
 
     friendSprite = new Image();
     friendSprite.onload = function(){}
-    friendSprite.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/1504px-Map_pin_icon_green.svg.png";
+    friendSprite.src = mediaUrl + "map_pins/friendpin.png";
+    //friendSprite.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/1504px-Map_pin_icon_green.svg.png";
     randomSprite = new Image();
     randomSprite.onload = function(){}
-    randomSprite.src = "https://img.favpng.com/20/11/24/google-map-maker-google-maps-computer-icons-map-collection-png-favpng-BNWkuCw9tdsBqxLR2PTzGbS6V.jpg";
+    randomSprite.src = mediaUrl + "map_pins/randompin.png";
+    //randomSprite.src = "https://img.favpng.com/20/11/24/google-map-maker-google-maps-computer-icons-map-collection-png-favpng-BNWkuCw9tdsBqxLR2PTzGbS6V.jpg";
     markerSpritePublic = new Image();
     markerSpritePublic.onload = function(){}
-    markerSpritePublic.src = "https://www.pinclipart.com/picdir/middle/126-1269086_google-map-marker-red-peg-png-image-red.png";
+    markerSpritePublic.src = mediaUrl + "map_pins/userpin.png";
+    //markerSpritePublic.src = "https://www.pinclipart.com/picdir/middle/126-1269086_google-map-marker-red-peg-png-image-red.png";
     markerSpritePrivate = new Image()
     markerSpritePrivate.onload = function(){}
-    markerSpritePrivate.src = "https://cdn-icons-png.flaticon.com/512/446/446075.png";
+    markerSpritePrivate.src = mediaUrl + "map_pins/privatepin.png"
+    //markerSpritePrivate.src = "https://cdn-icons-png.flaticon.com/512/446/446075.png";
 
     drawMap();
 
