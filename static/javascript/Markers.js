@@ -6,6 +6,8 @@ var friendSprite;
 var randomSprite;
 var markerSpritePublic;
 var markerSpritePrivate;
+var markerWidth = 18;
+var markerHeight = 22;
 
 
 $(document).ready(() => {
@@ -66,34 +68,35 @@ function drawMap() {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             locmap = JSON.parse(this.responseText);
-            locmap["friends"] = [{"x": 1100, "y": 500, "name": "Duncan"}, {"x": 400, "y": 300, "name": "Jahan"}, {"x": 550, "y": 350, "name": "David"}, {"x": 650, "y": 500, "name": "Leo"}];
-            locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
+            //locmap["friends"] = [{"x": 1100, "y": 500, "name": "Duncan"}, {"x": 400, "y": 300, "name": "Jahan"}, {"x": 550, "y": 350, "name": "David"}, {"x": 650, "y": 500, "name": "Leo"}];
+            //locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
             mapSprite.onload = function () {
                 context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
                 for (let i = 0; i < locmap["others"].length; i++) {
-                    context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], 18, 22);
+                    context.drawImage(randomSprite, locmap["others"][i]["x"], locmap["others"][i]["y"], markerWidth, markerHeight);
                 }
                 for (let i = 0; i < locmap["friends"].length; i++) {
                     text = locmap["friends"][i]["name"];
                     measurements = context.measureText(text);
+                    console.log(measurements);
+                    console.log((measurements.width-markerWidth-4)/2);
                     context.fillStyle = "#000000";
                     context.globalAlpha = 0.8;
-                    context.fillRect(locmap["friends"][i]["x"] - (measurements.width/20)-2, locmap["friends"][i]["y"] - 10, measurements.width+4, 15);
+                    context.fillRect(locmap["friends"][i]["x"]-(measurements.width-markerWidth+4)/2, locmap["friends"][i]["y"]-10, measurements.width+4, 15);
                     context.globalAlpha = 1;
                     context.fillStyle = "#ffffff";
-                    context.fillText(text, locmap["friends"][i]["x"]-1, locmap["friends"][i]["y"]);
-                    context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"]+5, 18, 22);
+                    context.fillText(text, locmap["friends"][i]["x"]-(measurements.width-markerWidth)/2, locmap["friends"][i]["y"]);
+                    context.drawImage(friendSprite, locmap["friends"][i]["x"], locmap["friends"][i]["y"]+5, markerWidth, markerHeight);
                 }
                 if (locmap["user_loc"].length > 0) {
                     text = "You";
                     measurements = context.measureText(text);
                     context.fillStyle = "#000000";
                     context.globalAlpha = 0.8;
-                    context.fillRect(locmap["user_loc"][0]["x"] - (measurements.width/20)-2, locmap["user_loc"][0]["y"] - 10, measurements.width+4, 15);
+                    context.fillRect(locmap["user_loc"][0]["x"] - (measurements.width-markerWidth+4)/2, locmap["user_loc"][0]["y"] - 10, measurements.width+4, 15);
                     context.globalAlpha = 1;
                     context.fillStyle = "#ffffff";
-                    context.fillText(text, locmap["user_loc"][0]["x"]-1, locmap["user_loc"][0]["y"]);
-                    console.log(text);
+                    context.fillText(text, locmap["user_loc"][0]["x"]-(measurements.width-markerWidth)/2, locmap["user_loc"][0]["y"]);
                     drawMarker(locmap["user_loc"][0]["x"], locmap["user_loc"][0]["y"]+5, locmap["user_loc"][0]["private"]);
                 }
             }
@@ -108,10 +111,10 @@ function drawMap() {
 function drawMarker(xpos, ypos, private) {
     if (private) {
         // Draw marker
-        context.drawImage(markerSpritePrivate, xpos, ypos, 18, 22);
+        context.drawImage(markerSpritePrivate, xpos, ypos, markerWidth, markerHeight);
     } else {
         // Draw marker
-        context.drawImage(markerSpritePublic, xpos, ypos, 18, 22);
+        context.drawImage(markerSpritePublic, xpos, ypos, markerWidth, markerHeight);
     }
 }
 
