@@ -8,7 +8,31 @@ var markerSpritePublic;
 var markerSpritePrivate;
 
 
+$(document).ready(() => {
+    current_floor = parseInt(document.getElementById("floor_number").textContent);
+    updateImage(current_floor);
+    drawSetUp();
+});
 
+function updateImage(new_floor) {
+    let url = "http://127.0.0.1:8000/libnav/updatemap/" + new_floor
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let floor = JSON.parse(this.responseText);
+            updatePage(floor);
+        }
+    };
+    xhttp.open("GET", url, false);
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+    xhttp.send();
+}
+
+function updatePage(floor) {
+    floorimg = floor.mapName;
+    floornum = floor.number;
+    mediaUrl = floor.mediaUrl
+}
 
 var Marker = function () {
     this.Width = 20;
