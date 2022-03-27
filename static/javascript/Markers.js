@@ -11,6 +11,7 @@ var markerHeight = 22;
 var floorimg;
 var current_floor;
 var mediaUrl;
+const host = "127.0.0.1:8000"
 
 
 $(document).ready(() => {
@@ -44,7 +45,7 @@ function drawMap() {
     var text;
     var measurements
 
-    const getLocUrl = new URL("http://127.0.0.1:8000/libnav/api/get-loc/")
+    const getLocUrl = new URL("http://" + host + "/libnav/api/get-loc/")
     const user = JSON.parse(document.getElementById('user-id').textContent);
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -98,7 +99,7 @@ function drawMarker(xpos, ypos, private) {
 
 
 function deleteMarker(user) {
-    const deleteMarkerUrl = new URL("http://127.0.0.1:8000/libnav/api/remove-loc/");
+    const deleteMarkerUrl = new URL("http://" + host + "/libnav/api/remove-loc/");
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -129,7 +130,7 @@ function mouseClicked (mouse) {
 
         // check if existing marker has been clicked, if yes, ask if it should be deleted
         var marker_clicked = false;
-        const getLocUrl = new URL("http://127.0.0.1:8000/libnav/api/get-loc/");
+        const getLocUrl = new URL("http://" + host + "/libnav/api/get-loc/");
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
@@ -162,7 +163,7 @@ function mouseClicked (mouse) {
                 drawMarker(m.XPos, m.YPos, private);
             }
 
-            const setLocUrl = new URL("http://127.0.0.1:8000/libnav/api/set-loc/");
+            const setLocUrl = new URL("http://" + host + "/libnav/api/set-loc/");
             const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
