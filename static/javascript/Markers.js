@@ -8,6 +8,9 @@ var markerSpritePublic;
 var markerSpritePrivate;
 var markerWidth = 18;
 var markerHeight = 22;
+var floorimg;
+var floornum;
+var mediaUrl;
 
 
 $(document).ready(() => {
@@ -26,7 +29,6 @@ function updateImage(new_floor) {
         }
     };
     xhttp.open("GET", url, false);
-    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.send();
 }
 
@@ -42,9 +44,6 @@ var Marker = function () {
     this.XPos = 0;
     this.YPos = 0;
 }
-
-var Markers = new Array();
-
 
 function drawMap() {
     try {
@@ -68,8 +67,6 @@ function drawMap() {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             locmap = JSON.parse(this.responseText);
-            //locmap["friends"] = [{"x": 1100, "y": 500, "name": "Duncan"}, {"x": 400, "y": 300, "name": "Jahan"}, {"x": 550, "y": 350, "name": "David"}, {"x": 650, "y": 500, "name": "Leo"}];
-            //locmap["others"] = [{"x": 300, "y": 300}, {"x": 400, "y": 400}];
             mapSprite.onload = function () {
                 context.drawImage(mapSprite, 0, 0, canvasWidth, canvasHeight);
                 for (let i = 0; i < locmap["others"].length; i++) {
@@ -78,8 +75,6 @@ function drawMap() {
                 for (let i = 0; i < locmap["friends"].length; i++) {
                     text = locmap["friends"][i]["name"];
                     measurements = context.measureText(text);
-                    console.log(measurements);
-                    console.log((measurements.width-markerWidth-4)/2);
                     context.fillStyle = "#000000";
                     context.globalAlpha = 0.8;
                     context.fillRect(locmap["friends"][i]["x"]-(measurements.width-markerWidth+4)/2, locmap["friends"][i]["y"]-10, measurements.width+4, 15);
@@ -188,7 +183,7 @@ function mouseClicked (mouse) {
             const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
-                    console.log("location set");
+                    console.log("Location set");
                 }
             };
             let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": floornum, "private": private}
@@ -222,19 +217,15 @@ function drawSetUp() {
     friendSprite = new Image();
     friendSprite.onload = function(){}
     friendSprite.src = mediaUrl + "map_pins/friendpin.png";
-    //friendSprite.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/1504px-Map_pin_icon_green.svg.png";
     randomSprite = new Image();
     randomSprite.onload = function(){}
     randomSprite.src = mediaUrl + "map_pins/randompin.png";
-    //randomSprite.src = "https://img.favpng.com/20/11/24/google-map-maker-google-maps-computer-icons-map-collection-png-favpng-BNWkuCw9tdsBqxLR2PTzGbS6V.jpg";
     markerSpritePublic = new Image();
     markerSpritePublic.onload = function(){}
     markerSpritePublic.src = mediaUrl + "map_pins/userpin.png";
-    //markerSpritePublic.src = "https://www.pinclipart.com/picdir/middle/126-1269086_google-map-marker-red-peg-png-image-red.png";
     markerSpritePrivate = new Image()
     markerSpritePrivate.onload = function(){}
     markerSpritePrivate.src = mediaUrl + "map_pins/privatepin.png"
-    //markerSpritePrivate.src = "https://cdn-icons-png.flaticon.com/512/446/446075.png";
 
     drawMap();
 
