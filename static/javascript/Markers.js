@@ -193,7 +193,7 @@ function drawSetUp() {
 
     // get height and width for canvas
     var containerDiv = document.getElementById("mainbody")
-    canvasHeight = containerDiv.offsetHeight-100;
+    canvasHeight = containerDiv.offsetHeight;
     canvasWidth = containerDiv.offsetWidth-100;
     canvas.height = canvasHeight;
     canvas.width = canvasWidth;
