@@ -163,11 +163,11 @@ def map(request, floor_number):
         books = Book.objects.filter(bookcase__in=Bookcase.objects.filter(floor=Floor.objects.get(number=floor_number))).order_by('-likes')
         context_dict['books'] = books
         context_dict['user'] = request.user.id
-        business = min(locations.get_business_of_floor(int(floor_number)) // 5, 5)
-        business_list = list(range(business))
-        unbusiness_list = list(range(5 - business))
-        context_dict['business'] = business_list
-        context_dict['unbusiness'] = unbusiness_list
+        busyness = min(locations.get_busyness_of_floor(int(floor_number)) // 5, 5)
+        busyness_list = list(range(busyness))
+        unbusyness_list = list(range(5 - busyness))
+        context_dict['busyness'] = busyness_list
+        context_dict['unbusyness'] = unbusyness_list
     except (Floor.DoesNotExist, Bookcase.DoesNotExist, ValueError):
         context_dict['floor'] = None
         context_dict['books'] = None

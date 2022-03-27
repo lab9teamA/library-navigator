@@ -39,5 +39,5 @@ class locations:
         return [loc for loc in locations.locmap.values() if loc.floor == floor and not loc.private]
 
     @staticmethod
-    def get_business_of_floor(floor):
+    def get_busyness_of_floor(floor):
         return len([loc for loc in locations.locmap.values() if loc.floor == floor])
