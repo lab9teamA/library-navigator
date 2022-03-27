@@ -9,34 +9,17 @@ var markerSpritePrivate;
 var markerWidth = 18;
 var markerHeight = 22;
 var floorimg;
-var floornum;
+var current_floor;
 var mediaUrl;
 
 
 $(document).ready(() => {
     current_floor = parseInt(document.getElementById("floor_number").textContent);
-    updateImage(current_floor);
+    floorimg = JSON.parse(document.getElementById('floor_map').textContent);
+    mediaUrl = JSON.parse(document.getElementById('media_url').textContent);
     drawSetUp();
 });
 
-function updateImage(new_floor) {
-    let url = "http://127.0.0.1:8000/libnav/updatemap/" + new_floor
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            let floor = JSON.parse(this.responseText);
-            updatePage(floor);
-        }
-    };
-    xhttp.open("GET", url, false);
-    xhttp.send();
-}
-
-function updatePage(floor) {
-    floorimg = floor.mapName;
-    floornum = floor.number;
-    mediaUrl = floor.mediaUrl
-}
 
 var Marker = function () {
     this.Width = 20;
@@ -98,7 +81,7 @@ function drawMap() {
         }
     };
     getLocUrl.searchParams.set("userID", user)
-    getLocUrl.searchParams.set("floor", floornum)
+    getLocUrl.searchParams.set("floor", current_floor)
     xhttp.open("GET", getLocUrl, false);
     xhttp.send();
 }
@@ -165,7 +148,7 @@ function mouseClicked (mouse) {
             }
         }
         getLocUrl.searchParams.set("userID", user);
-        getLocUrl.searchParams.set("floor", floornum);
+        getLocUrl.searchParams.set("floor", current_floor);
         xhttp.open("GET", getLocUrl, false);
         xhttp.send();
 
@@ -186,7 +169,7 @@ function mouseClicked (mouse) {
                     console.log("Location set");
                 }
             };
-            let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": floornum, "private": private}
+            let post_data = {"userID": user, "x": m.XPos, "y": m.YPos, "floor": current_floor, "private": private}
             xhttp.open("POST", setLocUrl, false);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send(JSON.stringify(post_data));

@@ -174,10 +174,6 @@ def map(request, floor_number):
     response = render(request, 'libnav/map.html', context = context_dict)
     return response
 
-def updateMap(request, floor_number):
-    floor = Floor.objects.get(number=floor_number)
-    response = HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
-    return response
 
 def book(request, isbn):
     context_dict ={}
