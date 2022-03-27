@@ -64,13 +64,9 @@ def update_book(request, isbn):
             profile.save()
             
         response = JsonResponse({"likes": book.likes})
-        response['Access-Control-Allow-Origin'] = 'http://127.0.0.1:8000'
         return response
     else:
         return redirect(reverse('libnav:home'))
-
-def testPage(request):
-    return render(request, "libnav/test.html")
 
 
 def home(request):
@@ -178,7 +174,6 @@ def map(request, floor_number):
 def updateMap(request, floor_number):
     floor = Floor.objects.get(number=floor_number)
     response = HttpResponse(json.dumps({"mapName": floor.mapName, "number": floor.number, "mediaUrl": MEDIA_URL}))
-    response["Access-Control-Allow-Origin"] = "*"
     return response
 
 def book(request, isbn):
@@ -294,8 +289,6 @@ def api_get_loc(request):
     public_loc = [{"x": loc.x, "y": loc.y} for loc in public_loc]
     response = JsonResponse({"user_loc": user_loc, "friends": friends_loc, "others": public_loc})
 
-    response["Access-Control-Allow-Origin"] = "*"
-    response["Access-Control-Allow-Headers"] = "*"
     return response
 
 @csrf_exempt
