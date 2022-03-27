@@ -31,7 +31,6 @@ Unknown Book
                 <h4><p id="likes">{{ book.likes }} like this</p></h4>
 				{% if user.is_authenticated %}
                 <ul>
-					<!-- if the book is checked out by someone else -->
 					{% if checked_out and not flags.checkout %}
 						<li>Currently not available for checkout</li>
 					{% else %}
