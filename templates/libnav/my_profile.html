@@ -15,7 +15,7 @@
             <div class="profileContent">
                 <div class="image">
                     {% if userProfile.picture %}
-                    <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}/{{userProfile.picture.path}}">
+                    <img alt="{{user.username}}'s profile photo" src="{{userProfile.picture.url}}">
                     {% else %}
                     <img alt="{{user.username}}'s profile photo" src="{{ MEDIA_URL }}profile_images/NONE.jpg">
                     {% endif %}

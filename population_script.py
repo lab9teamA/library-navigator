@@ -22,18 +22,18 @@ def populate():
     ]
 
     floors = [
-        {"number": 1, "mapname": "level1alpha.png"},
-        {"number": 2, "mapname": "level2alpha.png"},
-        {"number": 3, "mapname": "level3alpha.png"},
-        {"number": 4, "mapname": "level4alpha.png"},
-        {"number": 5, "mapname": "level5alpha.png"},
-        {"number": 6, "mapname": "level6alpha.png"},
-        {"number": 7, "mapname": "level7alpha.png"},
-        {"number": 8, "mapname": "level8alpha.png"},
-        {"number": 9, "mapname": "level9alpha.png"},
-        {"number": 10, "mapname": "level10alpha.png"},
-        {"number": 11, "mapname": "level11alpha.png"},
-        {"number": 12, "mapname": "level12alpha.png"},
+        {"number": 1, "mapname": "Level1alpha.png"},
+        {"number": 2, "mapname": "Level2alpha.png"},
+        {"number": 3, "mapname": "Level3alpha.png"},
+        {"number": 4, "mapname": "Level4alpha.png"},
+        {"number": 5, "mapname": "Level5alpha.png"},
+        {"number": 6, "mapname": "Level6alpha.png"},
+        {"number": 7, "mapname": "Level7alpha.png"},
+        {"number": 8, "mapname": "Level8alpha.png"},
+        {"number": 9, "mapname": "Level9alpha.png"},
+        {"number": 10, "mapname": "Level10alpha.png"},
+        {"number": 11, "mapname": "Level11alpha.png"},
+        {"number": 12, "mapname": "Level12alpha.png"},
     ]
     bookcases = [
         {"id": "abc-ddd-lll", "floor":1},
