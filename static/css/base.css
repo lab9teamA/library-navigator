@@ -596,6 +596,14 @@ body {
     border-radius: 5px 15px 15px 15px;
     box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--darkest-blue);
 }
+
+#bodyBlock #pageWrapper .list ul{
+    list-style-type: '-';
+    padding: 0;
+    margin-left: 2%;
+
+}
+
 #bodyBlock #mainProfile #pageWrapper .content .list li{
     padding: 5px;
 }

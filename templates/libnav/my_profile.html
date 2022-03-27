@@ -35,11 +35,13 @@
                 <h3>your friends...</h3>
                 <div class="list">
                     {% if friends %}
+                    <ul>
                     {%for friend in friends%}
                     <li>
                         <a href="{% url 'libnav:profile' friend.username %}">{{friend.username}}</a>
                     </li>
                     {%endfor%}
+                    </ul>
                     {% else %}
                     <p>No friends</p>
                     {% endif %}
@@ -50,6 +52,7 @@
                 
                 <h3>your friends requests...</h3>
                 <div class="list">
+                    <ul>
                     {%for request in requests %}
                     <li>
                         <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}</a>
@@ -57,6 +60,7 @@
                         <a href="{% url 'libnav:delete friend request' request.id %}">delete</a>
                     </li>
                     {%endfor%}
+                    </ul>
                    {% if messages %}
                    <ul class="messages">
                        {% for message in messages %}
@@ -72,11 +76,13 @@
                 <h4>your checked out books</h4>
                 <div class="list">
                     {% if reading %}
+                    <ul>
                     {%for book in reading%}
                     <li>
                         <a href="{% url 'libnav:book' book.ISBN %}">{{book.title}}</a>
                     </li>
                     {%endfor%}
+                    </ul>
                     {% else %}
                     <p>No checked out books</p>
                     {% endif %}
@@ -86,11 +92,13 @@
                 <h4>your recommendations</h4>
                 <div class="list">
                     {% if recommended %}
+                    <ul>
                     {%for book in recommended %}
                     <li>
                         <a href="{% url 'libnav:book' book.ISBN %}">{{book.title}}</a>
                     </li>
                     {%endfor%}
+                    </ul>
                     {% else %}
                     <p>No recommendations</p>
                     {% endif %}
