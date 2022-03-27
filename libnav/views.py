@@ -146,6 +146,8 @@ def edit_profile(request):
                 profile.description = data['description']
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
+            if data['favouriteFloor']:
+                profile.favouriteFloor = data['favouriteFloor']
             profile.save()
             return redirect(reverse('libnav:profile', kwargs={'username': current_user.username}))
         else:
