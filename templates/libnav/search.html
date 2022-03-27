@@ -70,8 +70,8 @@ search
                                     {%endif%}
                                 </div>
                                 <div class="text-content">
-                                    {%if user.isReading.Book%}
-                                        Reading: {{user.isReading.Book.title}}
+                                    {%if user.isReading.exists%}
+                                        Reading: {{user.isReading.first.title}}
                                     {%else%}
                                         Reading: Nothing
                                     {%endif%}
