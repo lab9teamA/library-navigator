@@ -54,14 +54,13 @@ body {
     float: right;
     list-style-type: none;
     margin: 0;
-    padding: 0;
 }
 
 .wrapper #navbar a {
     float: left;
     color: var(--lightest-blue);
     text-align: center;
-    padding: 14px 16px;
+    padding: 16px;
     text-decoration: none;
     font-size: 15px;
 }
