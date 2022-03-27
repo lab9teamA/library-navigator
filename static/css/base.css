@@ -54,14 +54,13 @@ body {
     float: right;
     list-style-type: none;
     margin: 0;
-    padding: 0;
 }
 
 .wrapper #navbar a {
     float: left;
     color: var(--lightest-blue);
     text-align: center;
-    padding: 14px 16px;
+    padding: 16px;
     text-decoration: none;
     font-size: 15px;
 }
@@ -596,6 +595,23 @@ body {
     border-radius: 5px 15px 15px 15px;
     box-shadow: 0 0 3px var(--light-blue), 0 0 5px var(--darkest-blue);
 }
+
+#bodyBlock #pageWrapper .list ul{
+    list-style-type: '-';
+    padding: 0;
+    margin-left: 2%;
+}
+
+#bodyBlock #pageWrapper .list #friendRequests a{
+    font-size: 1.3em;
+    text-decoration: none;
+}
+
+#bodyBlock #pageWrapper .list #friendRequests button{
+    padding: 3px;
+}
+
+
 #bodyBlock #mainProfile #pageWrapper .content .list li{
     padding: 5px;
 }
