@@ -52,12 +52,12 @@
                 
                 <h3>your friends requests...</h3>
                 <div class="list">
-                    <ul>
+                    <ul id="friendRequests">
                     {%for request in requests %}
                     <li>
-                        <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}</a>
-                        <a href="{% url 'libnav:accept friend request' request.id %}">accept</a>
-                        <a href="{% url 'libnav:delete friend request' request.id %}">delete</a>
+                        <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}:</a>
+                        <a href="{% url 'libnav:accept friend request' request.id %}"><button>accept</button></a>
+                        <a href="{% url 'libnav:delete friend request' request.id %}"><button>delete</button></a>
                     </li>
                     {%endfor%}
                     </ul>
@@ -110,24 +110,25 @@
 {% endblock %}
 
 
-<!--{%if requests%}-->
-<!--<div class="sWig">-->
-<!--    <h4>friend requests</h4>-->
-<!--    <div id="cFriendsInd">-->
-        {%for request in requests %}
-        <li>
-            <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}</a>
-            <a href="{% url 'libnav:accept friend request' request.id %}">accept</a>
-            <a href="{% url 'libnav:delete friend request' request.id %}">delete</a>
-        </li>
-        {%endfor%}
-    </div>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-<!--</div>-->
-<!--{% endif %}-->
+<!--&lt;!&ndash;{%if requests%}&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="sWig">&ndash;&gt;-->
+<!--&lt;!&ndash;    <h4>friend requests</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div id="cFriendsInd">&ndash;&gt;-->
+
+<!--        {%for request in requests %}-->
+<!--        <li>-->
+<!--            <a href="{% url 'libnav:profile' request.from_user.username %}">{{request.from_user.username}}</a>-->
+<!--            <a href="{% url 'libnav:accept friend request' request.id %}">accept</a>-->
+<!--            <a href="{% url 'libnav:delete friend request' request.id %}">delete</a>-->
+<!--        </li>-->
+<!--        {%endfor%}-->
+<!--    </div>-->
+<!--    {% if messages %}-->
+<!--    <ul class="messages">-->
+<!--        {% for message in messages %}-->
+<!--        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--    {% endif %}-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;{% endif %}&ndash;&gt;-->

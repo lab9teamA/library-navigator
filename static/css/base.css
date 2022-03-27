@@ -601,8 +601,17 @@ body {
     list-style-type: '-';
     padding: 0;
     margin-left: 2%;
-
 }
+
+#bodyBlock #pageWrapper .list #friendRequests a{
+    font-size: 1.3em;
+    text-decoration: none;
+}
+
+#bodyBlock #pageWrapper .list #friendRequests button{
+    padding: 3px;
+}
+
 
 #bodyBlock #mainProfile #pageWrapper .content .list li{
     padding: 5px;

@@ -27,13 +27,15 @@
                     {% endif %}
                 </h2>
                 <a href="{{userProfile.website}}">{{userProfile.website}}</a>
+                {% if description %}
                 <div id = "description">
                     {{userProfile.description}}
                 </div>
+                {% endif %}
                 {% if notFriends %}
-                <a href="{% url 'libnav:send friend request' user.username %}">send friend request</a>
+                <a href="{% url 'libnav:send friend request' user.username %}"><button>Send friend request</button></a>
                 {% elif auth%}
-                    <a href="{% url 'libnav:delete friend' user.username %}">delete friend</a>
+                <a href="{% url 'libnav:delete friend' user.username %}"><button>Delete friend</button></a>
 
                 {%endif%}
                 {% if messages %}
