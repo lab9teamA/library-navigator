@@ -91,6 +91,7 @@ def about(request):
 def profile(request, username):
     context_dict = {}
     current_user = request.user
+    context_dict["auth"] = None
 
     try:
         user = User.objects.get(username = username)
@@ -108,11 +109,13 @@ def profile(request, username):
         context_dict["recommended"] = None
         context_dict["reading"] = None
 
+
     else:
         if current_user.is_authenticated and user == current_user:
             return my_profile(request, username, context_dict= context_dict)
 
         if current_user.is_authenticated:
+            context_dict["auth"] = True
             if userProfile.friends.filter(username = current_user).exists():
                 context_dict['notFriends'] = False
             else:

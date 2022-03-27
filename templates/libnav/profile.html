@@ -32,8 +32,9 @@
                 </div>
                 {% if notFriends %}
                 <a href="{% url 'libnav:send friend request' user.username %}">send friend request</a>
-                {%else%}
-                <a href="{% url 'libnav:delete friend' user.username %}">delete friend</a>
+                {% elif auth%}
+                    <a href="{% url 'libnav:delete friend' user.username %}">delete friend</a>
+
                 {%endif%}
                 {% if messages %}
                     <ul class="messages">
