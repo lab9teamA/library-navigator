@@ -27,7 +27,9 @@ LOGIN_URL = 'libnav:login'
 SECRET_KEY = 'pwfyt3iucl0q#75nzn@xnw7a1$@7+4u@-m6-+#!36lt88#zgie'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 

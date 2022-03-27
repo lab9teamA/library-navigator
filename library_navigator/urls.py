@@ -25,3 +25,6 @@ urlpatterns = [
     path('libnav/', include('libnav.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+handler404 = "library_navigator.views.page_not_found_view"
