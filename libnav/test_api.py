@@ -24,23 +24,44 @@ class APItests(TestCase):
         self.friend_profile.friends.add(self.test_user)
 
     def test_set_point(self):
-        data = dict()
-        data['userID'] = self.test_user.id
-        data['x'] = 500
-        data['y'] = 450
-        data['floor'] = 7
-        data['private'] = False
-        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(data), content_type='application/json')
+        set_data = dict()
+        set_data['userID'] = self.test_user.id
+        set_data['x'] = 500
+        set_data['y'] = 450
+        set_data['floor'] = 7
+        set_data['private'] = False
+        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(set_data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    def test_set_and_read_point_own(self):
-        data = dict()
-        data['userID'] = self.test_user.id
-        data['x'] = 500
-        data['y'] = 450
-        data['floor'] = 7
-        data['private'] = False
-        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(data), content_type='application/json')
+    def test_remove_point(self):
+        set_data = dict()
+        set_data['userID'] = self.test_user.id
+        set_data['x'] = 500
+        set_data['y'] = 450
+        set_data['floor'] = 7
+        set_data['private'] = False
+        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(set_data), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        remove_data = {'userID':self.test_user.id}
+        response = self.client.post(reverse('libnav:removeloc'), data=json.dumps(remove_data), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        query_data = {"userID": self.friend.id, "floor": 7}
+        points_response = self.client.get(reverse('libnav:getloc'), data=query_data)
+        self.assertEqual(points_response.status_code, 200)
+        self.assertEqual(points_response.content,
+                         b'{"user_loc": [], "friends": [], "others": []}')
+
+
+    def test_set_and_read_own_point(self):
+        set_data = dict()
+        set_data['userID'] = self.test_user.id
+        set_data['x'] = 500
+        set_data['y'] = 450
+        set_data['floor'] = 7
+        set_data['private'] = False
+        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(set_data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
         query_data = {"userID": self.test_user.id, "floor": 7}
@@ -50,31 +71,16 @@ class APItests(TestCase):
         self.assertEqual(points_response.content,
                          b'{"user_loc": [{"x": 500, "y": 450, "private": false, "name": "testuser"}], "friends": [], "others": []}')
 
-    def test_set_and_read_point_others(self):
-        data = dict()
-        data['userID'] = self.test_user.id
-        data['x'] = 500
-        data['y'] = 450
-        data['floor'] = 7
-        data['private'] = False
-        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(data), content_type='application/json')
-        self.assertEqual(response.status_code, 200)
 
-        query_data = {"userID": self.test_user2.id, "floor": 7}
-        points_response = self.client.get(reverse('libnav:getloc'), data=query_data)
-        self.assertEqual(points_response.status_code, 200)
 
-        self.assertEqual(points_response.content,
-                         b'{"user_loc": [], "friends": [], "others": [{"x": 500, "y": 450}]}')
-
-    def test_set_and_read_point_friends(self):
-        data = dict()
-        data['userID'] = self.test_user.id
-        data['x'] = 500
-        data['y'] = 450
-        data['floor'] = 7
-        data['private'] = False
-        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(data), content_type='application/json')
+    def test_set_and_read_friends_point(self):
+        set_data = dict()
+        set_data['userID'] = self.test_user.id
+        set_data['x'] = 500
+        set_data['y'] = 450
+        set_data['floor'] = 7
+        set_data['private'] = False
+        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(set_data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
         query_data = {"userID": self.friend.id, "floor": 7}
@@ -84,13 +90,79 @@ class APItests(TestCase):
         self.assertEqual(points_response.content,
                          b'{"user_loc": [], "friends": [{"x": 500, "y": 450, "private": false, "name": "testuser"}], "others": []}')
 
+    def test_set_and_read_others_public_points(self):
+        set_data = dict()
+        set_data['userID'] = self.test_user.id
+        set_data['x'] = 500
+        set_data['y'] = 450
+        set_data['floor'] = 7
+        set_data['private'] = False
+        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(set_data), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        query_data = {"userID": self.test_user2.id, "floor": 7}
+        points_response = self.client.get(reverse('libnav:getloc'), data=query_data)
+        self.assertEqual(points_response.status_code, 200)
+
+        self.assertEqual(points_response.content,
+                         b'{"user_loc": [], "friends": [], "others": [{"x": 500, "y": 450}]}')
+
+    def test_set_and_read_others_private_points(self):
+        set_data = dict()
+        set_data['userID'] = self.test_user.id
+        set_data['x'] = 500
+        set_data['y'] = 450
+        set_data['floor'] = 7
+        set_data['private'] = True
+        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(set_data), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        query_data_own = {"userID": self.test_user.id, "floor": 7}
+        points_response_own = self.client.get(reverse('libnav:getloc'), data=query_data_own)
+        self.assertEqual(points_response_own.status_code, 200)
+
+        self.assertEqual(points_response_own.content,
+                         b'{"user_loc": [{"x": 500, "y": 450, "private": true, "name": "testuser"}], "friends": [], "others": []}')
+
+        query_data_others = {"userID": self.test_user2.id, "floor": 7}
+        points_response_others = self.client.get(reverse('libnav:getloc'), data=query_data_others)
+        self.assertEqual(points_response_others.status_code, 200)
+
+        self.assertEqual(points_response_others.content,
+                         b'{"user_loc": [], "friends": [], "others": []}')
+
+
+    def test_set_and_read_friends_public_points(self):
+        set_data = dict()
+        set_data['userID'] = self.test_user.id
+        set_data['x'] = 500
+        set_data['y'] = 450
+        set_data['floor'] = 7
+        set_data['private'] = True
+        response = self.client.post(reverse('libnav:setloc'), data=json.dumps(set_data), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        query_data_own = {"userID": self.test_user.id, "floor": 7}
+        points_response_own = self.client.get(reverse('libnav:getloc'), data=query_data_own)
+        self.assertEqual(points_response_own.status_code, 200)
+
+        self.assertEqual(points_response_own.content,
+                         b'{"user_loc": [{"x": 500, "y": 450, "private": true, "name": "testuser"}], "friends": [], "others": []}')
+
+        query_data_others = {"userID": self.friend.id, "floor": 7}
+        points_response_others = self.client.get(reverse('libnav:getloc'), data=query_data_others)
+        self.assertEqual(points_response_others.status_code, 200)
+
+        self.assertEqual(points_response_others.content,
+                         b'{"user_loc": [], "friends": [{"x": 500, "y": 450, "private": true, "name": "testuser"}], "others": []}')
+
     def test_unkown_user(self):
         with self.assertRaises(Exception):
-            data = dict()
-            data['userID'] = 99
-            data['x'] = 500
-            data['y'] = 450
-            data['floor'] = 7
-            data['private'] = False
-            response = self.client.post(reverse('libnav:setloc'), data=json.dumps(data),
+            set_data = dict()
+            set_data['userID'] = 99
+            set_data['x'] = 500
+            set_data['y'] = 450
+            set_data['floor'] = 7
+            set_data['private'] = False
+            response = self.client.post(reverse('libnav:setloc'), data=json.dumps(set_data),
                                         content_type='application/json')
